@@ -2,18 +2,18 @@
 Group project for Professor Naser Ezzati-Jivan's COSC 4P02 class at Brock Universtiy.
 Winter 2021 term.
 
-TITLE: Interactive Course Scheduler for Brock University
-TEAM NAME: Team Rocket
-MEMBERS: 
+TITLE: Interactive Course Scheduler for Brock University<br>
+TEAM NAME: Team Rocket<br>
 
-Liam Yethon (6255384)
-James Zhao (6240527)
-Jesse Masciarelli (6243109)
-Katie Lee (6351696)
-Wenjie Lin (6135859)
-Jason Grightmire (5388327)
-David Saldana (6155964)
-Calvin Feng (6240790)
+MEMBERS: <br>
+Liam Yethon (6255384)<br>
+James Zhao (6240527)<br>
+Jesse Masciarelli (6243109)<br>
+Katie Lee (6351696)<br>
+Wenjie Lin (6135859)<br>
+Jason Grightmire (5388327)<br>
+David Saldana (6155964)<br>
+Calvin Feng (6240790)<br>
 
 PROJECT SUMMARY:
 
