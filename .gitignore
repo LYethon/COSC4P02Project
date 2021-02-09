@@ -1,0 +1,8 @@
+
+CourseOfActionDashboard/obj/CourseOfActionDashboard.csproj.nuget.dgspec.json
+*.cache
+*.dll
+*.json
+*.pdb
+*.cs
+*.v2
