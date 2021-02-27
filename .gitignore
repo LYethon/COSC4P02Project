@@ -4,6 +4,5 @@ CourseOfActionDashboard/obj/CourseOfActionDashboard.csproj.nuget.dgspec.json
 *.dll
 *.json
 *.pdb
-*.cs
 *.v2
 CourseOfActionDashboard/.vs/CourseOfActionDashboard/v16/.suo
