@@ -12,6 +12,20 @@ namespace CourseOfActionDashboard.Models
     {
         [Key, Column(Order = 1)]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int idCourse { get; set; }
+        public string Code { get; set; }
+
+        public string Title { get; set; }
+
+        public string Description { get; set; }
+
+        public double CreditValue { get; set; }
+
+        public string SubjectCode1 { get; set; }
+
+        public string SubjectCode2 { get; set; }
+
+        public string Notes { get; set; }
+
+        public List<Course> Prerequisites { get; set; }
     }
 }

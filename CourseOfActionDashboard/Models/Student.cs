@@ -12,7 +12,7 @@ namespace CourseOfActionDashboard.Models
     {
         [Key, Column(Order = 1)]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int idStudent { get; set; }
+        public int Id { get; set; }
         [Required]
         [StringLength(50, MinimumLength = 3)]
         public string FirstName { get; set; }
@@ -36,5 +36,7 @@ namespace CourseOfActionDashboard.Models
         {
             return this.FirstName + " " + this.LastName;
         }
+
+        public Schedule Schedule { get; set; }
     }
 }
