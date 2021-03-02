@@ -2,6 +2,70 @@
     ViewData["Title"] = "Home Page";
 }
 
+    <style>
+        .cs_title {
+            font-size: 120%;
+        }
+
+        .cs_baritem {
+            font-size: 90%;
+            max-width: 110px;
+            margin-right: -10px;
+            margin-top: 5px;
+            right: -60px;
+            cursor: pointer;
+        }
+
+            .cs_baritem:hover {
+                transition: 0.3s;
+                color: #3053a1;
+            }
+
+        .year {
+            margin: auto;
+            color: #3053a1;
+        }
+
+        .year_container {
+            background-color: #daf3f5;
+            padding-bottom: 15px;
+            border-radius: 10px;
+        }
+
+        .remove_btn {
+            font-weight: bold;
+            color: dimgrey;
+            margin-top: -2px;
+            margin-left: -7px;
+            cursor: pointer;
+        }
+
+            .remove_btn:hover {
+                color: #e6393f;
+                transition: 0.3s;
+                cursor: pointer;
+            }
+
+        .credit_box {
+            font-size: 90%;
+            padding: 2px 4px;
+            margin: 5px -5px;
+            cursor: pointer;
+            background-color: white;
+        }
+
+        .cr_select {
+            border: 1px solid grey;
+            border-radius: 5px;
+        }
+
+        .cr_unselect {
+            color: grey;
+            border: 1px dashed grey;
+            border-radius: 5px;
+        }
+    </style>
+
     <div class="row">
         <div class="container-fluid" style="">
             <!--Header and Progress Bar-->
@@ -110,9 +174,148 @@
 </div>
 
 <div class="row">
-    <div class="container-fluid col-8" style="background-color:yellow">
+    <div class="container-fluid col-8" style="border: 1px solid">
+        <!--Bar: Course Planner-->
+        <div class="row" style="margin-top: 10px">
+            <div class="col-8 cs_title">
+                Course Scheduler
+            </div>
+            <div class="col-2 cs_baritem">
+                <span>
+                    Add year
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                    </svg>
+                </span>
+            </div>
+            <div class="col-2 cs_baritem">
+                <span>
+                    Export
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share" viewBox="0 0 16 16">
+                        <path d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z" />
+                    </svg>
+                </span>
+            </div>
+        </div>
         <!--Course Planner-->
-        Course Planner
+        <div class="row" style="margin-top: 10px; margin-bottom: 10px">
+            <div class="col-6 col-sm-3 year_container">
+                <div class="row year">Year 1</div>
+                <div class="row credit_box cr_select">
+                    <div class="col-10">COSC 1P02</div>
+                    <span class="col-1 remove_btn">x</span>
+                </div>
+                <div class="row credit_box cr_select">
+                    <div class="col-10">COSC 1P03</div>
+                    <span class="col-1 remove_btn">x</span>
+                </div>
+                <div class="row credit_box cr_select">
+                    <div class="col-10">COSC 1P50</div>
+                    <span class="col-1 remove_btn">x</span>
+                </div>
+                <div class="row credit_box cr_select">
+                    <div class="col-10">MATH 1P66</div>
+                    <span class="col-1 remove_btn">x</span>
+                </div>
+                <div class="row credit_box cr_unselect">
+                    <div class="col-10">MATH 1P67</div>
+                </div>
+                <div class="row credit_box cr_unselect">
+                    <div class="col-10">1 Humanities</div>
+                </div>
+                <div class="row credit_box cr_unselect">
+                    <div class="col-10">1 Social Science</div>
+                </div>
+                <div class="row credit_box cr_unselect">
+                    <div class="col-10">0.5 Electives</div>
+                </div>
+                <div class="row credit_box cr_unselect">
+                    <div class="col-10">+ Add Elective </div>
+                </div>
+            </div>
+            <div class="col-6 col-sm-3 year_container">
+                <div class="row year">Year 2</div>
+                <div class="row credit_box cr_select">
+                    <div class="col-10">COSC 2P03</div>
+                    <span class="col-1 remove_btn">x</span>
+                </div>
+                <div class="row credit_box cr_select">
+                    <div class="col-10">COSC 2P05</div>
+                    <span class="col-1 remove_btn">x</span>
+                </div>
+                <div class="row credit_box cr_select">
+                    <div class="col-10">COSC 2P12</div>
+                    <span class="col-1 remove_btn">x</span>
+                </div>
+                <div class="row credit_box cr_unselect">
+                    <div class="col-10">MATH 1P12</div>
+                </div>
+                <div class="row credit_box cr_unselect">
+                    <div class="col-10">MATH 1P98</div>
+                </div>
+                <div class="row credit_box cr_unselect">
+                    <div class="col-10">COSC 2P13</div>
+                </div>
+                <div class="row credit_box cr_unselect">
+                    <div class="col-10">2 Electives</div>
+                </div>
+                <div class="row credit_box cr_unselect">
+                    <div class="col-10">+ Add Elective </div>
+                </div>
+            </div>
+            <div class="col-6 col-sm-3 year_container">
+                <div class="row year">Year 3</div>
+                <div class="row credit_box cr_select">
+                    <div class="col-10">COSC 3P03</div>
+                    <span class="col-1 remove_btn">x</span>
+                </div>
+                <div class="row credit_box cr_select">
+                    <div class="col-10">COSC 3P32</div>
+                    <span class="col-1 remove_btn">x</span>
+                </div>
+                <div class="row credit_box cr_unselect">
+                    <div class="col-10">COSC 3P71</div>
+                </div>
+                <div class="row credit_box cr_unselect">
+                    <div class="col-10">MATH 1P05</div>
+                </div>
+                <div class="row credit_box cr_unselect">
+                    <div class="col-10">MATH 1P06</div>
+                </div>
+                <div class="row credit_box cr_unselect">
+                    <div class="col-10">1 COSC</div>
+                </div>
+                <div class="row credit_box cr_unselect">
+                    <div class="col-10">1.5 Electives</div>
+                </div>
+                <div class="row credit_box cr_unselect">
+                    <div class="col-10">+ Add Elective </div>
+                </div>
+            </div>
+            <div class="col-6 col-sm-3 year_container">
+                <div class="row year">Year 4</div>
+                <div class="row credit_box cr_unselect">
+                    <div class="col-10">COSC 4P01</div>
+                </div>
+                <div class="row credit_box cr_unselect">
+                    <div class="col-10">COSC 4P02</div>
+                </div>
+                <div class="row credit_box cr_unselect">
+                    <div class="col-10">COSC 4P61</div>
+                </div>
+                <div class="row credit_box cr_unselect">
+                    <div class="col-10">2 COSC</div>
+                </div>
+                <div class="row credit_box cr_unselect">
+                    <div class="col-10">1.5 Electives</div>
+                </div>
+                <div class="row credit_box cr_unselect">
+                    <div class="col-10">+ Add Elective </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <div class="container-fluid col-4" style="background-color:purple">
