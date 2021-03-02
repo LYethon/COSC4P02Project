@@ -1,30 +1,44 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+    <style>
+        /*navbar Background colour*/
+        .navbar-custom {
+            background-color: rgba(204,0,0,255);
+        }
+
+        p {
+            text-align: center;
+            line-height: 0.7;
+            margin-top: 20px;
+        }
+
+        .one {
+            text-align: center;
+            line-height: 0.7;
+            margin-top: 40px;
+        }
+    </style>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - CourseOfActionDashboard</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" href="~/css/LoginPage.css" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-custom navbar-expand-md navbar-toggleable-sm bg-faded box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">CourseOfActionDashboard</a>
+                <a class="navbar-brand">
+                    <img src="https://brocku.ca/brand/wp-content/uploads/sites/sites/176/Brocku-logo-screen.png?x44039" width="125" height="70">
+                </a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"> CourseOfActionDashboard</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                    <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="LoginPage">Login</a>
                         </li>
@@ -39,10 +53,31 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - CourseOfActionDashboard - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
+
+    <footer class="bg-light border-top footer">
+        <p class="one small">
+            <a href="https://brocku.ca/">Brock University Home</a>
+            <a href="https://my.brocku.ca/Portal/Login.aspx?ReturnUrl=%2fportal%2fDefault.aspx">my.brocku.ca</a>
+            <a href="https://www.brocku.ca/accessibility">Accessibility</a>
+            <a href="https://lms.brocku.ca/access/content/group/Copyright_Info/access/copyright.html">Copying Guidelines</a>
+            <a href="https://github.com/LYethon/COSC4P02Project/">Powered By Team Rocket</a>
+        </p>
+        <p class="small">
+            Brock University | Niagara Region |
+            <a href="https://brocku.ca/contact">1812 Sir Isaac Brock Way, St. Catharines, Ont., L2S 3A1 Canada</a>
+        </p>
+        <p class="small">
+            <a href="tel://+19056885550">+1 905-688-5550</a>
+        </p>
+        <p class="small">
+            Brock University is located on the traditional lands of the Haudenosaunee and Anishinaabe peoples and traditional shared hunting and gathering grounds of many nations.
+        </p>
+        <p class="small">
+            © Brock University. Other content copyrighted as noted.
+        </p>
+        <p class="small">
+            Powered by <big>Team Rocket</big>
+        </p>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
