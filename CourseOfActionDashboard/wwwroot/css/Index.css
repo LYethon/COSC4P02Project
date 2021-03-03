@@ -1,0 +1,68 @@
+﻿.cs_title {
+    font-size: 120%;
+}
+
+.cs_baritem {
+    font-size: 90%;
+    max-width: 110px;
+    margin-right: -10px;
+    margin-top: 5px;
+    right: -60px;
+    cursor: pointer;
+}
+
+    .cs_baritem:hover {
+        transition: 0.3s;
+        color: #3053a1;
+    }
+
+.year {
+    margin: auto;
+    color: #3053a1;
+}
+
+.year_container {
+    background-color: #daf3f5;
+    padding-bottom: 15px;
+    border-radius: 10px;
+}
+
+.remove_btn {
+    font-weight: bold;
+    color: dimgrey;
+    margin-top: -2px;
+    margin-left: -7px;
+    cursor: pointer;
+}
+
+    .remove_btn:hover {
+        color: #e6393f;
+        transition: 0.3s;
+        cursor: pointer;
+    }
+
+.credit_box {
+    font-size: 90%;
+    padding: 2px 4px;
+    margin: 5px -5px;
+    cursor: pointer;
+    background-color: white;
+}
+
+.cr_select {
+    border: 1px solid grey;
+    border-radius: 5px;
+}
+
+.cr_unselect {
+    color: grey;
+    border: 1px dashed grey;
+    border-radius: 5px;
+}
+
+body {
+    min-height: 400px;
+    /* Margin bottom by footer height */
+    margin-bottom: 400px;
+    clear: both;
+}

@@ -59,8 +59,10 @@ html {
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    min-height: 400px;
+    /* Margin bottom by footer height */
+    margin-bottom: 400px;
+    clear: both;
 }
 .footer {
   position: absolute;

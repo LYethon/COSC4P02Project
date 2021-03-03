@@ -1,0 +1,16 @@
+﻿/*navbar Background colour*/
+.navbar-custom {
+    background-color: rgba(204,0,0,255);
+}
+
+p {
+    text-align: center;
+    line-height: 0.7;
+    margin-top: 20px;
+}
+
+.one {
+    text-align: center;
+    line-height: 0.7;
+    margin-top: 40px;
+}
