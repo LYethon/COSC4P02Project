@@ -1,7 +1,6 @@
 ﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 // for details on configuring this project to bundle and minify static web assets.
 
-// Write your JavaScript code.
 
 //  updateProgress method: when changes are made to students schedule, use updateProgress
 //  to update the credit counter and progress bar
@@ -62,4 +61,53 @@ function updateProgress() {
 
     document.getElementById("percentCompleted").setAttribute("style", percentComp);
     document.getElementById("percentPlanned").setAttribute("style", percentPlanned);
+}
+
+
+// Drag and drop:
+//_________________________________________________________________________________________
+
+const draggables = document.querySelectorAll('.draggable')
+const containers = document.querySelectorAll('.ul_container')
+
+draggables.forEach(draggable => {
+    draggable.addEventListener('dragstart', () => {
+        draggable.classList.add('dragging')
+    })
+
+    draggable.addEventListener('dragend', () => {
+        draggable.classList.remove('dragging')
+    })
+})
+
+containers.forEach(container => {
+    container.addEventListener('dragover', e => {
+        e.preventDefault()
+        const afterElement = getDragAfterElement(container, e.clientY)
+        const draggable = document.querySelector('.dragging')
+        if (afterElement == null) {
+            container.appendChild(draggable)
+        } else {
+            container.insertBefore(draggable, afterElement)
+        }
+    })
+})
+
+function getDragAfterElement(container, y) {
+    const draggableElements = [...container.querySelectorAll('.draggable:not(.ghost)')]
+
+    return draggableElements.reduce((closest, child) => {
+        const box = child.getBoundingClientRect()
+        const offset = y - box.top - box.height / 2
+        if (offset < 0 && offset > closest.offset) {
+            return { offset: offset, element: child }
+        } else {
+            return closest
+        }
+    }, { offset: Number.NEGATIVE_INFINITY }).element
+}
+
+function remove(el) {
+    var credit = el;
+    credit.remove();
 }

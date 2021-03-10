@@ -1,7 +1,9 @@
-﻿.cs_title {
+﻿/* The course scheduler (CS) title 'COAD' */
+.cs_title {
     font-size: 120%;
 }
 
+/* The CS tools within the tool bar */
 .cs_baritem {
     font-size: 90%;
     max-width: 110px;
@@ -10,21 +12,23 @@
     right: -60px;
     cursor: pointer;
 }
-
-    .cs_baritem:hover {
-        transition: 0.3s;
-        color: #3053a1;
-    }
+.cs_baritem:hover {
+    transition: 0.3s;
+    color: #3053a1;
+}
 
 .year {
     margin: auto;
     color: #3053a1;
 }
 
+/* The CS year and courses container */
 .year_container {
-    background-color: #daf3f5;
+    background-color: white;
     padding-bottom: 15px;
+    border: 5px solid #E4F5FC;
     border-radius: 10px;
+    box-shadow: 0 6.7px 5.3px rgba(0, 0, 0, 0.048);
 }
 
 .remove_btn {
@@ -35,12 +39,13 @@
     cursor: pointer;
 }
 
-    .remove_btn:hover {
-        color: #e6393f;
-        transition: 0.3s;
-        cursor: pointer;
-    }
+.remove_btn:hover {
+    color: #e6393f;
+    transition: 0.3s;
+    cursor: pointer;
+}
 
+/* The CS individual credit/course box - draggable */
 .credit_box {
     font-size: 90%;
     padding: 2px 4px;
@@ -58,6 +63,27 @@
     color: grey;
     border: 1px dashed grey;
     border-radius: 5px;
+}
+
+/* The CS course/credit list formatting */
+.ul_format {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+/* The CS course/credit list items formatting */
+.li_format {
+    cursor: move;
+    margin-left: -5px;
+}
+
+
+.draggable.ghost {
+    opacity: .5;
 }
 
 body {
