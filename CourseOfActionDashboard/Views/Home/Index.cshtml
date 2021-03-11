@@ -1,15 +1,17 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    @using Microsoft.AspNetCore.Http;
 }
 <link rel="stylesheet" href="~/css/Index.css" />
 <script type="text/javascript" src="./site.js"></script>
-
 <body>
+    @{ if (Context.Session.GetString("FullName") != null)
+        {
+            <h1>Welcome @Context.Session.GetString("FullName")</h1>
+        }
+    }
     <div class="row">
         <div class="container-fluid" style="">
-            <!--Header and Progress Bar-->
-            <text style="font-size:x-large;">Welcome, Name!</text>
-
             <!--Progress Bar Legend-->
             <div class="legendarea" style="padding-top:3%;">
                 <table style="width:400px;">
@@ -26,14 +28,14 @@
                         <td>  Required  </td>
                     </tc>
                 </table>
-                    <button onclick="updateProgress()">Refresh Stats (test button)</button>
+                <button onclick="updateProgress()">Refresh Stats (test button)</button>
             </div>
 
             <!--Progress Bar-->
             <div class="progressarea" style="padding-top:2.5%;">
                 <div class="progress" style="background-color:lightcoral">
-                    <div class="progress-bar-striped bg-success" id = "percentCompleted" role="progressbar" style="width: 0%" aria-valuemin="0" aria-valuemax="100"></div><!--aria-valuenow="10"-->
-                    <div class="progress-bar-striped bg-warning" id = "percentPlanned" role="progressbar" style="width: 0%" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress-bar-striped bg-success" id="percentCompleted" role="progressbar" style="width: 0%" aria-valuemin="0" aria-valuemax="100"></div><!--aria-valuenow="10"-->
+                    <div class="progress-bar-striped bg-warning" id="percentPlanned" role="progressbar" style="width: 0%" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
             </div>
 
@@ -85,8 +87,8 @@
                                 </tr>
                                 <tr>
                                     <tc><td style="">1alpha00-1alpha99</td></tc>
-                                    <tc><td id ="1aPlanned" style="">0/0</td></tc>
-                                    <tc><td id ="1aCompleted"style="">0/0</td></tc>
+                                    <tc><td id="1aPlanned" style="">0/0</td></tc>
+                                    <tc><td id="1aCompleted" style="">0/0</td></tc>
                                 </tr>
                                 <tr>
                                     <tc><td style="">2alpha00-2alpha99</td></tc>
@@ -387,37 +389,37 @@
 <script>
 
     function alertMessage(num) {
-        switch(num) {
+        switch (num) {
             case 0:
-            Swal.fire({
-                icon: 'success',
-                title: 'Success',
-                text: 'This alert box could indicate a successful or positive action!',
-            });
-            break;
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'This alert box could indicate a successful or positive action!',
+                });
+                break;
             case 1:
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'This alert box could indicate a dangerous or potentially negative action!',
-            })
-            break;
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'This alert box could indicate a dangerous or potentially negative action!',
+                })
+                break;
             case 2:
-            Swal.fire({
-                icon: 'warning',
-                title: 'Warning',
-                text: 'This alert box could indicate a warning that might need attention!',
-            })
-            break;
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Warning',
+                    text: 'This alert box could indicate a warning that might need attention!',
+                })
+                break;
             case 3:
-            Swal.fire({
-                icon: 'info',
-                title: 'Info',
-                text: 'This alert box could indicate a neutral informative change or action!',
-            })
-            break;
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Info',
+                    text: 'This alert box could indicate a neutral informative change or action!',
+                })
+                break;
             default:
-            return;
+                return;
         }
     }
 </script>

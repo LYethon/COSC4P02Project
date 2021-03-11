@@ -12,7 +12,7 @@ namespace CourseOfActionDashboard.Models
         public DB_Entities() : base("NameOfDatabaseGoesHere") { }
         public DbSet<Student> Students { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
+        {           
             //Database.SetInitializer<demoEntities>(null);
             modelBuilder.Entity<Student>().ToTable("Students");
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();

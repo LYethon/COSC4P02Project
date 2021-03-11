@@ -43,8 +43,19 @@
             </div>
         </div>
     </div>
-
-
 </div>
+<script>
+    function invalidLogin() {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Invalid Email or Password',
+        });
+    }
 
+    var urlParam = new URLSearchParams(window.location.search);
+    if (urlParam.has('error') && urlParam.get('error')=='login') {
+        invalidLogin();
+    }
+</script>
 

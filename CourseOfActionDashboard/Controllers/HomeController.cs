@@ -9,6 +9,7 @@ using CourseOfActionDashboard.Models;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
+using Microsoft.AspNetCore.Http;
 
 namespace CourseOfActionDashboard.Controllers
 { 
@@ -42,22 +43,26 @@ namespace CourseOfActionDashboard.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult LoginPage(string email, string password)
         {
-            if (ModelState.IsValid && password!=null)
+            if (ModelState.IsValid)
             {
-                var f_password = GetMD5(password);
-                var data = _db.Students.Where(s => s.Email.Equals(email) && s.Password.Equals(f_password)).ToList();
+                //var f_password = GetMD5(password);
+                var data = _db.Students.Where(s => s.Email.Equals(email) && s.Password.Equals(password)).ToList();
                 if (data.Count() > 0)
                 {
                     //add session
+                    
+                    HttpContext.Session.SetString("FullName", data.FirstOrDefault().FirstName + " " + data.FirstOrDefault().LastName);
+                    HttpContext.Session.SetString("Email", data.FirstOrDefault().Email);
+                    HttpContext.Session.SetInt32("Id", data.FirstOrDefault().Id);
                     /*Session["FullName"] = data.FirstOrDefault().FirstName + " " + data.FirstOrDefault().LastName;
                     Session["Email"] = data.FirstOrDefault().Email;
-                    Session["idStudent"] = data.FirstOrDefault().idStudent;*/
+                    Session["Id"] = data.FirstOrDefault().Id;*/
                     return RedirectToAction("Index");
                 }
                 else
                 {
                     ViewBag.error = "Login failed";
-                    return RedirectToAction("LoginPage");
+                    return RedirectToAction("LoginPage", "Home", new { error = "login" });
                 }
             }
             return View();

@@ -28,6 +28,10 @@ namespace CourseOfActionDashboard.Models
 
         public string Password { get; set; }
 
+        [Required]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,15}$")]
+        public string Schedule { get; set; }
+
         [NotMapped]
         [Required]
         [System.ComponentModel.DataAnnotations.Compare("Password")]
@@ -36,7 +40,5 @@ namespace CourseOfActionDashboard.Models
         {
             return this.FirstName + " " + this.LastName;
         }
-
-        public Schedule Schedule { get; set; }
     }
 }
