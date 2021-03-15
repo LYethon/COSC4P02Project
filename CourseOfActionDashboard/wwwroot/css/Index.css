@@ -75,6 +75,11 @@
     user-select: none;
 }
 
+.ul_container {
+    background-color: mediumpurple;
+    height: 100%;
+}
+
 /* The CS course/credit list items formatting */
 .li_format {
     cursor: move;
@@ -82,7 +87,7 @@
 }
 
 
-.draggable.ghost {
+.draggable.dragging {
     opacity: .5;
 }
 
