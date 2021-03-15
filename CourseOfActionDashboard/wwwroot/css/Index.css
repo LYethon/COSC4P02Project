@@ -50,18 +50,11 @@
     font-size: 90%;
     padding: 2px 4px;
     margin: 5px -5px;
-    cursor: pointer;
     background-color: white;
-}
 
-.cr_select {
+    cursor: grab;
+    margin-left: -5px;
     border: 1px solid grey;
-    border-radius: 5px;
-}
-
-.cr_unselect {
-    color: grey;
-    border: 1px dashed grey;
     border-radius: 5px;
 }
 
@@ -75,20 +68,24 @@
     user-select: none;
 }
 
-.ul_container {
-    background-color: mediumpurple;
-    height: 100%;
-}
-
-/* The CS course/credit list items formatting */
-.li_format {
-    cursor: move;
-    margin-left: -5px;
-}
-
-
 .draggable.dragging {
     opacity: .5;
+    cursor: grabbing;
+    cursor: -moz-grabbing;
+    cursor: -webkit-grabbing;
+}
+
+.draggable {
+    cursor: move; /* fallback if grab cursor is unsupported */
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+}
+
+.draggable:active {
+    cursor: grabbing;
+    cursor: -moz-grabbing;
+    cursor: -webkit-grabbing;
 }
 
 body {
