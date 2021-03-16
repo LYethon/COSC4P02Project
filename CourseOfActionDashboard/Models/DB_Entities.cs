@@ -9,7 +9,7 @@ namespace CourseOfActionDashboard.Models
 {
     public class DB_Entities : DbContext
     {
-        public DB_Entities() : base("NameOfDatabaseGoesHere") { }
+        public DB_Entities() : base("master") { }
         public DbSet<Student> Students { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {           
