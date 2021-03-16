@@ -64,8 +64,7 @@ function updateProgress() {
 }
 
 
-// Drag and drop:
-//_________________________________________________________________________________________
+// Drag and drop: ______________________________________________________________________________
 
 const draggables = document.querySelectorAll('.draggable')
 const containers = document.querySelectorAll('.ul_container')
@@ -107,7 +106,12 @@ function getDragAfterElement(container, y) {
     }, { offset: Number.NEGATIVE_INFINITY }).element
 }
 
+
+//Remove button ___________________________________________________________________________
+
 function remove(el) {
-    var credit = el;
-    credit.remove();
+    var child = el;
+    var parent = child.parentNode;
+    parent.parentNode.removeChild(parent);
 }
+
