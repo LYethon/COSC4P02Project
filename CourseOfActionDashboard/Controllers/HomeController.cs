@@ -49,14 +49,10 @@ namespace CourseOfActionDashboard.Controllers
                 var data = _db.Students.Where(s => s.Email.Equals(email) && s.Password.Equals(password)).ToList();
                 if (data.Count() > 0)
                 {
-                    //add session
-                    
+                    //add session                   
                     HttpContext.Session.SetString("FullName", data.FirstOrDefault().FirstName + " " + data.FirstOrDefault().LastName);
                     HttpContext.Session.SetString("Email", data.FirstOrDefault().Email);
                     HttpContext.Session.SetInt32("Id", data.FirstOrDefault().Id);
-                    /*Session["FullName"] = data.FirstOrDefault().FirstName + " " + data.FirstOrDefault().LastName;
-                    Session["Email"] = data.FirstOrDefault().Email;
-                    Session["Id"] = data.FirstOrDefault().Id;*/
                     return RedirectToAction("Index");
                 }
                 else
