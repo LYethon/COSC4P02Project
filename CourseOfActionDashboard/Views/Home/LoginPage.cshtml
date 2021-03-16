@@ -4,23 +4,21 @@
     ViewData["Title"] = "LoginPage";
     ViewBag.Title = "LoginPage";
 }
-<!-- Login Page Layout -->
-<!-- container -->
-<div class="h-100 w-100" style="background-image: url('https://brocku.ca/brock-news/wp-content/uploads/2020/04/Aerial-Drone-2017-002-1600x899.jpg?x70330')">
-    <!-- title -->
-    <div class="row justify-content-md-center">
-        <div class="col-8 text-center h1 p-1" style="background-color:white; outline:5px solid red;">
-            Course of Action Dashboard
-        </div>
-    </div>
-
-    <!-- form -->
-    <div class="pt-4 row justify-content-md-center">
-
-        <div class="col-md-4">
+<div class="background">
+    <header>
+        <nav class="navbar navbar-custom navbar-expand-md">
+            <div class="container">
+                <a class="navbar-brand mr-1">
+                    <img src="https://brocku.ca/brand/wp-content/uploads/sites/sites/176/Brocku-logo-screen.png?x44039" width="125" height="70">
+                </a>
+            </div>
+        </nav>
+    </header>
+    <div class="row align-items-center h-75 container-fluid">
+        <div class="col-lg-4 col-md-6 col-sm-6 mx-auto">
             <div class="card">
-                <div class="card-header text-center">
-                    Login
+                <div class="h1 card-header text-center">
+                    Course of Action Dashboard
                 </div>
                 <div class="card-body">
                     @using (Html.BeginForm("LoginPage", "Home", FormMethod.Post))
@@ -44,6 +42,11 @@
         </div>
     </div>
 </div>
+<style>
+    body, html {
+        height: 100%;
+    }
+</style>
 <script>
     function invalidLogin() {
         Swal.fire({
@@ -54,7 +57,7 @@
     }
 
     var urlParam = new URLSearchParams(window.location.search);
-    if (urlParam.has('error') && urlParam.get('error')=='login') {
+    if (urlParam.has('error') && urlParam.get('error') == 'login') {
         invalidLogin();
     }
 </script>
