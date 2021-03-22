@@ -1,13 +1,12 @@
 ﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 // for details on configuring this project to bundle and minify static web assets.
 
-
 //  updateProgress method: when changes are made to students schedule, use updateProgress
 //  to update the credit counter and progress bar
 
 function updateProgress() {
     //Required totals **these can be hardcoded if only relevant to computer science students
-    var totOverall = 40; 
+    var totOverall = 40;
     var totMajor = 32;
     var totMinor = 6;
     var totSocSci = 1;

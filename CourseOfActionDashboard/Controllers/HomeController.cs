@@ -24,9 +24,12 @@ namespace CourseOfActionDashboard.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(Student student)
         {
-            return View();
+
+            ViewData["Student"] = student;
+            student.FirstName = "David"; //test data
+            return View(student);
         }
 
         public IActionResult Privacy()
@@ -53,7 +56,7 @@ namespace CourseOfActionDashboard.Controllers
                     HttpContext.Session.SetString("FullName", data.FirstOrDefault().FirstName + " " + data.FirstOrDefault().LastName);
                     HttpContext.Session.SetString("Email", data.FirstOrDefault().Email);
                     HttpContext.Session.SetInt32("Id", data.FirstOrDefault().Id);
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", new { Student = _db.Students.Where(s => s.Email.Equals(email) && s.Password.Equals(password)) }); //passing student as object to index page
                 }
                 else
                 {

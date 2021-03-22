@@ -1,7 +1,12 @@
-﻿@{
+﻿@using  CourseOfActionDashboard.Models
+@Model CourseOfActionDashboard.Models.Student;
+
+@{
+    var student = ViewData["Student"] as Student;
     ViewData["Title"] = "Home Page";
     @using Microsoft.AspNetCore.Http;
 }
+
 <header>
     <nav class="navbar navbar-custom navbar-expand-md navbar-toggleable-sm bg-faded box-shadow mb-3">
         <div class="container">
@@ -72,6 +77,7 @@
                                             <tc><td>Completed</td></tc>
                                         </tr>
                                         <tr>
+                                            
                                             <tc><td style="">Overall</td></tc>
                                             <tc><td id="overPlanned" style="">0/0</td></tc>
                                             <tc><td id="overCompleted" style="">0/0</td></tc>
