@@ -10,6 +10,8 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Routing;
 
 namespace CourseOfActionDashboard.Controllers
 { 
@@ -26,10 +28,8 @@ namespace CourseOfActionDashboard.Controllers
 
         public IActionResult Index(Student student)
         {
-
             ViewData["Student"] = student;
-            student.FirstName = "David"; //test data
-            return View(student);
+            return View("Index",student);
         }
 
         public IActionResult Privacy()
@@ -52,14 +52,12 @@ namespace CourseOfActionDashboard.Controllers
                 var data = _db.Students.Where(s => s.Email.Equals(email) && s.Password.Equals(password)).ToList();
                 if (data.Count() > 0)
                 {
-                    //add session                   
-                    HttpContext.Session.SetString("FullName", data.FirstOrDefault().FirstName + " " + data.FirstOrDefault().LastName);
-                    HttpContext.Session.SetString("Email", data.FirstOrDefault().Email);
-                    HttpContext.Session.SetInt32("Id", data.FirstOrDefault().Id);
-                    return RedirectToAction("Index", new { Student = _db.Students.Where(s => s.Email.Equals(email) && s.Password.Equals(password)) }); //passing student as object to index page
+                    //Return to Index Page View with the student object that logged in
+                    return Index(_db.Students.Where(s => s.Email.Equals(email) && s.Password.Equals(password)).FirstOrDefault());
                 }
                 else
                 {
+                    //Failed login
                     ViewBag.error = "Login failed";
                     return RedirectToAction("LoginPage", "Home", new { error = "login" });
                 }
