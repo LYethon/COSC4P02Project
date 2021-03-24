@@ -140,249 +140,210 @@
                 </div>
             </div>
 
-
             <div class="row">
                 <div class="container-fluid col-8">
-                    <!--Bar: Course Planner-->
-                    <div class="row" style="margin-top: 10px">
-                        <div class="col-8 cs_title">
-                            Course Scheduler
-                        </div>
-                        <div class="col-2 cs_baritem">
-                            <span>
-                                Add year
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-                                </svg>
-                            </span>
-                        </div>
-                        <div class="col-2 cs_baritem">
-                            <span>
-                                Export
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share" viewBox="0 0 16 16">
-                                    <path d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z" />
-                                </svg>
-                            </span>
-                        </div>
-                    </div>
-                    <!--Course Planner-->
-                    <div class="row" style="margin-top: 10px; margin-bottom: 10px; background-color:#E4F5FC; padding-top: 15px; padding-bottom: 15px">
-                        <div class="col-6 col-sm-3 year_container">
-                            <div class="row year">Year 1</div>
-                            <div class="ul_container" style="height: 100%;">
-                                <ul class="ul_format">
-                                    <li class="row credit_box draggable" draggable="true">
-                                        <div class="col-10">COSC 1P02</div>
-                                        <span class="col-1 remove_btn" onclick="remove(this)">x</span>
-                                    </li>
-                                    <li class="row credit_box draggable" draggable="true">
-                                        <div class="col-10">COSC 1P03</div>
-                                        <span class="col-1 remove_btn" onclick="remove(this)">x</span>
-                                    </li>
-                                    <li class="row credit_box draggable" draggable="true">
-                                        <div class="col-10">COSC 1P50</div>
-                                        <span class="col-1 remove_btn" onclick="remove(this)">x</span>
-                                    </li>
-                                    <li class="row credit_box draggable" draggable="true">
-                                        <div class="col-10">MATH 1P66</div>
-                                        <span class="col-1 remove_btn" onclick="remove(this)">x</span>
-                                    </li>
-                                    <li class="row credit_box draggable" draggable="true">
-                                        <div class="col-10">MATH 1P67</div>
-                                        <span class="col-1 remove_btn" onclick="remove(this)">x</span>
-                                    </li>
-                                    <li class="row credit_box draggable" draggable="true">
-                                        <div class="col-10">1 Humanities Context Credit</div>
-                                        <span class="col-1 remove_btn" onclick="remove(this)">x</span>
-                                    </li>
-                                    <li class="row credit_box draggable" draggable="true">
-                                        <div class="col-10">1 Social Science Context Credit</div>
-                                        <span class="col-1 remove_btn" onclick="remove(this)">x</span>
-                                    </li>
-                                    <li class="row credit_box draggable" draggable="true">
-                                        <div class="col-10">0.5 Elective Credits</div>
-                                        <span class="col-1 remove_btn" onclick="remove(this)">x</span>
-                                    </li>
-                                </ul>
+                    <nav class="navbar navbar-expand-lg navbar-light bg-transparent">
+                        <a class="navbar-brand">Course Scheduler</a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                            <div class="navbar-nav">
+                                <form class="form-inline">
+                                    <button type="button" class="btn btn-outline-primary add_year mr-2" onclick="addYear()">Add Year</button>
+                                    <button type="button" class="btn btn-outline-secondary export" onclick="exportSchedule()">Export</button>
+                                </form>
                             </div>
                         </div>
-                        <div class="col-6 col-sm-3 year_container">
-                            <div class="row year">Year 2</div>
-                            <div class="ul_container" style="height: 100%;">
-                                <ul class="ul_format">
-                                    <li class="row credit_box draggable" draggable="true">
-                                        <div class="col-10">COSC 2P03</div>
-                                        <span class="col-1 remove_btn" onclick="remove(this)">x</span>
-                                    </li>
-                                    <li class="row credit_box draggable" draggable="true">
-                                        <div class="col-10">COSC 2P05</div>
-                                        <span class="col-1 remove_btn" onclick="remove(this)">x</span>
-                                    </li>
-                                    <li class="row credit_box draggable" draggable="true">
-                                        <div class="col-10">COSC 2P12</div>
-                                        <span class="col-1 remove_btn" onclick="remove(this)">x</span>
-                                    </li>
-                                    <li class="row credit_box draggable" draggable="true">
-                                        <div class="col-10">MATH 1P12</div>
-                                        <span class="col-1 remove_btn" onclick="remove(this)">x</span>
-                                    </li>
-                                    <li class="row credit_box draggable" draggable="true">
-                                        <div class="col-10">MATH 1P98</div>
-                                        <span class="col-1 remove_btn" onclick="remove(this)">x</span>
-                                    </li>
-                                    <li class="row credit_box draggable" draggable="true">
-                                        <div class="col-10">COSC 2P13</div>
-                                        <span class="col-1 remove_btn" onclick="remove(this)">x</span>
-                                    </li>
-                                    <li class="row credit_box draggable" draggable="true">
-                                        <div class="col-10">2 Elective Credits</div>
-                                        <span class="col-1 remove_btn" onclick="remove(this)">x</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-6 col-sm-3 year_container">
-                            <div class="row year">Year 3</div>
-                            <div class="ul_container" style="height: 100%;">
-                                <ul class="ul_container ul_format">
-                                    <li class="row credit_box draggable" draggable="true">
-                                        <div class="col-10">COSC 3P03</div>
-                                        <span class="col-1 remove_btn" onclick="remove(this)">x</span>
-                                    </li>
-                                    <li class="row credit_box draggable" draggable="true">
-                                        <div class="col-10">COSC 3P32</div>
-                                        <span class="col-1 remove_btn" onclick="remove(this)">x</span>
-                                    </li>
-                                    <li class="row credit_box draggable" draggable="true">
-                                        <div class="col-10">COSC 3P71</div>
-                                        <span class="col-1 remove_btn" onclick="remove(this)">x</span>
-                                    </li>
-                                    <li class="row credit_box draggable" draggable="true">
-                                        <div class="col-10">MATH 1P05</div>
-                                        <span class="col-1 remove_btn" onclick="remove(this)">x</span>
-                                    </li>
-                                    <li class="row credit_box draggable" draggable="true">
-                                        <div class="col-10">MATH 1P06</div>
-                                        <span class="col-1 remove_btn" onclick="remove(this)">x</span>
-                                    </li>
-                                    <li class="row credit_box draggable" draggable="true">
-                                        <div class="col-10">1 COSC Credit</div>
-                                        <span class="col-1 remove_btn" onclick="remove(this)">x</span>
-                                    </li>
-                                    <li class="row credit_box draggable" draggable="true">
-                                        <div class="col-10">1.5 Elective Credits</div>
-                                        <span class="col-1 remove_btn" onclick="remove(this)">x</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-6 col-sm-3 year_container">
-                            <div class="row year">Year 4</div>
-                            <div class="ul_container" style="height: 100%;">
-                                <ul class="ul_format">
-                                    <li class="row credit_box draggable" draggable="true">
-                                        <div class="col-10">COSC 4P01</div>
-                                        <span class="col-1 remove_btn" onclick="remove(this)">x</span>
-                                    </li>
-                                    <li class="row credit_box draggable" draggable="true">
-                                        <div class="col-10">COSC 4P02</div>
-                                        <span class="col-1 remove_btn" onclick="remove(this)">x</span>
-                                    </li>
-                                    <li class="row credit_box draggable" draggable="true">
-                                        <div class="col-10">COSC 4P61</div>
-                                        <span class="col-1 remove_btn" onclick="remove(this)">x</span>
-                                    </li>
-                                    <li class="row credit_box draggable" draggable="true">
-                                        <div class="col-10">2 COSC Credits</div>
-                                        <span class="col-1 remove_btn" onclick="remove(this)">x</span>
-                                    </li>
-                                    <li class="row credit_box draggable" draggable="true">
-                                        <div class="col-10">1.5 Elective Credits</div>
-                                        <span class="col-1 remove_btn" onclick="remove(this)">x</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                    </nav>
 
+                    <!--Bar: Course Planner-->
+                    <!--<div class="row" style="margin-top: 10px">
+            <div class="col-8 cs_title">
+                Course Scheduler
+            </div>
+            <div class="col-2 cs_baritem">
+                <span>
+                    Add year
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                    </svg>
+                </span>
+            </div>
+            <div class="col-2 cs_baritem">
+                <span>
+                    Export
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share" viewBox="0 0 16 16">
+                        <path d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z" />
+                    </svg>
+                </span>
+            </div>
+        </div> -->
+                    <!--Course Planner-->
+                    <div style="margin: 10px 0px; background-color: #E4F5FC; padding: 15px 0px;">
+                        <div id="course_planner" style="overflow-x: auto; white-space: nowrap;">
+                            <div class="col-6 col-sm-3 year_container" style="display: inline-block;">
+                                <div class="row year mb-2">Year 1</div>
+                                <div style="height: 100%;">
+                                    <ul id="ul_year" class="ul_container ul_format" style="min-height: 30px;">
+                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
+                                            <div class="col-10">COSC 1P02</div>
+                                            <span class="col-1 remove_btn" onclick="remove(this)">x</span>
+                                        </li>
+                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
+                                            <div class="col-10">COSC 1P03</div>
+                                            <span class="col-1 remove_btn" onclick="remove(this)">x</span>
+                                        </li>
+                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
+                                            <div class="col-10">COSC 1P50</div>
+                                            <span class="col-1 remove_btn" onclick="remove(this)">x</span>
+                                        </li>
+                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
+                                            <div class="col-10">MATH 1P66</div>
+                                            <span class="col-1 remove_btn" onclick="remove(this)">x</span>
+                                        </li>
+                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
+                                            <div class="col-10">MATH 1P67</div>
+                                            <span class="col-1 remove_btn" onclick="remove(this)">x</span>
+                                        </li>
+                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
+                                            <div class="col-10">1 Humanities Context Credit</div>
+                                            <span class="col-1 remove_btn" onclick="remove(this)">x</span>
+                                        </li>
+                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
+                                            <div class="col-10">1 Social Science Context Credit</div>
+                                            <span class="col-1 remove_btn" onclick="remove(this)">x</span>
+                                        </li>
+                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
+                                            <div class="col-10">0.5 Elective Credits</div>
+                                            <span class="col-1 remove_btn" onclick="remove(this)">x</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-6 col-sm-3 year_container" style=" display: inline-block;">
+                                <div class="row year mb-2">Year 2</div>
+                                <div style="height: 100%;">
+                                    <ul class="ul_container ul_format" style="min-height: 30px;">
+                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
+                                            <div class="col-10">COSC 2P03</div>
+                                            <span class="col-1 remove_btn" onclick="remove(this)">x</span>
+                                        </li>
+                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
+                                            <div class="col-10">COSC 2P05</div>
+                                            <span class="col-1 remove_btn" onclick="remove(this)">x</span>
+                                        </li>
+                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
+                                            <div class="col-10">COSC 2P12</div>
+                                            <span class="col-1 remove_btn" onclick="remove(this)">x</span>
+                                        </li>
+                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
+                                            <div class="col-10">MATH 1P12</div>
+                                            <span class="col-1 remove_btn" onclick="remove(this)">x</span>
+                                        </li>
+                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
+                                            <div class="col-10">MATH 1P98</div>
+                                            <span class="col-1 remove_btn" onclick="remove(this)">x</span>
+                                        </li>
+                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
+                                            <div class="col-10">COSC 2P13</div>
+                                            <span class="col-1 remove_btn" onclick="remove(this)">x</span>
+                                        </li>
+                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
+                                            <div class="col-10">2 Elective Credits</div>
+                                            <span class="col-1 remove_btn" onclick="remove(this)">x</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-6 col-sm-3 year_container" style=" display: inline-block;">
+                                <div class="row year mb-2">Year 3</div>
+                                <div style="height: 100%;">
+                                    <ul class="ul_container ul_format" style="min-height: 30px;">
+                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
+                                            <div class="col-10">COSC 3P03</div>
+                                            <span class="col-1 remove_btn" onclick="remove(this)">x</span>
+                                        </li>
+                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
+                                            <div class="col-10">COSC 3P32</div>
+                                            <span class="col-1 remove_btn" onclick="remove(this)">x</span>
+                                        </li>
+                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
+                                            <div class="col-10">COSC 3P71</div>
+                                            <span class="col-1 remove_btn" onclick="remove(this)">x</span>
+                                        </li>
+                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
+                                            <div class="col-10">MATH 1P05</div>
+                                            <span class="col-1 remove_btn" onclick="remove(this)">x</span>
+                                        </li>
+                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
+                                            <div class="col-10">MATH 1P06</div>
+                                            <span class="col-1 remove_btn" onclick="remove(this)">x</span>
+                                        </li>
+                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
+                                            <div class="col-10">1 COSC Credit</div>
+                                            <span class="col-1 remove_btn" onclick="remove(this)">x</span>
+                                        </li>
+                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
+                                            <div class="col-10">1.5 Elective Credits</div>
+                                            <span class="col-1 remove_btn" onclick="remove(this)">x</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-6 col-sm-3 year_container" style=" display: inline-block;">
+                                <div class="row year mb-2">Year 4</div>
+                                <div style="height: 100%;">
+                                    <ul class="ul_container ul_format" style="min-height: 30px;">
+                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
+                                            <div class="col-10">COSC 4P01</div>
+                                            <span class="col-1 remove_btn" onclick="remove(this)">x</span>
+                                        </li>
+                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
+                                            <div class="col-10">COSC 4P02</div>
+                                            <span class="col-1 remove_btn" onclick="remove(this)">x</span>
+                                        </li>
+                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
+                                            <div class="col-10">COSC 4P61</div>
+                                            <span class="col-1 remove_btn" onclick="remove(this)">x</span>
+                                        </li>
+                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
+                                            <div class="col-10">2 COSC Credits</div>
+                                            <span class="col-1 remove_btn" onclick="remove(this)">x</span>
+                                        </li>
+                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
+                                            <div class="col-10">1.5 Elective Credits</div>
+                                            <span class="col-1 remove_btn" onclick="remove(this)">x</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="container-fluid col-4 overflow-auto" style="background-color:grey">
+
+
+              
+                <div class="container-fluid col-4 overflow-auto" style="background-color:darkseagreen">
                     <!--Course List-->
                     <input type="text" id="myInput" onkeyup="filterFunction()" placeholder="Search for courses..">
-
                     <ul id="myUL" style="overflow-y:scroll; max-height: 400px">
-                        <li class="list-group-item list-group-item-success"><a herf="#">COSC 1P02 (Introduction to Computer Science)</a></li>
-                        <li class="list-group-item list-group-item-success"><a herf="#">COSC 1P03 (Introduction to Data Structures)</a></li>
-                        <li class="list-group-item list-group-item-action"><a herf="#">COSC 1P50 (Integrity and Literacy in the Information Age)</a></li>
-                        <li class="list-group-item list-group-item-success"><a herf="#">COSC 2P03 (Advanced Data Structures)</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 2P05 (Programming Languages)</a></li>
-                        <li class="list-group-item list-group-item-warning"><a herf="#">COSC 2P12 (Introduction to Computer Architecture)</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 2P13 (Computer Systems)</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 2P89</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 2P95</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 2P96</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 3P03</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 3P32</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 3P71</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 3P91</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 3P93</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 3P94</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 3P97</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 3P98</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 3P99</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 3Q95</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 3V90-3V99</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 3F90</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 4P01</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 4P02</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 4P03</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 4P13</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 4P14</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 4P41</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 4P42</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 4P61</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 4P76</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 4P78</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 4P80</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 4P81</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 4P82</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 4P98</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 4V77</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 4V80</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 4V96</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 0N01 (Co-op Work Placement)</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 0N02 (Co-op Work Placement)</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 0N03 (Co-op Work Placement)</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 0N04 (Co-op Work Placement)</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 0N05 (Co-op Work Placement)</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 2C01 (Co-op Reflective Learning and Integration)</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 2C02 (Co-op Reflective Learning and Integration)</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 2C03 (Co-op Reflective Learning and Integration)</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 2C04 (Co-op Reflective Learning and Integration)</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 2C05 (Co-op Reflective Learning and Integration)</a></li>
-                        <li class="list-group-item list-group-item-dark"><a herf="#">COSC 2N90 (Internship)</a></li>
-
+                        <li class="list-group-item list-group-item-success draggable course_list" draggable="true" >
+                            <div>COSC 1P02 (Introduction to Computer Science)</div>
+                        </li>
+                        <li class="list-group-item list-group-item-success draggable course_list" draggable="true" >
+                            <div>COSC 1P03 (Introduction to Data Structures)</div>
+                        </li>
+                        <li class="list-group-item list-group-item-action draggable course_list" draggable="true" >
+                            <div>COSC 1P50 (Integrity and Literacy in the Information Age)</div>
+                        </li>
+                      @*  <li class="list-group-item list-group-item-success draggable"><div>COSC 2P03 (Advanced Data Structures)</div></li>
+                        <li class="list-group-item list-group-item-dark draggable"><div>COSC 2P05 (Programming Languages)</div></li>
+                        <li class="list-group-item list-group-item-warning draggable"><div>COSC 2P12 (Introduction to Computer Architecture)</div></li>
+                        <li class="list-group-item list-group-item-dark draggable "><div>COSC 2P13 (Computer Systems)</div></li>*@
                     </ul>
-                    <script>
-                        function filterFunction() {
-                            var input, filter, ul, li, a, i, txtValue;
-                            input = document.getElementById("myInput");
-                            filter = input.value.toUpperCase();
-                            ul = document.getElementById("myUL");
-                            li = ul.getElementsByTagName("li");
-                            for (i = 0; i < li.length; i++) {
-                                a = li[i].getElementsByTagName("a")[0];
-                                txtValue = a.textContent || a.innerText;
-                                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                                    li[i].style.display = "";
-                                } else {
-                                    li[i].style.display = "none";
-                                }
-                            }
-                        }
-                    </script>
                 </div>
             </div>
 

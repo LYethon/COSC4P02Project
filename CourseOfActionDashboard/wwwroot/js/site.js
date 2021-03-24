@@ -65,31 +65,48 @@ function updateProgress() {
 
 // Drag and drop: ______________________________________________________________________________
 
-const draggables = document.querySelectorAll('.draggable')
-const containers = document.querySelectorAll('.ul_container')
+drag_and_drop();
 
-draggables.forEach(draggable => {
-    draggable.addEventListener('dragstart', () => {
-        draggable.classList.add('dragging')
+function drag_and_drop() {
+    const draggables = document.querySelectorAll('.draggable')
+    const containers = document.querySelectorAll('.ul_container')
+
+    draggables.forEach(draggable => {
+        draggable.addEventListener('dragstart', () => {
+            draggable.classList.add('dragging')
+        })
+        draggable.addEventListener('dragend', () => {
+            draggable.classList.remove('dragging')
+        })
     })
 
-    draggable.addEventListener('dragend', () => {
-        draggable.classList.remove('dragging')
-    })
-})
+    containers.forEach(container => {
+        container.addEventListener('dragover', e => {
+            e.preventDefault()
+            const afterElement = getDragAfterElement(container, e.clientY)
+            const draggable = document.querySelector('.dragging')
+            if (afterElement == null && !draggable.classList.contains('course_list')) {
+                container.appendChild(draggable)
+            } else if (!draggable.classList.contains('course_list')) {
+                container.insertBefore(draggable, afterElement)
+            }
+        })
+        container.addEventListener('drop', e => {
+            e.preventDefault();
+            const afterElement = getDragAfterElement(container, e.clientY)
+            const draggable = document.querySelector('.dragging')
+            const droppable = convertToCSObj(draggable);
 
-containers.forEach(container => {
-    container.addEventListener('dragover', e => {
-        e.preventDefault()
-        const afterElement = getDragAfterElement(container, e.clientY)
-        const draggable = document.querySelector('.dragging')
-        if (afterElement == null) {
-            container.appendChild(draggable)
-        } else {
-            container.insertBefore(draggable, afterElement)
-        }
+            if (afterElement == null && draggable.classList.contains('course_list')) {
+                container.appendChild(droppable)
+            } else if (draggable.classList.contains('course_list')) {
+                    container.insertBefore(droppable, afterElement)
+            }
+        })
     })
-})
+}
+
+
 
 function getDragAfterElement(container, y) {
     const draggableElements = [...container.querySelectorAll('.draggable:not(.dragging)')]
@@ -114,3 +131,100 @@ function remove(el) {
     parent.parentNode.removeChild(parent);
 }
 
+
+//Add year button ___________________________________________________________________________
+
+function addYear() {
+    // create an empty newYear element and its inner empty elements
+    const newYearDiv = document.createElement("div");
+    const newTitleDiv = document.createElement("div");
+    const newUlDiv = document.createElement("div");
+    const newUl = document.createElement("ul");
+
+    // attach the styles for the newUl
+    newUl.classList.add('ul_container', 'ul_format');
+    newUl.style.minHeight = "50px";
+
+    // add newUl and attach the styles for the newUlDiv
+    newUlDiv.appendChild(newUl); 
+    newUlDiv.style.height = "100%";
+
+    // attach the styles and content for the newTitleDiv
+    const newTitle = document.createTextNode("Year 5"); //CORRECT -> DON'T MAKE IT STATIC
+    newTitleDiv.appendChild(newTitle); 
+    newTitleDiv.classList.add('row', 'year', 'mb-2');
+
+    // add newUlDiv and newTitleDiv and attach the styles and content for the newYearDiv
+    newYearDiv.appendChild(newTitleDiv); 
+    newYearDiv.appendChild(newUlDiv); 
+    newYearDiv.classList.add('col-6', 'col-sm-3', 'year_container');
+    newYearDiv.style.display = "inline-block";
+
+    // add the new element to the course planner container
+    document.getElementById("course_planner").appendChild(newYearDiv);
+
+    drag_and_drop(); //update the drag and droppable lists
+}
+
+
+//Export schedule button ___________________________________________________________________________
+
+function exportSchedule() {
+
+}
+
+
+
+// course list filter ________________________________________
+function filterFunction() {
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    ul = document.getElementById("myUL");
+    li = ul.getElementsByTagName("li");
+    for (i = 0; i < li.length; i++) {
+        a = li[i].getElementsByTagName("div")[0];
+        txtValue = a.textContent || a.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "";
+        } else {
+            li[i].style.display = "none";
+        }
+    }
+}
+
+
+
+function convertToCSObj(draggable) {
+
+    // create the empty containers
+    const newLi = document.createElement("li");
+    const newTitle = document.createElement("div");
+    const newBtn = document.createElement("span");
+
+    // attach the styles for the newBtn
+    newBtn.classList.add('col-1', 'remove_btn');
+    const x = document.createTextNode("x");
+    newBtn.appendChild(x);
+
+    // attach the styles and content to the newTitle 
+    newTitle.classList.add('col-10');
+
+    const course_name = draggable.innerText;
+/*    console.log(course_name);
+    str = "hello";
+    console.log(str.substr(1,2));*/
+
+    const title = document.createTextNode(course_name);
+    newTitle.appendChild(title);
+
+    // attach the styles for the newLi
+    newLi.classList.add('row', 'credit_box', 'draggable');
+    newLi.style.whiteSpace = "normal";
+
+    // add the components to newLi
+    newLi.appendChild(newTitle);
+    newLi.appendChild(newBtn);
+
+    return newLi;
+}

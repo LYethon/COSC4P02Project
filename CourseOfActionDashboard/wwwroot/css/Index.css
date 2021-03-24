@@ -7,18 +7,26 @@
 .cs_baritem {
     font-size: 90%;
     max-width: 110px;
-    margin-right: -10px;
     margin-top: 5px;
-    right: -60px;
     cursor: pointer;
 }
+
+.cs_left {
+    margin-right: 10px;
+}
+
+.cs_right {
+    margin-right: -10px;
+    right: -60px;
+}
+
 .cs_baritem:hover {
     transition: 0.3s;
     color: #3053a1;
 }
 
 .year {
-    margin: auto;
+    margin:auto;
     color: #3053a1;
 }
 
@@ -56,6 +64,8 @@
     margin-left: -5px;
     border: 1px solid grey;
     border-radius: 5px;
+
+    white-space: !important normal;
 }
 
 /* The CS course/credit list formatting */
@@ -86,6 +96,9 @@
     cursor: grabbing;
     cursor: -moz-grabbing;
     cursor: -webkit-grabbing;
+}
+
+.add_year {
 }
 
 body {
