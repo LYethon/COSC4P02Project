@@ -3,7 +3,7 @@
     @model Student
     ViewData["Title"] = "LoginPage";
     ViewBag.Title = "LoginPage";
-}<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+}
 <div class="background">
     <header>
         <nav class="navbar navbar-custom navbar-expand-md">
@@ -24,6 +24,9 @@
                     @using (Html.BeginForm("LoginPage", "Home", FormMethod.Post))
                     {
                         @Html.AntiForgeryToken()
+                        <div class="form-group" id="invalid" style="display: none; color: #dc3545;">
+                            Invalid username or password.
+                        </div>
                         <div class="form-group">
                             @Html.LabelFor(m => m.Email)
                             @Html.TextBoxFor(m => m.Email, "", new { @class = "form-control", @placeholder = "Email" })
@@ -48,17 +51,20 @@
     }
 </style>
 <script>
-    function invalidLogin() {
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'Invalid Email or Password',
-        });
-    }
 
     var urlParam = new URLSearchParams(window.location.search);
     if (urlParam.has('error') && urlParam.get('error') == 'login') {
         invalidLogin();
+        window.history.replaceState(null, null, window.location.pathname);
+    }
+
+    function invalidLogin() {
+        var x = document.getElementById("invalid");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
     }
 </script>
 
