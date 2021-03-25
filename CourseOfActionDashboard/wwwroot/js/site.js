@@ -101,15 +101,18 @@ function drag_and_drop() {
                 if (draggable.classList.contains('course_list')) {
                     const droppable = convertToCSObj(draggable);
                     container.appendChild(droppable);
-
+                } else {
+                    container.appendChild(draggable);
                 }
-            } else { 
+            } else {  //insert element
                 if (draggable.classList.contains('course_list')) {
                     const droppable = convertToCSObj(draggable);
                     container.insertBefore(droppable, afterElement);
+                } else {
+                    container.insertBefore(draggable, afterElement);
                 }
             }
-            addDragTag(); 
+            addDragTag();
             colorCourseList();
         })
     })
@@ -259,7 +262,6 @@ function colorCourseList() {
     }
 }
 
-
 function addDragTag() {
     const draggables = document.querySelectorAll('.draggable')
 
@@ -273,5 +275,3 @@ function addDragTag() {
     })
 
 }
-
-// JavaScript source code
