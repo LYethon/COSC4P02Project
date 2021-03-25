@@ -98,12 +98,12 @@ function drag_and_drop() {
             const draggable = document.querySelector('.dragging')
 
             if (afterElement == null) {
-                if (draggable.classList.contain('course_list')) {
+                if (draggable.classList.contains('course_list')) {
                     const droppable = convertToCSObj(draggable);
                     container.appendChild(droppable);
 
                 }
-            } else {  //insert element
+            } else { 
                 if (draggable.classList.contains('course_list')) {
                     const droppable = convertToCSObj(draggable);
                     container.insertBefore(droppable, afterElement);
@@ -113,7 +113,6 @@ function drag_and_drop() {
             colorCourseList();
         })
     })
-   // drag_and_drop();
 }
 
 
