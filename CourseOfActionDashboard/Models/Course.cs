@@ -12,20 +12,25 @@ namespace CourseOfActionDashboard.Models
     {
         [Key, Column(Order = 1)]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        public int CID { get; set; }
+
+        public string Name { get; set; }
+
         public string Code { get; set; }
 
-        public string Title { get; set; }
+        public string Subject { get; set; }
+
+        public string AlternativeSubject1 { get; set; }
+
+        public string AlternativeSubject2 { get; set; }
 
         public string Description { get; set; }
 
         public double CreditValue { get; set; }
 
-        public string SubjectCode1 { get; set; }
+        public List<int> Prerequisites { get; set; }
 
-        public string SubjectCode2 { get; set; }
+        public string Context { get; set; }
 
-        public string Notes { get; set; }
-
-        public List<Course> Prerequisites { get; set; }
     }
 }

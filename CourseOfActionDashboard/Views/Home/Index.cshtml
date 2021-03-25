@@ -4,6 +4,8 @@
 @{
     ViewData["Title"] = "Home Page";
     var student = ViewData["Student"] as Student;
+    var schedule = ViewData["Schedule"] as Schedule;
+    //var courses = ViewData["Courses"] as List<Course>;
 }
 
 <header>
@@ -12,7 +14,7 @@
             <a class="navbar-brand">
                 <img src="https://brocku.ca/brand/wp-content/uploads/sites/sites/176/Brocku-logo-screen.png?x44039" width="125" height="70">
             </a>
-            <a class="navbar-brand text-white font-weight-bold" asp-area="" asp-controller="Home" asp-action="Index"> CourseOfActionDashboard</a>
+            <a class="navbar-brand text-white font-weight-bold" > CourseOfActionDashboard</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -34,6 +36,7 @@
                 {
                     <h1>Welcome @student.FullName()</h1>
                     <h1>Email: @student.Email</h1>
+                    <h1>Schedule Notes: @schedule.Courses[0][0].Description</h1>
                 }
             }
             <div class="row">

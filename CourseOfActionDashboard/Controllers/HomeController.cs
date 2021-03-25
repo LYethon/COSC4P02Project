@@ -18,6 +18,7 @@ namespace CourseOfActionDashboard.Controllers
     public class HomeController : Controller
     {
         private DB_Entities _db = new DB_Entities();
+        private DB_Courses _dbCourses = new DB_Courses();
 
         private readonly ILogger<HomeController> _logger;
 
@@ -28,7 +29,11 @@ namespace CourseOfActionDashboard.Controllers
 
         public IActionResult Index(Student student)
         {
+            //List<Course> courses = _dbCourses.courseTable.ToList();
             ViewData["Student"] = student;
+            Schedule schedule= JsonConvert.DeserializeObject<Schedule>(student.Schedule);
+            ViewData["Schedule"] = schedule;
+            //ViewData["Courses"] = courses;
             return View("Index",student);
         }
 
@@ -49,7 +54,7 @@ namespace CourseOfActionDashboard.Controllers
             if (ModelState.IsValid)
             {
                 //var f_password = GetMD5(password);
-                var data = _db.Students.Where(s => s.Email.Equals(email) && s.Password.Equals(password)).ToList();
+                var data = _db.Students.Where(s => s.Email.Equals(email) && s.Password.Equals(password)).ToList();               
                 if (data.Count() > 0)
                 {
                     //Return to Index Page View with the student object that logged in
