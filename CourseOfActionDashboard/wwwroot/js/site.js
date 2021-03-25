@@ -66,6 +66,7 @@ function updateProgress() {
 // Drag and drop: ______________________________________________________________________________
 
 drag_and_drop();
+colorCourseList();
 
 function drag_and_drop() {
     const draggables = document.querySelectorAll('.draggable')
@@ -95,15 +96,24 @@ function drag_and_drop() {
             e.preventDefault();
             const afterElement = getDragAfterElement(container, e.clientY)
             const draggable = document.querySelector('.dragging')
-            const droppable = convertToCSObj(draggable);
 
-            if (afterElement == null && draggable.classList.contains('course_list')) {
-                container.appendChild(droppable)
-            } else if (draggable.classList.contains('course_list')) {
-                    container.insertBefore(droppable, afterElement)
+            if (afterElement == null) {
+                if (draggable.classList.contain('course_list')) {
+                    const droppable = convertToCSObj(draggable);
+                    container.appendChild(droppable);
+
+                }
+            } else {  //insert element
+                if (draggable.classList.contains('course_list')) {
+                    const droppable = convertToCSObj(draggable);
+                    container.insertBefore(droppable, afterElement);
+                }
             }
+            addDragTag(); 
+            colorCourseList();
         })
     })
+   // drag_and_drop();
 }
 
 
@@ -129,41 +139,49 @@ function remove(el) {
     var child = el;
     var parent = child.parentNode;
     parent.parentNode.removeChild(parent);
+    colorCourseList();
 }
 
 
 //Add year button ___________________________________________________________________________
 
+numYears = 4;    //CHANGE LATER : SHOULD GET STUDENT'S TOTAL NUMBER OF YEARS FROM DB
+
 function addYear() {
-    // create an empty newYear element and its inner empty elements
-    const newYearDiv = document.createElement("div");
-    const newTitleDiv = document.createElement("div");
-    const newUlDiv = document.createElement("div");
-    const newUl = document.createElement("ul");
 
-    // attach the styles for the newUl
-    newUl.classList.add('ul_container', 'ul_format');
-    newUl.style.minHeight = "50px";
+    numYears++;
+    if (numYears <= 10) {
+        // create an empty newYear element and its inner empty elements
+        const newYearDiv = document.createElement("div");
+        const newTitleDiv = document.createElement("div");
+        const newUlDiv = document.createElement("div");
+        const newUl = document.createElement("ul");
 
-    // add newUl and attach the styles for the newUlDiv
-    newUlDiv.appendChild(newUl); 
-    newUlDiv.style.height = "100%";
+        // attach the styles for the newUl
+        newUl.classList.add('ul_container', 'ul_format');
+        newUl.style.minHeight = "50px";
 
-    // attach the styles and content for the newTitleDiv
-    const newTitle = document.createTextNode("Year 5"); //CORRECT -> DON'T MAKE IT STATIC
-    newTitleDiv.appendChild(newTitle); 
-    newTitleDiv.classList.add('row', 'year', 'mb-2');
+        // add newUl and attach the styles for the newUlDiv
+        newUlDiv.appendChild(newUl);
+        newUlDiv.style.height = "100%";
 
-    // add newUlDiv and newTitleDiv and attach the styles and content for the newYearDiv
-    newYearDiv.appendChild(newTitleDiv); 
-    newYearDiv.appendChild(newUlDiv); 
-    newYearDiv.classList.add('col-6', 'col-sm-3', 'year_container');
-    newYearDiv.style.display = "inline-block";
+        // attach the styles and content for the newTitleDiv
+        const newTitle = document.createTextNode("Year "+ numYears); //CORRECT -> DON'T MAKE IT STATIC
+        newTitleDiv.appendChild(newTitle);
+        newTitleDiv.classList.add('row', 'year', 'mb-2');
 
-    // add the new element to the course planner container
-    document.getElementById("course_planner").appendChild(newYearDiv);
+        // add newUlDiv and newTitleDiv and attach the styles and content for the newYearDiv
+        newYearDiv.appendChild(newTitleDiv);
+        newYearDiv.appendChild(newUlDiv);
+        newYearDiv.classList.add('col-6', 'col-sm-3', 'year_container');
+        newYearDiv.style.display = "inline-block";
 
-    drag_and_drop(); //update the drag and droppable lists
+        // add the new element to the course planner container
+        document.getElementById("course_planner").appendChild(newYearDiv);
+
+        drag_and_drop(); //update the drag and droppable lists
+    }
+    //ELSE: SHOULD NOTIFY USER THAT THEY CANNOT ADD MORE THAN 10 YEARS
 }
 
 
@@ -172,7 +190,6 @@ function addYear() {
 function exportSchedule() {
 
 }
-
 
 
 // course list filter ________________________________________
@@ -194,7 +211,6 @@ function filterFunction() {
 }
 
 
-
 function convertToCSObj(draggable) {
 
     // create the empty containers
@@ -206,14 +222,12 @@ function convertToCSObj(draggable) {
     newBtn.classList.add('col-1', 'remove_btn');
     const x = document.createTextNode("x");
     newBtn.appendChild(x);
+    newBtn.setAttribute("onclick", "remove(this)");
 
     // attach the styles and content to the newTitle 
     newTitle.classList.add('col-10');
 
     const course_name = draggable.innerText;
-/*    console.log(course_name);
-    str = "hello";
-    console.log(str.substr(1,2));*/
 
     const title = document.createTextNode(course_name);
     newTitle.appendChild(title);
@@ -221,6 +235,7 @@ function convertToCSObj(draggable) {
     // attach the styles for the newLi
     newLi.classList.add('row', 'credit_box', 'draggable');
     newLi.style.whiteSpace = "normal";
+    newLi.draggable = true;
 
     // add the components to newLi
     newLi.appendChild(newTitle);
@@ -228,3 +243,36 @@ function convertToCSObj(draggable) {
 
     return newLi;
 }
+
+function colorCourseList() {
+    var courseList = document.querySelectorAll('.course_list');
+    var courseSchd = document.querySelectorAll('.col-10');
+    for (i = 0; i < courseList.length; i++) {
+        if (courseList.item(i).classList.contains('list-group-item-success')) {
+            courseList.item(i).classList.remove('list-group-item-success');
+        }
+        for (j = 0; j < courseSchd.length; j++) {
+            if (courseList.item(i).innerText == courseSchd.item(j).innerText) {
+                courseList.item(i).classList.add('list-group-item-success');
+                break;
+            }
+        }
+    }
+}
+
+
+function addDragTag() {
+    const draggables = document.querySelectorAll('.draggable')
+
+    draggables.forEach(draggable => {
+        draggable.addEventListener('dragstart', () => {
+            draggable.classList.add('dragging')
+        })
+        draggable.addEventListener('dragend', () => {
+            draggable.classList.remove('dragging')
+        })
+    })
+
+}
+
+// JavaScript source code
