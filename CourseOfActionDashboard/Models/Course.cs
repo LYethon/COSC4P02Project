@@ -28,7 +28,7 @@ namespace CourseOfActionDashboard.Models
 
         public double CreditValue { get; set; }
 
-        public List<int> Prerequisites { get; set; }
+        public string Prerequisites { get; set; }
 
         public string Context { get; set; }
 

@@ -29,11 +29,11 @@ namespace CourseOfActionDashboard.Controllers
 
         public IActionResult Index(Student student)
         {
-            //List<Course> courses = _dbCourses.courseTable.ToList();
+            List<Course> courses = _dbCourses.courseTable.ToList();
             ViewData["Student"] = student;
             Schedule schedule= JsonConvert.DeserializeObject<Schedule>(student.Schedule);
             ViewData["Schedule"] = schedule;
-            //ViewData["Courses"] = courses;
+            ViewData["Courses"] = courses;
             return View("Index",student);
         }
 
