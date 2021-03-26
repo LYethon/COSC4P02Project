@@ -31,8 +31,13 @@ namespace CourseOfActionDashboard.Controllers
         {
             List<Course> courses = _dbCourses.courseTable.ToList();
             ViewData["Student"] = student;
-            Schedule schedule= JsonConvert.DeserializeObject<Schedule>(student.Schedule);
-            ViewData["Schedule"] = schedule;
+            if (student.Schedule != null){
+                Schedule schedule = JsonConvert.DeserializeObject<Schedule>(student.Schedule);
+                ViewData["Schedule"] = schedule;
+            }
+            else{
+                ViewData["Schedule"] = null;
+            }
             ViewData["Courses"] = courses;
             return View("Index",student);
         }

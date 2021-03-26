@@ -36,16 +36,15 @@
                 {
                     <h1>Welcome @student.FullName()</h1>
                     <h1>Email: @student.Email</h1>
-                    <h1>Schedule Notes: @schedule.Courses[0][0].Description</h1>
-                    <h2>Name: @courses[0].Name</h2>
-                    <h2>@courses[0].Subject @courses[0].Code</h2>
-                    <h2>@courses[0].Description</h2>
-                    <h2>@courses[0].CreditValue.ToString("0.0")</h2>
-                    <h2>@courses[1].CreditValue.ToString("0.0")</h2>
-                    <h4>@courses[0].Context</h4>
-                    <h2>@courses[0].Prerequisites</h2>
                 }
-            }
+
+                /*for(int i=0; i<courses.Count; i++)
+                {
+                <p>@courses[i].Name</p>
+                }*/
+            }   
+            
+            
             <div class="row">
                 <div class="container-fluid" style="">
                     <!--Progress Bar Legend-->
@@ -448,5 +447,9 @@
             default:
                 return;
         }
+    }
+
+    function listCourses() {
+        
     }
 </script>
