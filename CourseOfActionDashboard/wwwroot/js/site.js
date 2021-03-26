@@ -63,7 +63,19 @@ function updateProgress() {
 }
 
 
+// Remove button: ______________________________________________________________________________
+
+function remove(el) {
+    var child = el;
+    var parent = child.parentNode;
+    parent.parentNode.removeChild(parent);
+    colorCourseList();
+}
+
+
 // Drag and drop: ______________________________________________________________________________
+
+maxYearCredits = 12; //CHANGE TO ACTUALLY CALC CREDIT WEIGHT AND ADD TO CONFIGURATIONS
 
 drag_and_drop();
 colorCourseList();
@@ -82,13 +94,18 @@ function drag_and_drop() {
     })
 
     containers.forEach(container => {
+
         container.addEventListener('dragover', e => {
             e.preventDefault()
             const afterElement = getDragAfterElement(container, e.clientY)
             const draggable = document.querySelector('.dragging')
-            if (afterElement == null && !draggable.classList.contains('course_list')) {
+
+            var numElements = container.childElementCount;
+            console.log(numElements);
+
+            if (afterElement == null && !draggable.classList.contains('course_list') && numElements < maxYearCredits) {
                 container.appendChild(draggable)
-            } else if (!draggable.classList.contains('course_list')) {
+            } else if (!draggable.classList.contains('course_list') && numElements < maxYearCredits) {
                 container.insertBefore(draggable, afterElement)
             }
         })
@@ -97,14 +114,17 @@ function drag_and_drop() {
             const afterElement = getDragAfterElement(container, e.clientY)
             const draggable = document.querySelector('.dragging')
 
-            if (afterElement == null) {
+            var numElements = container.childElementCount;
+            console.log(numElements);
+
+            if (afterElement == null && numElements < maxYearCredits) {
                 if (draggable.classList.contains('course_list')) {
                     const droppable = convertToCSObj(draggable);
                     container.appendChild(droppable);
                 } else {
                     container.appendChild(draggable);
                 }
-            } else {  //insert element
+            } else if (numElements < maxYearCredits) {  //insert element
                 if (draggable.classList.contains('course_list')) {
                     const droppable = convertToCSObj(draggable);
                     container.insertBefore(droppable, afterElement);
@@ -118,8 +138,7 @@ function drag_and_drop() {
     })
 }
 
-
-
+// getDragAfterElement: determines where the item should get dropped
 function getDragAfterElement(container, y) {
     const draggableElements = [...container.querySelectorAll('.draggable:not(.dragging)')]
 
@@ -134,25 +153,14 @@ function getDragAfterElement(container, y) {
     }, { offset: Number.NEGATIVE_INFINITY }).element
 }
 
-
-//Remove button ___________________________________________________________________________
-
-function remove(el) {
-    var child = el;
-    var parent = child.parentNode;
-    parent.parentNode.removeChild(parent);
-    colorCourseList();
-}
-
-
-//Add year button ___________________________________________________________________________
-
 numYears = 4;    //CHANGE LATER : SHOULD GET STUDENT'S TOTAL NUMBER OF YEARS FROM DB
 
+// addYear: adds a year container to the student's CP
 function addYear() {
 
-    numYears++;
-    if (numYears <= 10) {
+    if (numYears < 10) {
+        numYears++;
+
         // create an empty newYear element and its inner empty elements
         const newYearDiv = document.createElement("div");
         const newTitleDiv = document.createElement("div");
@@ -168,34 +176,70 @@ function addYear() {
         newUlDiv.style.height = "100%";
 
         // attach the styles and content for the newTitleDiv
-        const newTitle = document.createTextNode("Year "+ numYears); //CORRECT -> DON'T MAKE IT STATIC
+        const newTitle = document.createTextNode("Year "+ numYears);
         newTitleDiv.appendChild(newTitle);
         newTitleDiv.classList.add('row', 'year', 'mb-2');
 
         // add newUlDiv and newTitleDiv and attach the styles and content for the newYearDiv
         newYearDiv.appendChild(newTitleDiv);
         newYearDiv.appendChild(newUlDiv);
-        newYearDiv.classList.add('col-6', 'col-sm-3', 'year_container');
+        newYearDiv.classList.add('col-3', 'year_container', 'align-top', 'mt-2', 'mb-2', 'mr-2', 'pb-1');
         newYearDiv.style.display = "inline-block";
 
         // add the new element to the course planner container
         document.getElementById("course_planner").appendChild(newYearDiv);
 
         drag_and_drop(); //update the drag and droppable lists
+        if (numYears <= 5) {
+            update_menu_bar(); //update the CP menu bar 
+        }
     }
     //ELSE: SHOULD NOTIFY USER THAT THEY CANNOT ADD MORE THAN 10 YEARS
 }
 
 
-//Export schedule button ___________________________________________________________________________
+// update_menu_bar: updates the button bar (adds or removes the 'remove last year' button)
+function update_menu_bar() {
+    // create a new remove button
+    const newBtn = document.createElement("button");
+    const btnText = document.createTextNode("Remove Last Year");
+
+    newBtn.setAttribute("type", "button");
+    newBtn.setAttribute("onclick", "removeYear()");
+    newBtn.classList.add('btn', 'btn-outline-danger', 'add_year', 'mr-2');
+    newBtn.appendChild(btnText);
+    document.getElementById("btn_bar").appendChild(newBtn);
+}
+
+
+//removeYear: removes the last year container in the CP
+function removeYear() {
+    if (numYears > 4) {
+        numYears--;
+
+        var years = document.getElementById('course_planner');
+        years.removeChild(years.lastChild);
+
+        if (numYears == 4) {
+            var buttons = document.getElementById('btn_bar');
+            buttons.removeChild(buttons.lastChild);
+        }
+    }
+    //ELSE: SHOULD NOTIFY USER THAT THEY CANNOT REMOVE ANY MORE YEARS
+}
+
+
+
+// Export schedule: ___________________________________________________________________________
 
 function exportSchedule() {
 
 }
 
 
-// course list filter ________________________________________
-function filterFunction() {
+// Course List filter: ________________________________________________________________________
+
+function filterFunction() {_
     var input, filter, ul, li, a, i, txtValue;
     input = document.getElementById("myInput");
     filter = input.value.toUpperCase();
@@ -212,9 +256,8 @@ function filterFunction() {
     }
 }
 
-
+// convertToCSObj: converts the CS list item to a CP item
 function convertToCSObj(draggable) {
-
     // create the empty containers
     const newLi = document.createElement("li");
     const newTitle = document.createElement("div");
@@ -246,6 +289,7 @@ function convertToCSObj(draggable) {
     return newLi;
 }
 
+// colorCourseList: colours the CL item depending if already present in CP
 function colorCourseList() {
     var courseList = document.querySelectorAll('.course_list');
     var courseSchd = document.querySelectorAll('.col-10');
@@ -262,6 +306,7 @@ function colorCourseList() {
     }
 }
 
+// addDragTag: adds any newely added elements that has class 'draggable' into the query
 function addDragTag() {
     const draggables = document.querySelectorAll('.draggable')
 

@@ -144,7 +144,7 @@
             </div>
 
             <div class="row">
-                <div class="container-fluid col-8">
+                <div class="container-fluid col-8 p-0">
                     <nav class="navbar navbar-expand-lg navbar-light bg-transparent">
                         <a class="navbar-brand">Course Scheduler</a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -152,44 +152,23 @@
                         </button>
                         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                             <div class="navbar-nav">
-                                <form class="form-inline">
+                                <form id="btn_bar" class="form-inline">
                                     <button type="button" class="btn btn-outline-primary add_year mr-2" onclick="addYear()">Add Year</button>
+                                </form>
+                                <form class="form-inline">
                                     <button type="button" class="btn btn-outline-secondary export" onclick="exportSchedule()">Export</button>
                                 </form>
                             </div>
                         </div>
                     </nav>
 
-                    <!--Bar: Course Planner-->
-                    <!--<div class="row" style="margin-top: 10px">
-                        <div class="col-8 cs_title">
-                            Course Scheduler
-                        </div>
-                        <div class="col-2 cs_baritem">
-                            <span>
-                                Add year
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-                                </svg>
-                            </span>
-                        </div>
-                        <div class="col-2 cs_baritem">
-                            <span>
-                                Export
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share" viewBox="0 0 16 16">
-                                    <path d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z" />
-                                </svg>
-                            </span>
-                        </div>
-                    </div> -->
                     <!--Course Planner-->
-                    <div style="margin: 10px 0px; background-color: #E4F5FC; padding: 15px 0px;">
-                        <div id="course_planner" style="overflow-x: auto; white-space: nowrap;">
-                            <div class="col-6 col-sm-3 year_container" style="display: inline-block;">
+                    <div style="margin: 10px 0px; background-color: #E4F5FC; overflow-x: auto;">
+                        <div id="course_planner" style="white-space: nowrap; width: 95%">
+                            <div class="col-3 year_container align-top mt-2 ml-2 mb-2 pb-1" style="display: inline-block;">
                                 <div class="row year mb-2">Year 1</div>
                                 <div style="height: 100%;">
-                                    <ul id="ul_year" class="ul_container ul_format" style="min-height: 30px;">
+                                    <ul id="ul_year" class="ul_container ul_format" style="min-height: 50px;">
                                         <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
                                             <div class="col-10">COSC 1P02</div>
                                             <span class="col-1 remove_btn" onclick="remove(this)">x</span>
@@ -225,10 +204,10 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="col-6 col-sm-3 year_container" style="display: inline-block;">
+                            <div class="col-3 year_container align-top mt-2 ml-1 mb-2 pb-1" style="display: inline-block;">
                                 <div class="row year mb-2">Year 2</div>
-                                <div style="height: 100%; ">
-                                    <ul class="ul_container ul_format" style="min-height: 30px;">
+                                <div style="height: 100%;">
+                                    <ul class="ul_container ul_format" style="min-height: 50px;">
                                         <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
                                             <div class="col-10">COSC 2P03</div>
                                             <span class="col-1 remove_btn" onclick="remove(this)">x</span>
@@ -260,10 +239,10 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="col-6 col-sm-3 year_container" style="display: inline-block;">
+                            <div class="col-3 year_container align-top mt-2 ml-1 mb-2 pb-1" style="display: inline-block;">
                                 <div class="row year mb-2">Year 3</div>
                                 <div style="height: 100%;">
-                                    <ul class="ul_container ul_format" style="min-height: 30px;">
+                                    <ul class="ul_container ul_format" style="min-height: 50px;">
                                         <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
                                             <div class="col-10">COSC 3P03</div>
                                             <span class="col-1 remove_btn" onclick="remove(this)">x</span>
@@ -295,10 +274,10 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="col-6 col-sm-3 year_container" style="display: inline-block;">
+                            <div class="col-3 year_container align-top mt-2 ml-1 mb-2 mr-1 pb-1" style="display: inline-block;">
                                 <div class="row year mb-2">Year 4</div>
                                 <div style="height: 100%;">
-                                    <ul class="ul_container ul_format" style="min-height: 30px;">
+                                    <ul class="ul_container ul_format" style="min-height: 50px;">
                                         <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
                                             <div class="col-10">COSC 4P01</div>
                                             <span class="col-1 remove_btn" onclick="remove(this)">x</span>

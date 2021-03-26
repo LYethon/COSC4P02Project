@@ -33,8 +33,6 @@
 /* The CS year and courses container */
 .year_container {
     background-color: white;
-    padding-bottom: 15px;
-    border: 5px solid #E4F5FC;
     border-radius: 10px;
     box-shadow: 0 6.7px 5.3px rgba(0, 0, 0, 0.048);
 }
