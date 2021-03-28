@@ -164,7 +164,7 @@
 
                     <!--Course Planner-->
                     <div style="margin: 10px 0px; background-color: #E4F5FC; overflow-x: auto; min-height: 480px">
-                        <div id="course_planner" style="white-space: nowrap; width: 95%">                          
+                        <div id="course_planner" style="white-space: nowrap; width: 92%">                          
                             @if (schedule != null)
                             {
                                 for (int y = 0; y < schedule.Courses.Count; y++)
@@ -176,7 +176,7 @@
                                             @for (int i = 0; i < schedule.Courses[y].Count; i++)
                                             {
                                                 <li class="row credit_box draggable p-2" draggable="true" style="white-space: normal;">
-                                                    <div id="@schedule.Courses[y][i].CID" class="col-10 pl-2 courseName">@schedule.Courses[y][i].Name</div>
+                                                    <div id="@schedule.Courses[y][i].CID" class="col-9 pl-2 courseName">@schedule.Courses[y][i].Subject @schedule.Courses[y][i].Code</div>
                                                     <span class="col-1 remove_btn" onclick="remove(this)">x</span>
                                                 </li>
                                             }                                           
@@ -185,7 +185,6 @@
                                 </div>
                                 }
                             }
-
                         </div>
                     </div>
                 </div>
