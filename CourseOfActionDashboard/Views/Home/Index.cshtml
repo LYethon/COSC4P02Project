@@ -156,6 +156,9 @@
                                     <button type="button" class="btn btn-outline-primary add_year mr-2" onclick="addYear()">Add Year</button>
                                 </form>
                                 <form class="form-inline">
+                                    <button type="button" class="btn btn-outline-success mr-2" onclick="buildJSON()">Save</button>
+                                </form>
+                                <form class="form-inline">
                                     <button type="button" class="btn btn-outline-secondary export" onclick="exportSchedule()">Export</button>
                                 </form>
                             </div>
@@ -163,23 +166,28 @@
                     </nav>
 
                     <!--Course Planner-->
-                    <div style="margin: 10px 0px; background-color: #E4F5FC; overflow-x: auto; min-height: 480px">
-                        <div id="course_planner" style="white-space: nowrap; width: 92%">                          
+                    <div style="margin: 10px 0px; background-color: #E4F5FC; overflow-x: auto; min-height: 520px">
+                        <div id="course_planner" class="ml-2 d-inline-flex" style="white-space: nowrap; width: 93%; min-height: 480px;">                         
                             @if (schedule != null)
                             {
                                 for (int y = 0; y < schedule.Courses.Count; y++)
                                 {
-                                <div class="col-3 year_container align-top mt-2 ml-2 mb-2 pb-1" style="display: inline-block;">
-                                    <div class="row year mb-2">Year @(y + 1)</div>
+                                <div class="col-3 year_container align-top mt-2 ml-1 mr-1 mb-2 pb-1">
+                                    <div class="row year">
+                                        <p class="mb-3 mt-3 " style="user-select: none">Year @(y + 1)</p>
+                                    </div>
                                     <div style="height: 100%;">
-                                        <ul id="ul_year" class="ul_container ul_format" style="min-height: 50px;">
+                                        <ul id="ul_year" class="ul_container ul_format" style="min-height: 410px;">
                                             @for (int i = 0; i < schedule.Courses[y].Count; i++)
                                             {
-                                                <li class="row credit_box draggable p-2" draggable="true" style="white-space: normal;">
-                                                    <div id="@schedule.Courses[y][i].CID" class="col-9 pl-2 courseName">@schedule.Courses[y][i].Subject @schedule.Courses[y][i].Code</div>
-                                                    <span class="col-1 remove_btn" onclick="remove(this)">x</span>
-                                                </li>
-                                            }                                           
+                                                if (schedule.Courses[y][i] != null)
+                                                {
+                                            <li class="row credit_box draggable p-2" draggable="true" style="white-space: normal;">
+                                                <div id="@schedule.Courses[y][i].CID" class="col-10 courseName pl-2 pr-1">@schedule.Courses[y][i].Subject @schedule.Courses[y][i].Code</div>
+                                                <span class="col-1 remove_btn pl-2" onclick="remove(this)">x</span>
+                                            </li>
+                                                }
+                                            }
                                         </ul>
                                     </div>
                                 </div>
@@ -196,7 +204,7 @@
                         @for (int i = 0; i < courses.Count; i++)
                         {
                             <li class="list-group-item draggable course_list" draggable="true">
-                                <div style="text-align: center">@courses[i].Subject @courses[i].Code</div>
+                                <div id="@courses[i].CID" style="text-align: center">@courses[i].Subject @courses[i].Code</div>
                             </li>
                         }
                     </ul>
@@ -317,26 +325,27 @@
         });
     }
 
-    function buildJSON() {
-        var idArray = [];
-        var newSchedule = @Html.Raw(Json.Serialize(schedule));
-        console.log(newSchedule);
-
+    function buildJSON() {       
+        const courseArray = [];
+        
         var yearList = document.getElementsByClassName("year_container");
         for (var i = 0; i < yearList.length; i++) {
-            console.log("Building Year " + i);
+            var idArray = [];
             var courseList = yearList[i].getElementsByClassName("courseName");
             for (var q = 0; q < courseList.length; q++) {
-                console.log(courseList[q].id);
-                idArray.push(courseList[q].id);
-                console.log(idArray);
+                idArray.push(parseInt(courseList[q].id));               
             }
+            if (courseList.length == 0) {
+                idArray.push(-1);
+            }
+            courseArray.push(idArray);
         }
+        console.log(courseArray);
 
         $.ajax({
             type: 'POST',
-            url: "@(Url.Action("buildScheduleJSON", "Home"))",
-            data: { idList: idArray },
+            url: "@(Url.Action("saveSchedule", "Home"))",
+            data: { idList: courseArray, studentId:@student.Id},
             success: function (msg) {
                 console.log("Success");
             },

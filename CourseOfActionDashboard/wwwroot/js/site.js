@@ -39,7 +39,7 @@ function updateProgress() {
 
     document.getElementById("overPlanned").innerHTML = (compOverall + planOverall) + "/" + totOverall;
     document.getElementById("overCompleted").innerHTML = (compOverall) + "/" + totOverall;
-    document.getElementById("majorPlanned").innerHTML =(compMajor+planMajor) + "/" + totMajor;
+    document.getElementById("majorPlanned").innerHTML = (compMajor + planMajor) + "/" + totMajor;
     document.getElementById("majorCompleted").innerHTML = (compMajor) + "/" + totMajor;
     document.getElementById("minorPlanned").innerHTML = (compMinor + planMinor) + "/" + totMinor;
     document.getElementById("minorCompleted").innerHTML = (compMinor) + "/" + totMinor;
@@ -56,8 +56,8 @@ function updateProgress() {
     document.getElementById("4aPlanned").innerHTML = (comp4alpha + plan4alpha) + "/" + tot4alpha;
     document.getElementById("4aCompleted").innerHTML = (comp4alpha) + "/" + tot4alpha;
 
-    var percentComp = "width:" + ((compOverall/totOverall)*100) + "%";
-    var percentPlanned = "width:" + ((planOverall/totOverall)*100) + "%";
+    var percentComp = "width:" + ((compOverall / totOverall) * 100) + "%";
+    var percentPlanned = "width:" + ((planOverall / totOverall) * 100) + "%";
 
     document.getElementById("percentCompleted").setAttribute("style", percentComp);
     document.getElementById("percentPlanned").setAttribute("style", percentPlanned);
@@ -82,10 +82,6 @@ drag_and_drop();
 colorCourseList();
 
 
-/*<button class="show-example-btn" aria-label="SuccessButton" onclick="alertMessage(0)">
-    Success Test
-                    </button>*/
-
 function drag_and_drop() {
     const draggables = document.querySelectorAll('.draggable')
     const containers = document.querySelectorAll('.ul_container')
@@ -102,7 +98,6 @@ function drag_and_drop() {
     containers.forEach(container => {
         container.addEventListener('dragover', e => {
             var numElements = container.childElementCount;
-
             e.preventDefault()
             const afterElement = getDragAfterElement(container, e.clientY)
             const draggable = document.querySelector('.dragging')
@@ -149,6 +144,7 @@ function getDragAfterElement(container, y) {
     return draggableElements.reduce((closest, child) => {
         const box = child.getBoundingClientRect()
         const offset = y - box.top - box.height / 2
+
         if (offset < 0 && offset > closest.offset) {
             return { offset: offset, element: child }
         } else {
@@ -157,7 +153,7 @@ function getDragAfterElement(container, y) {
     }, { offset: Number.NEGATIVE_INFINITY }).element
 }
 
-numYears = 4;    //CHANGE LATER : SHOULD GET STUDENT'S TOTAL NUMBER OF YEARS FROM DB
+numYears = 4; //CHANGE LATER : SHOULD GET STUDENT'S TOTAL NUMBER OF YEARS FROM DB
 
 // addYear: adds a year container to the student's CP
 function addYear() {
@@ -171,24 +167,21 @@ function addYear() {
         const newUlDiv = document.createElement("div");
         const newUl = document.createElement("ul");
 
-        // attach the styles for the newUl
+        // attach the styles for the newUl and append to parent
         newUl.classList.add('ul_container', 'ul_format');
         newUl.style.minHeight = "50px";
-
-        // add newUl and attach the styles for the newUlDiv
         newUlDiv.appendChild(newUl);
-        newUlDiv.style.height = "100%";
 
         // attach the styles and content for the newTitleDiv
-        const newTitle = document.createTextNode("Year "+ numYears);
+        const newTitle = document.createTextNode("Year " + numYears);
         newTitleDiv.appendChild(newTitle);
-        newTitleDiv.classList.add('row', 'year', 'mb-2');
+        newTitleDiv.classList.add('row', 'year', 'mb-2', 'mt-2');
+        newTitleDiv.style.userSelect = "none";
 
         // add newUlDiv and newTitleDiv and attach the styles and content for the newYearDiv
         newYearDiv.appendChild(newTitleDiv);
         newYearDiv.appendChild(newUlDiv);
-        newYearDiv.classList.add('col-3', 'year_container', 'align-top', 'mt-2', 'mb-2', 'mr-2', 'pb-1');
-        newYearDiv.style.display = "inline-block";
+        newYearDiv.classList.add('col-3', 'year_container', 'align-top', 'mt-2', 'mb-2', 'ml-1', 'pb-1', 'mr-1', 'd-inline-block');
 
         // add the new element to the course planner container
         document.getElementById("course_planner").appendChild(newYearDiv);
@@ -233,6 +226,23 @@ function removeYear() {
 }
 
 
+// Save schedule: ___________________________________________________________________________
+/*
+function saveSchedule() {
+    const containers = document.querySelectorAll('.ul_container')
+
+    containers.forEach(year => {
+        const credits = Array.prototype.slice.call(year.children);
+
+        credits.forEach(data => {
+            var id = data.childNodes[1]; //the credit ID
+            console.log(id)
+
+            
+        })
+    })
+}
+*/
 
 // Export schedule: ___________________________________________________________________________
 
@@ -267,14 +277,18 @@ function convertToCSObj(draggable) {
     const newTitle = document.createElement("div");
     const newBtn = document.createElement("span");
 
+    console.log(draggable.children[0].id)
+    const id = draggable.children[0].id;
+
     // attach the styles for the newBtn
-    newBtn.classList.add('col-1', 'remove_btn');
+    newBtn.classList.add('col-1', 'pl-2', 'remove_btn');
     const x = document.createTextNode("x");
     newBtn.appendChild(x);
     newBtn.setAttribute("onclick", "remove(this)");
 
     // attach the styles and content to the newTitle 
-    newTitle.classList.add('col-10', 'pl-2');
+    newTitle.id = id;
+    newTitle.classList.add('col-10', 'pl-2', 'courseName');
 
     const course_name = draggable.innerText;
 

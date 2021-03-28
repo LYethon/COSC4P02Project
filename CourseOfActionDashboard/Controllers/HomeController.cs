@@ -44,18 +44,27 @@ namespace CourseOfActionDashboard.Controllers
         }
 
         [HttpPost]
-        public void saveSchedule(string json)
+        public void saveSchedule(int[][] idList, int studentId)
         {
-            Student student= JsonConvert.DeserializeObject<Student>(json);
-            student.FirstName = "Justin";
+            string jsonSched = "{'Courses':[";
+
+            for (int i = 0; i < idList.Length; i++)
+            {
+                jsonSched += "[";
+                for (int q = 0; q < idList[i].Length; q++)
+                {
+                    var temp = idList[i][q];
+                    Course course = _dbCourses.courseTable.Where(s => s.CID.Equals(temp)).FirstOrDefault();
+                    jsonSched += JsonConvert.SerializeObject(course)+",";
+                }
+                jsonSched += "],";
+            }
+            jsonSched += "]}";
+
+            Student student = _db.Students.Where(s => s.Id.Equals(studentId)).FirstOrDefault();
+            student.Schedule = jsonSched;
             _db.Entry(student).State = EntityState.Modified;
             _db.SaveChanges();
-        }
-
-        [HttpPost]
-        public void buildScheduleJSON(int[] idList)
-        {
-
         }
 
         public IActionResult Privacy()
