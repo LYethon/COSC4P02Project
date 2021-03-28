@@ -36,15 +36,22 @@
                 {
                     <h1>Welcome @student.FullName()</h1>
                     <h1>Email: @student.Email</h1>
+                    <h1>Schedule Notes: @schedule.Courses[0][0].Description</h1>
+                    <h2>Name: @courses[0].Name</h2>
+                    <h2>@courses[0].Subject @courses[0].Code</h2> //COSC 1p02
+                    <h2>@courses[0].Description</h2>
+                    <h2>@courses[0].CreditValue.ToString("0.0")</h2>
+                    <h2>@courses[1].CreditValue.ToString("0.0")</h2>
+                    <h4>@courses[0].Context</h4>
+                    <h2>@courses[0].Prerequisites</h2>
                 }
-
-                /*for(int i=0; i<courses.Count; i++)
-                {
+            }
+@*            'COSC 1P02'
+*@ @*           for(int i=0; i<courses.Count; i++)
+                                            {
                 <p>@courses[i].Name</p>
-                }*/
-            }   
-            
-            
+                }*@
+
             <div class="row">
                 <div class="container-fluid" style="">
                     <!--Progress Bar Legend-->
@@ -169,42 +176,44 @@
                     </nav>
 
                     <!--Course Planner-->
-                    <div style="margin: 10px 0px; background-color: #E4F5FC; overflow-x: auto;">
+                    <div style="margin: 10px 0px; background-color: #E4F5FC; overflow-x: auto; min-height: 480px">
                         <div id="course_planner" style="white-space: nowrap; width: 95%">
                             <div class="col-3 year_container align-top mt-2 ml-2 mb-2 pb-1" style="display: inline-block;">
                                 <div class="row year mb-2">Year 1</div>
                                 <div style="height: 100%;">
                                     <ul id="ul_year" class="ul_container ul_format" style="min-height: 50px;">
-                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
-                                            <div class="col-10">COSC 1P02</div>
+
+
+                                        <li class="row credit_box draggable p-2" draggable="true" style="white-space: normal;" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
+                                            <div class="col-10 pl-2">COSC 1P02</div>
                                             <span class="col-1 remove_btn" onclick="remove(this)">x</span>
                                         </li>
-                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
-                                            <div class="col-10">COSC 1P03</div>
+                                        <li class="row credit_box draggable p-2" draggable="true" style="white-space: normal;">
+                                            <div class="col-10 pl-2">COSC 1P03</div>
                                             <span class="col-1 remove_btn" onclick="remove(this)">x</span>
                                         </li>
-                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
-                                            <div class="col-10">COSC 1P50</div>
+                                        <li class="row credit_box draggable p-2" draggable="true" style="white-space: normal;">
+                                            <div class="col-10 pl-2">COSC 1P50</div>
                                             <span class="col-1 remove_btn" onclick="remove(this)">x</span>
                                         </li>
-                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
-                                            <div class="col-10">MATH 1P66</div>
+                                        <li class="row credit_box draggable p-2" draggable="true" style="white-space: normal;">
+                                            <div class="col-10 pl-2">MATH 1P66</div>
                                             <span class="col-1 remove_btn" onclick="remove(this)">x</span>
                                         </li>
-                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
-                                            <div class="col-10">MATH 1P67</div>
+                                        <li class="row credit_box draggable p-2" draggable="true" style="white-space: normal;">
+                                            <div class="col-10 pl-2">MATH 1P67</div>
                                             <span class="col-1 remove_btn" onclick="remove(this)">x</span>
                                         </li>
-                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
-                                            <div class="col-10">1 Humanities Context Credit</div>
+                                        <li class="row credit_box draggable p-2" draggable="true" style="white-space: normal;">
+                                            <div class="col-10 pl-2">1 Humanities Context Credit</div>
                                             <span class="col-1 remove_btn" onclick="remove(this)">x</span>
                                         </li>
-                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
-                                            <div class="col-10">1 Social Science Context Credit</div>
+                                        <li class="row credit_box draggable p-2" draggable="true" style="white-space: normal;">
+                                            <div class="col-10 pl-2">1 Social Science Context Credit</div>
                                             <span class="col-1 remove_btn" onclick="remove(this)">x</span>
                                         </li>
-                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
-                                            <div class="col-10">0.5 Elective Credits</div>
+                                        <li class="row credit_box draggable p-2" draggable="true" style="white-space: normal;">
+                                            <div class="col-10 pl-2">0.5 Elective Credits</div>
                                             <span class="col-1 remove_btn" onclick="remove(this)">x</span>
                                         </li>
                                     </ul>
@@ -214,32 +223,32 @@
                                 <div class="row year mb-2">Year 2</div>
                                 <div style="height: 100%;">
                                     <ul class="ul_container ul_format" style="min-height: 50px;">
-                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
-                                            <div class="col-10">COSC 2P03</div>
+                                        <li class="row credit_box draggable p-2" draggable="true" style="white-space: normal;">
+                                            <div class="col-10 pl-2">COSC 2P03</div>
                                             <span class="col-1 remove_btn" onclick="remove(this)">x</span>
                                         </li>
-                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
-                                            <div class="col-10">COSC 2P05</div>
+                                        <li class="row credit_box draggable p-2" draggable="true" style="white-space: normal;">
+                                            <div class="col-10 pl-2">COSC 2P05</div>
                                             <span class="col-1 remove_btn" onclick="remove(this)">x</span>
                                         </li>
-                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
-                                            <div class="col-10">COSC 2P12</div>
+                                        <li class="row credit_box draggable p-2" draggable="true" style="white-space: normal;">
+                                            <div class="col-10 pl-2">COSC 2P12</div>
                                             <span class="col-1 remove_btn" onclick="remove(this)">x</span>
                                         </li>
-                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
-                                            <div class="col-10">MATH 1P12</div>
+                                        <li class="row credit_box draggable p-2" draggable="true" style="white-space: normal;">
+                                            <div class="col-10 pl-2">MATH 1P12</div>
                                             <span class="col-1 remove_btn" onclick="remove(this)">x</span>
                                         </li>
-                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
-                                            <div class="col-10">MATH 1P98</div>
+                                        <li class="row credit_box draggable p-2" draggable="true" style="white-space: normal;">
+                                            <div class="col-10 pl-2">MATH 1P98</div>
                                             <span class="col-1 remove_btn" onclick="remove(this)">x</span>
                                         </li>
-                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
-                                            <div class="col-10">COSC 2P13</div>
+                                        <li class="row credit_box draggable p-2" draggable="true" style="white-space: normal;">
+                                            <div class="col-10 pl-2">COSC 2P13</div>
                                             <span class="col-1 remove_btn" onclick="remove(this)">x</span>
                                         </li>
-                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
-                                            <div class="col-10">2 Elective Credits</div>
+                                        <li class="row credit_box draggable p-2" draggable="true" style="white-space: normal;">
+                                            <div class="col-10 pl-2">2 Elective Credits</div>
                                             <span class="col-1 remove_btn" onclick="remove(this)">x</span>
                                         </li>
                                     </ul>
@@ -249,32 +258,32 @@
                                 <div class="row year mb-2">Year 3</div>
                                 <div style="height: 100%;">
                                     <ul class="ul_container ul_format" style="min-height: 50px;">
-                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
-                                            <div class="col-10">COSC 3P03</div>
+                                        <li class="row credit_box draggable p-2" draggable="true" style="white-space: normal;">
+                                            <div class="col-10 pl-2">COSC 3P03</div>
                                             <span class="col-1 remove_btn" onclick="remove(this)">x</span>
                                         </li>
-                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
-                                            <div class="col-10">COSC 3P32</div>
+                                        <li class="row credit_box draggable p-2" draggable="true" style="white-space: normal;">
+                                            <div class="col-10 pl-2">COSC 3P32</div>
                                             <span class="col-1 remove_btn" onclick="remove(this)">x</span>
                                         </li>
-                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
-                                            <div class="col-10">COSC 3P71</div>
+                                        <li class="row credit_box draggable p-2" draggable="true" style="white-space: normal;">
+                                            <div class="col-10 pl-2">COSC 3P71</div>
                                             <span class="col-1 remove_btn" onclick="remove(this)">x</span>
                                         </li>
-                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
-                                            <div class="col-10">MATH 1P05</div>
+                                        <li class="row credit_box draggable p-2" draggable="true" style="white-space: normal;">
+                                            <div class="col-10 pl-2">MATH 1P05</div>
                                             <span class="col-1 remove_btn" onclick="remove(this)">x</span>
                                         </li>
-                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
-                                            <div class="col-10">MATH 1P06</div>
+                                        <li class="row credit_box draggable p-2" draggable="true" style="white-space: normal;">
+                                            <div class="col-10 pl-2">MATH 1P06</div>
                                             <span class="col-1 remove_btn" onclick="remove(this)">x</span>
                                         </li>
-                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
-                                            <div class="col-10">1 COSC Credit</div>
+                                        <li class="row credit_box draggable p-2" draggable="true" style="white-space: normal;">
+                                            <div class="col-10 pl-2">1 COSC Credit</div>
                                             <span class="col-1 remove_btn" onclick="remove(this)">x</span>
                                         </li>
-                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
-                                            <div class="col-10">1.5 Elective Credits</div>
+                                        <li class="row credit_box draggable p-2" draggable="true" style="white-space: normal;">
+                                            <div class="col-10 pl-2">1.5 Elective Credits</div>
                                             <span class="col-1 remove_btn" onclick="remove(this)">x</span>
                                         </li>
                                     </ul>
@@ -284,24 +293,24 @@
                                 <div class="row year mb-2">Year 4</div>
                                 <div style="height: 100%;">
                                     <ul class="ul_container ul_format" style="min-height: 50px;">
-                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
-                                            <div class="col-10">COSC 4P01</div>
+                                        <li class="row credit_box draggable p-2" draggable="true" style="white-space: normal;">
+                                            <div class="col-10 pl-2">COSC 4P01</div>
                                             <span class="col-1 remove_btn" onclick="remove(this)">x</span>
                                         </li>
-                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
-                                            <div class="col-10">COSC 4P02</div>
+                                        <li class="row credit_box draggable p-2" draggable="true" style="white-space: normal;">
+                                            <div class="col-10 pl-2">COSC 4P02</div>
                                             <span class="col-1 remove_btn" onclick="remove(this)">x</span>
                                         </li>
-                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
-                                            <div class="col-10">COSC 4P61</div>
+                                        <li class="row credit_box draggable p-2" draggable="true" style="white-space: normal;">
+                                            <div class="col-10 pl-2">COSC 4P61</div>
                                             <span class="col-1 remove_btn" onclick="remove(this)">x</span>
                                         </li>
-                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
-                                            <div class="col-10">2 COSC Credits</div>
+                                        <li class="row credit_box draggable p-2" draggable="true" style="white-space: normal;">
+                                            <div class="col-10 pl-2">2 COSC Credits</div>
                                             <span class="col-1 remove_btn" onclick="remove(this)">x</span>
                                         </li>
-                                        <li class="row credit_box draggable" draggable="true" style="white-space: normal;">
-                                            <div class="col-10">1.5 Elective Credits</div>
+                                        <li class="row credit_box draggable p-2" draggable="true" style="white-space: normal;">
+                                            <div class="col-10 pl-2">1.5 Elective Credits</div>
                                             <span class="col-1 remove_btn" onclick="remove(this)">x</span>
                                         </li>
                                     </ul>
@@ -413,6 +422,7 @@
     </p>
 </footer>
 <script>
+
 
     function alertMessage(num) {
         switch (num) {

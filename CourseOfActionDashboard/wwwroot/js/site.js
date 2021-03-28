@@ -4,6 +4,7 @@
 //  updateProgress method: when changes are made to students schedule, use updateProgress
 //  to update the credit counter and progress bar
 
+
 function updateProgress() {
     //Required totals **these can be hardcoded if only relevant to computer science students
     var totOverall = 40;
@@ -80,6 +81,11 @@ maxYearCredits = 12; //CHANGE TO ACTUALLY CALC CREDIT WEIGHT AND ADD TO CONFIGUR
 drag_and_drop();
 colorCourseList();
 
+
+/*<button class="show-example-btn" aria-label="SuccessButton" onclick="alertMessage(0)">
+    Success Test
+                    </button>*/
+
 function drag_and_drop() {
     const draggables = document.querySelectorAll('.draggable')
     const containers = document.querySelectorAll('.ul_container')
@@ -94,15 +100,14 @@ function drag_and_drop() {
     })
 
     containers.forEach(container => {
-
         container.addEventListener('dragover', e => {
+            var numElements = container.childElementCount;
+
             e.preventDefault()
             const afterElement = getDragAfterElement(container, e.clientY)
             const draggable = document.querySelector('.dragging')
 
-            var numElements = container.childElementCount;
-            console.log(numElements);
-
+            //if user can add credit to container..
             if (afterElement == null && !draggable.classList.contains('course_list') && numElements < maxYearCredits) {
                 container.appendChild(draggable)
             } else if (!draggable.classList.contains('course_list') && numElements < maxYearCredits) {
@@ -115,7 +120,6 @@ function drag_and_drop() {
             const draggable = document.querySelector('.dragging')
 
             var numElements = container.childElementCount;
-            console.log(numElements);
 
             if (afterElement == null && numElements < maxYearCredits) {
                 if (draggable.classList.contains('course_list')) {
@@ -270,7 +274,7 @@ function convertToCSObj(draggable) {
     newBtn.setAttribute("onclick", "remove(this)");
 
     // attach the styles and content to the newTitle 
-    newTitle.classList.add('col-10');
+    newTitle.classList.add('col-10', 'pl-2');
 
     const course_name = draggable.innerText;
 
@@ -278,7 +282,7 @@ function convertToCSObj(draggable) {
     newTitle.appendChild(title);
 
     // attach the styles for the newLi
-    newLi.classList.add('row', 'credit_box', 'draggable');
+    newLi.classList.add('row', 'credit_box', 'draggable', 'p-2');
     newLi.style.whiteSpace = "normal";
     newLi.draggable = true;
 
