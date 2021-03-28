@@ -12,6 +12,7 @@ using System.Web;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Routing;
+using System.Data.Entity;
 
 namespace CourseOfActionDashboard.Controllers
 { 
@@ -42,6 +43,21 @@ namespace CourseOfActionDashboard.Controllers
             return View("Index",student);
         }
 
+        [HttpPost]
+        public void saveSchedule(string json)
+        {
+            Student student= JsonConvert.DeserializeObject<Student>(json);
+            student.FirstName = "Justin";
+            _db.Entry(student).State = EntityState.Modified;
+            _db.SaveChanges();
+        }
+
+        [HttpPost]
+        public void buildScheduleJSON(int[] idList)
+        {
+
+        }
+
         public IActionResult Privacy()
         {
             return View();
@@ -59,9 +75,9 @@ namespace CourseOfActionDashboard.Controllers
             if (ModelState.IsValid)
             {
                 //var f_password = GetMD5(password);
-                var data = _db.Students.Where(s => s.Email.Equals(email) && s.Password.Equals(password)).ToList();               
+                var data = _db.Students.Where(s => s.Email.Equals(email) && s.Password.Equals(password)).ToList();        
                 if (data.Count() > 0)
-                {
+                {                   
                     //Return to Index Page View with the student object that logged in
                     return Index(_db.Students.Where(s => s.Email.Equals(email) && s.Password.Equals(password)).FirstOrDefault());
                 }

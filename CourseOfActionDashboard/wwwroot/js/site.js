@@ -243,7 +243,7 @@ function exportSchedule() {
 
 // Course List filter: ________________________________________________________________________
 
-function filterFunction() {_
+function filterFunction() {
     var input, filter, ul, li, a, i, txtValue;
     input = document.getElementById("myInput");
     filter = input.value.toUpperCase();
