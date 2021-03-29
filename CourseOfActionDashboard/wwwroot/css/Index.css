@@ -27,7 +27,7 @@
 
 .year {
     margin:auto;
-    color: #3053a1;
+    font-size: 105%;
 }
 
 /* The CS year and courses container */
@@ -38,16 +38,18 @@
 }
 
 .remove_btn {
+    font-size: 105%;
     font-weight: bold;
     color: dimgrey;
-    margin-top: -2px;
-    margin-left: -7px;
+    margin-top: -3px;
+    margin-left: -2px;
     cursor: pointer;
+    transition: transform .2s;
 }
 
 .remove_btn:hover {
     color: #e6393f;
-    transition: 0.3s;
+    transform: scale(1.3);
     cursor: pointer;
 }
 
@@ -96,7 +98,14 @@
     cursor: -webkit-grabbing;
 }
 
-.add_year {
+.remove_year {
+    font-size: 90%;
+    color: red;
+    transition: transform .2s;
+}
+
+.remove_year:hover {
+    transform: scale(1.1);
 }
 
 body {

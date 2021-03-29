@@ -165,17 +165,27 @@ function addYear() {
         const newYearDiv = document.createElement("div");
         const newTitleDiv = document.createElement("div");
         const newUlDiv = document.createElement("div");
+        const newSpan1 = document.createElement("span");
+        const newSpan2 = document.createElement("span");
         const newUl = document.createElement("ul");
 
         // attach the styles for the newUl and append to parent
         newUl.classList.add('ul_container', 'ul_format');
-        newUl.style.minHeight = "50px";
+        newUl.style.minHeight = "400px";
         newUlDiv.appendChild(newUl);
 
         // attach the styles and content for the newTitleDiv
-        const newTitle = document.createTextNode("Year " + numYears);
-        newTitleDiv.appendChild(newTitle);
-        newTitleDiv.classList.add('row', 'year', 'mb-2', 'mt-2');
+        newSpan1.classList.add('mb-2', 'mt-3');
+        newSpan1.style.userSelect = "none";
+        newSpan1.appendChild(document.createTextNode("Year " + numYears));
+        newSpan2.classList.add('mt-3', 'ml-5', 'remove_year');
+        newSpan2.style.cursor = "pointer";
+        newSpan2.appendChild(document.createTextNode("remove"));
+        newSpan2.setAttribute("onclick", "removeYear(this)");
+
+        newTitleDiv.appendChild(newSpan1);
+        newTitleDiv.appendChild(newSpan2);
+        newTitleDiv.classList.add('row', 'year');
         newTitleDiv.style.userSelect = "none";
 
         // add newUlDiv and newTitleDiv and attach the styles and content for the newYearDiv
@@ -187,62 +197,26 @@ function addYear() {
         document.getElementById("course_planner").appendChild(newYearDiv);
 
         drag_and_drop(); //update the drag and droppable lists
-        if (numYears <= 5) {
-            update_menu_bar(); //update the CP menu bar 
-        }
+
     }
     //ELSE: SHOULD NOTIFY USER THAT THEY CANNOT ADD MORE THAN 10 YEARS
 }
 
 
-// update_menu_bar: updates the button bar (adds or removes the 'remove last year' button)
-function update_menu_bar() {
-    // create a new remove button
-    const newBtn = document.createElement("button");
-    const btnText = document.createTextNode("Remove Last Year");
-
-    newBtn.setAttribute("type", "button");
-    newBtn.setAttribute("onclick", "removeYear()");
-    newBtn.classList.add('btn', 'btn-outline-danger', 'add_year', 'mr-2');
-    newBtn.appendChild(btnText);
-    document.getElementById("btn_bar").appendChild(newBtn);
-}
-
-
 //removeYear: removes the last year container in the CP
-function removeYear() {
+function removeYear(el) {
     if (numYears > 4) {
         numYears--;
 
-        var years = document.getElementById('course_planner');
-        years.removeChild(years.lastChild);
-
-        if (numYears == 4) {
-            var buttons = document.getElementById('btn_bar');
-            buttons.removeChild(buttons.lastChild);
-        }
+        var child = el;
+        var parent = child.parentNode;
+        var grandparent = parent.parentNode;
+        grandparent.parentNode.removeChild(grandparent);
+        colorCourseList();
     }
     //ELSE: SHOULD NOTIFY USER THAT THEY CANNOT REMOVE ANY MORE YEARS
 }
 
-
-// Save schedule: ___________________________________________________________________________
-/*
-function saveSchedule() {
-    const containers = document.querySelectorAll('.ul_container')
-
-    containers.forEach(year => {
-        const credits = Array.prototype.slice.call(year.children);
-
-        credits.forEach(data => {
-            var id = data.childNodes[1]; //the credit ID
-            console.log(id)
-
-            
-        })
-    })
-}
-*/
 
 // Export schedule: ___________________________________________________________________________
 
