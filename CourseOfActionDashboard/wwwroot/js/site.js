@@ -205,15 +205,13 @@ function addYear() {
 
 //removeYear: removes the last year container in the CP
 function removeYear(el) {
-    if (numYears > 4) {
-        numYears--;
 
-        var child = el;
-        var parent = child.parentNode;
-        var grandparent = parent.parentNode;
-        grandparent.parentNode.removeChild(grandparent);
-        colorCourseList();
-    }
+    var child = el;
+    var parent = child.parentNode;
+    var grandparent = parent.parentNode;
+    grandparent.parentNode.removeChild(grandparent);
+    colorCourseList();
+
     //ELSE: SHOULD NOTIFY USER THAT THEY CANNOT REMOVE ANY MORE YEARS
 }
 
