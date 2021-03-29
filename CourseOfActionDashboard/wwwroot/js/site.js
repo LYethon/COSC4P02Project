@@ -153,66 +153,15 @@ function getDragAfterElement(container, y) {
     }, { offset: Number.NEGATIVE_INFINITY }).element
 }
 
-numYears = 4; //CHANGE LATER : SHOULD GET STUDENT'S TOTAL NUMBER OF YEARS FROM DB
-
-// addYear: adds a year container to the student's CP
-function addYear() {
-
-    if (numYears < 10) {
-        numYears++;
-
-        // create an empty newYear element and its inner empty elements
-        const newYearDiv = document.createElement("div");
-        const newTitleDiv = document.createElement("div");
-        const newUlDiv = document.createElement("div");
-        const newSpan1 = document.createElement("span");
-        const newSpan2 = document.createElement("span");
-        const newUl = document.createElement("ul");
-
-        // attach the styles for the newUl and append to parent
-        newUl.classList.add('ul_container', 'ul_format');
-        newUl.style.minHeight = "400px";
-        newUlDiv.appendChild(newUl);
-
-        // attach the styles and content for the newTitleDiv
-        newSpan1.classList.add('mb-2', 'mt-3');
-        newSpan1.style.userSelect = "none";
-        newSpan1.appendChild(document.createTextNode("Year " + numYears));
-        newSpan2.classList.add('mt-3', 'ml-5', 'remove_year');
-        newSpan2.style.cursor = "pointer";
-        newSpan2.appendChild(document.createTextNode("remove"));
-        newSpan2.setAttribute("onclick", "removeYear(this)");
-
-        newTitleDiv.appendChild(newSpan1);
-        newTitleDiv.appendChild(newSpan2);
-        newTitleDiv.classList.add('row', 'year');
-        newTitleDiv.style.userSelect = "none";
-
-        // add newUlDiv and newTitleDiv and attach the styles and content for the newYearDiv
-        newYearDiv.appendChild(newTitleDiv);
-        newYearDiv.appendChild(newUlDiv);
-        newYearDiv.classList.add('col-3', 'year_container', 'align-top', 'mt-2', 'mb-2', 'ml-1', 'pb-1', 'mr-1', 'd-inline-block');
-
-        // add the new element to the course planner container
-        document.getElementById("course_planner").appendChild(newYearDiv);
-
-        drag_and_drop(); //update the drag and droppable lists
-
-    }
-    //ELSE: SHOULD NOTIFY USER THAT THEY CANNOT ADD MORE THAN 10 YEARS
-}
-
 
 //removeYear: removes the last year container in the CP
 function removeYear(el) {
-
     var child = el;
     var parent = child.parentNode;
     var grandparent = parent.parentNode;
     grandparent.parentNode.removeChild(grandparent);
     colorCourseList();
-
-    //ELSE: SHOULD NOTIFY USER THAT THEY CANNOT REMOVE ANY MORE YEARS
+    updateYearNums();
 }
 
 
