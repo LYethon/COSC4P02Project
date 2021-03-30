@@ -14,7 +14,7 @@
             <a class="navbar-brand">
                 <img src="https://brocku.ca/brand/wp-content/uploads/sites/sites/176/Brocku-logo-screen.png?x44039" width="125" height="70">
             </a>
-            <a class="navbar-brand text-white font-weight-bold" > CourseOfActionDashboard</a>
+            <a class="navbar-brand text-white font-weight-bold"> CourseOfActionDashboard</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -30,6 +30,7 @@
     </nav>
 </header>
 <body>
+
     <div class="container">
         <main role="main" class="pb-3">
             @{ if (student != null)
@@ -37,7 +38,7 @@
                     <h1>Welcome @student.FullName()</h1>
                     <h1>Email: @student.Email</h1>
                 }
-            }                       
+            }
             <div class="row">
                 <div class="container-fluid" style="">
                     <!--Progress Bar Legend-->
@@ -169,25 +170,27 @@
                         <div id="course_planner" class="ml-1 d-inline-flex" style="white-space: nowrap; width: 93%; min-height: 480px;">
                             @if (schedule != null)
                             {
+                                int yearNum = -1;
                                 for (int y = 0; y < schedule.Courses.Count; y++)
                                 {
                                     if (schedule.Courses[y][0] != null)
                                     {
+                                        yearNum++;
                                         <div class="col-3 year_container align-top mt-2 ml-1 mr-1 mb-2 pb-1">
                                             <div class="row year">
                                                 <span class="mb-2 mt-3" style="user-select: none">
-                                                    Year @(y + 1)
+                                                    Year @(yearNum + 1)
                                                 </span>
                                                 @if (y >= 4)
-                                                 {
-                                                 <span class="mt-3 ml-5 remove_year" style="cursor:pointer" onclick="removeYear(this)">
-                                                    remove
-                                                    @*<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="red" class="bi bi-trash" viewBox="0 0 16 16">
-                                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                                                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                                                    </svg>*@
-                                                 </span>
-                                                 }
+                                                {
+                                                    <span class="mt-3 ml-5 remove_year" style="cursor:pointer" onclick="removeYear(this)">
+                                                        remove
+                                                        @*<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="red" class="bi bi-trash" viewBox="0 0 16 16">
+                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                    </svg>*@
+                                                    </span>
+                                                }
                                             </div>
                                             <div>
                                                 <ul id="ul_year" class="ul_container ul_format" style="min-height: 400px;">
@@ -201,6 +204,32 @@
                                                             </li>
                                                         }
                                                     }
+                                                </ul>
+
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        yearNum++;
+                                        <div class="col-3 year_container align-top mt-2 ml-1 mr-1 mb-2 pb-1">
+                                            <div class="row year">
+                                                <span class="mb-2 mt-3" style="user-select: none">
+                                                    Year @(yearNum + 1)
+                                                </span>
+                                                @if (y >= 4)
+                                                {
+                                                    <span class="mt-3 ml-5 remove_year" style="cursor:pointer" onclick="removeYear(this)">
+                                                        remove
+                                                        @*<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="red" class="bi bi-trash" viewBox="0 0 16 16">
+                                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                                        </svg>*@
+                                                    </span>
+                                                }
+                                            </div>
+                                            <div>
+                                                <ul id="ul_year" class="ul_container ul_format" style="min-height: 400px;">
                                                 </ul>
                                             </div>
                                         </div>
@@ -240,22 +269,22 @@
                         Warning Test
                     </button>
                     <!--Error Box
-            <div class="alert alert-success alert-dismissible">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong>Success!</strong> This alert box could indicate a successful or positive action.
-            </div>
-            <div class="alert alert-info alert-dismissible">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong>Info!</strong> This alert box could indicate a neutral informative change or action.
-            </div>
-            <div class="alert alert-warning alert-dismissible">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong>Warning!</strong> This alert box could indicate a warning that might need attention.
-            </div>
-            <div class="alert alert-danger alert-dismissible">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong>Danger!</strong> This alert box could indicate a dangerous or potentially negative action.
-            </div>-->
+                    <div class="alert alert-success alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Success!</strong> This alert box could indicate a successful or positive action.
+                    </div>
+                    <div class="alert alert-info alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Info!</strong> This alert box could indicate a neutral informative change or action.
+                    </div>
+                    <div class="alert alert-warning alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Warning!</strong> This alert box could indicate a warning that might need attention.
+                    </div>
+                    <div class="alert alert-danger alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Danger!</strong> This alert box could indicate a dangerous or potentially negative action.
+                    </div>-->
                 </div>
             </div>
         </main>
@@ -323,57 +352,7 @@
         }
     }
 
-    function updateYearNums() {
-        var i = 1;
-        const yearContainers = document.querySelectorAll('.year_container')
-        yearContainers.forEach(year => {
-            year.children[0].children[0].textContent = "Year " + i;
-            i++;
-        })
-    }
 
-    // addYear: adds a year container to the student's CP
-    function addYear() {
-        var yearNum = document.getElementById('course_planner').childElementCount;
-        if (yearNum < 10) {
-            yearNum++;
-            // create an empty newYear element and its inner empty elements
-            const newYearDiv = document.createElement("div");
-            const newTitleDiv = document.createElement("div");
-            const newUlDiv = document.createElement("div");
-            const newUl = document.createElement("ul");
-            const newSpan1 = document.createElement("span");
-            const newSpan2 = document.createElement("span");
-
-            // attach the styles for the newUl and append to parent
-            newUl.classList.add('ul_container', 'ul_format');
-            newUl.style.minHeight = "400px";
-            newUlDiv.appendChild(newUl);
-
-            // attach the styles and content for the spans and append to parent
-            newSpan1.classList.add('mb-2', 'mt-3');
-            newSpan1.style.userSelect = "none";
-            newSpan1.appendChild(document.createTextNode("Year " + yearNum));
-            newSpan2.classList.add('mt-3', 'ml-5', 'remove_year');
-            newSpan2.style.cursor = "pointer";
-            newSpan2.appendChild(document.createTextNode("remove"));
-            newSpan2.setAttribute("onclick", "removeYear(this)");
-            newTitleDiv.appendChild(newSpan1);
-            newTitleDiv.appendChild(newSpan2);
-            newTitleDiv.classList.add('row', 'year');
-            newTitleDiv.style.userSelect = "none";
-
-            // add newUlDiv and newTitleDiv and attach the styles and content for the newYearDiv
-            newYearDiv.appendChild(newTitleDiv);
-            newYearDiv.appendChild(newUlDiv);
-            newYearDiv.classList.add('col-3', 'year_container', 'align-top', 'mt-2', 'mb-2', 'ml-1', 'pb-1', 'mr-1', 'd-inline-block');
-
-            // add the new element to the course planner container
-            document.getElementById("course_planner").appendChild(newYearDiv);
-            drag_and_drop(); //update the drag and droppable lists
-        }
-        //ELSE: SHOULD NOTIFY USER THAT THEY CANNOT ADD MORE THAN 10 YEARS
-    }
 
     function saveSched() {
         var studentJson = @Html.Raw(Json.Serialize(@student));
