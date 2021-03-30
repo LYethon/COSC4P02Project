@@ -70,6 +70,7 @@ function remove(el) {
     var child = el;
     var parent = child.parentNode;
     parent.parentNode.removeChild(parent);
+    checkDuplicates();
     colorCourseList();
 }
 
@@ -108,6 +109,8 @@ function drag_and_drop() {
             } else if (!draggable.classList.contains('course_list') && numElements < maxYearCredits) {
                 container.insertBefore(draggable, afterElement)
             }
+            checkDuplicates();
+
         })
         container.addEventListener('drop', e => {
             e.preventDefault();
@@ -131,11 +134,14 @@ function drag_and_drop() {
                     container.insertBefore(draggable, afterElement);
                 }
             }
+            checkDuplicates();
             addDragTag();
             colorCourseList();
         })
     })
 }
+
+
 
 // getDragAfterElement: determines where the item should get dropped
 function getDragAfterElement(container, y) {
@@ -153,6 +159,26 @@ function getDragAfterElement(container, y) {
     }, { offset: Number.NEGATIVE_INFINITY }).element
 }
 
+//looks for duplicate credits witihin the student's CP
+function checkDuplicates() {
+    const yearContainers = document.querySelectorAll('.credit_box')
+    var idArray = [];
+    //find duplicates
+    yearContainers.forEach(year => {
+        idArray.push(year.children[0].id)
+    })
+    let findDuplicates = arr => arr.filter((item, index) => arr.indexOf(item) != index)
+    var uniqueIds = new Set(findDuplicates(idArray))
+    //highlight duplicates
+    yearContainers.forEach(year => {
+        if (uniqueIds.has(year.children[0].id)) {
+            year.style.backgroundColor = "#ff969c";
+        }
+        else {
+            year.style.backgroundColor = "white";
+        }
+    })
+}
 
 //removeYear: removes the last year container in the CP
 function removeYear(el) {
@@ -164,6 +190,58 @@ function removeYear(el) {
     updateYearNums();
 }
 
+
+function updateYearNums() {
+    var i = 1;
+    const yearContainers = document.querySelectorAll('.year_container')
+    yearContainers.forEach(year => {
+        year.children[0].children[0].textContent = "Year " + i;
+        i++;
+    })
+}
+
+// addYear: adds a year container to the student's CP
+function addYear() {
+    var yearNum = document.getElementById('course_planner').childElementCount;
+    if (yearNum < 10) {
+        yearNum++;
+        // create an empty newYear element and its inner empty elements
+        const newYearDiv = document.createElement("div");
+        const newTitleDiv = document.createElement("div");
+        const newUlDiv = document.createElement("div");
+        const newUl = document.createElement("ul");
+        const newSpan1 = document.createElement("span");
+        const newSpan2 = document.createElement("span");
+
+        // attach the styles for the newUl and append to parent
+        newUl.classList.add('ul_container', 'ul_format');
+        newUl.style.minHeight = "400px";
+        newUlDiv.appendChild(newUl);
+
+        // attach the styles and content for the spans and append to parent
+        newSpan1.classList.add('mb-2', 'mt-3');
+        newSpan1.style.userSelect = "none";
+        newSpan1.appendChild(document.createTextNode("Year " + yearNum));
+        newSpan2.classList.add('mt-3', 'ml-5', 'remove_year');
+        newSpan2.style.cursor = "pointer";
+        newSpan2.appendChild(document.createTextNode("remove"));
+        newSpan2.setAttribute("onclick", "removeYear(this)");
+        newTitleDiv.appendChild(newSpan1);
+        newTitleDiv.appendChild(newSpan2);
+        newTitleDiv.classList.add('row', 'year');
+        newTitleDiv.style.userSelect = "none";
+
+        // add newUlDiv and newTitleDiv and attach the styles and content for the newYearDiv
+        newYearDiv.appendChild(newTitleDiv);
+        newYearDiv.appendChild(newUlDiv);
+        newYearDiv.classList.add('col-3', 'year_container', 'align-top', 'mt-2', 'mb-2', 'ml-1', 'pb-1', 'mr-1', 'd-inline-block');
+
+        // add the new element to the course planner container
+        document.getElementById("course_planner").appendChild(newYearDiv);
+        drag_and_drop(); //update the drag and droppable lists
+    }
+    //ELSE: SHOULD NOTIFY USER THAT THEY CANNOT ADD MORE THAN 10 YEARS
+}
 
 // Export schedule: ___________________________________________________________________________
 
@@ -197,8 +275,6 @@ function convertToCSObj(draggable) {
     const newLi = document.createElement("li");
     const newTitle = document.createElement("div");
     const newBtn = document.createElement("span");
-
-    console.log(draggable.children[0].id)
     const id = draggable.children[0].id;
 
     // attach the styles for the newBtn
