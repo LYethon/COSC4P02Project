@@ -400,6 +400,23 @@
         });
     }
 
+    // export student schedule as a csv
+    function exportSchedule() {
+
+        $.ajax({
+            url: "@(Url.Action("ExportSchedule", "Home"))",
+            contentType: 'application/json; charset=utf-8',
+            data: { studentId:@student.Id },
+            type: 'GET',
+            beforeSend: function () {
+                buildJSON();
+            },
+            success: function () {
+                window.location = "@(Url.Action("ExportSchedule", "Home", new { studentId = @student.Id }))"
+            }
+        });
+    }
+
     function resetSchedule() {
 
     }

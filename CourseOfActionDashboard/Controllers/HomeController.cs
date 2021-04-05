@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Routing;
 using System.Data.Entity;
+using System.IO;
 
 namespace CourseOfActionDashboard.Controllers
 { 
@@ -65,6 +66,36 @@ namespace CourseOfActionDashboard.Controllers
             student.Schedule = jsonSched;
             _db.Entry(student).State = EntityState.Modified;
             _db.SaveChanges();
+        }
+
+        [HttpGet]
+        public FileContentResult ExportSchedule(int studentId)
+        {
+            string csv = "";
+            Student student = _db.Students.Where(s => s.Id.Equals(studentId)).FirstOrDefault();
+
+            if (student != null) {
+
+                Schedule schedule = JsonConvert.DeserializeObject<Schedule>(student.Schedule);
+
+                int i = 1;
+                foreach (var year in schedule.Courses)
+                {
+                    csv += "Year " + i + ",";
+                    foreach (var course in year)
+                    {
+                        csv += course.Code + ",";
+                    }
+                    csv += "\n";
+                    i++;
+                }
+            }
+            else
+            {
+                return null;
+            }
+
+            return File(new UTF8Encoding().GetBytes(csv), "text/csv", "StudentSchedule.csv");
         }
 
         public IActionResult Privacy()

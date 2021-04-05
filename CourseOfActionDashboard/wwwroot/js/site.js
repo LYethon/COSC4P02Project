@@ -243,12 +243,6 @@ function addYear() {
     //ELSE: SHOULD NOTIFY USER THAT THEY CANNOT ADD MORE THAN 10 YEARS
 }
 
-// Export schedule: ___________________________________________________________________________
-
-function exportSchedule() {
-
-}
-
 
 // Course List filter: ________________________________________________________________________
 
