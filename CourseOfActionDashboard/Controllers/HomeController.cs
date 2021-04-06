@@ -182,7 +182,11 @@ namespace CourseOfActionDashboard.Controllers
         }//pullPrereqs
 
         [HttpGet]
+<<<<<<< Updated upstream
         public List<String> pullContext(int[] idArray)
+=======
+        public List<String> pullCode(int[] idArray)
+>>>>>>> Stashed changes
         {
             List<String> testList = new List<String>();
             if (idArray != null)
@@ -192,8 +196,13 @@ namespace CourseOfActionDashboard.Controllers
                     var temp = idArray[i];
                     var test = _dbCourses.courseTable.Where(s => s.CID.Equals(temp)).ToList();
                     Course course = _dbCourses.courseTable.Where(s => s.CID.Equals(temp)).FirstOrDefault();
+<<<<<<< Updated upstream
                     if (course.Context != null)
                         testList.Add(course.Context);
+=======
+                    if (course.Code != null)
+                        testList.Add(course.Code);
+>>>>>>> Stashed changes
                 }
             }
             else
@@ -201,6 +210,7 @@ namespace CourseOfActionDashboard.Controllers
                 return null;
             }
             return testList;
+<<<<<<< Updated upstream
         }//pullContext
 
         public List<Double> pullValue(int[] idArray)
@@ -242,6 +252,10 @@ namespace CourseOfActionDashboard.Controllers
             else return null;
             return creditValues;
         }
+=======
+        }//pullPrereqs
+
+>>>>>>> Stashed changes
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
