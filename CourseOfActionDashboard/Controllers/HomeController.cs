@@ -155,6 +155,35 @@ namespace CourseOfActionDashboard.Controllers
             return byte2String;
         }
 
+
+
+        //JAMES HERE V
+        [HttpGet]
+        public List<String> pullPrereqs(int[] idArray)
+        {
+            List<String> testList = new List<String>();
+            if (idArray != null)
+            {
+                for (int i = 0; i < idArray.Length; i++)
+                {
+                    var temp = idArray[i];
+                    var test = _dbCourses.courseTable.Where(s => s.CID.Equals(temp)).ToList();
+                    Course course = _dbCourses.courseTable.Where(s => s.CID.Equals(temp)).FirstOrDefault();
+                    if (course.Prerequisites != null) 
+                        testList.Add(course.Prerequisites);
+                    else
+                        testList.Add("");
+                }
+            }
+            else
+            {
+                return null;
+            }
+            return testList;
+        }//pullPrereqs
+
+
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

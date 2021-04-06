@@ -317,6 +317,41 @@
     </p>
 </footer>
 <script type="text/javascript">
+
+
+    checkPrereq(); //you can get rid of me later;)
+
+    function checkPrereq() {
+        //save list of IDs from student CP
+        const stdIdArray = [];
+        const yearContainers = document.querySelectorAll('.courseName')
+        yearContainers.forEach(course => {
+            stdIdArray.push(parseInt(course.id));
+        })
+        console.log(stdIdArray);
+
+        //fetch prereqs based off IDs
+        $.ajax({
+            type: 'get',
+            url: "@(Url.Action("pullPrereqs", "Home"))",
+            data: { 'idArray': stdIdArray},
+            dataType: 'json',
+            traditional: true,
+            success: function (data) {
+                console.log("Success Prereq");
+                //JAMES DO UR STUFF HERE V
+                console.log(data);
+
+
+
+            },
+            error: function (e) {
+                console.log("Error Prereq");
+            }
+        });
+    }
+
+
     function alertMessage(num) {
         switch (num) {
             case 0:
@@ -418,7 +453,8 @@
     }
 
     function resetSchedule() {
-
+        var defaultSched = [[1,2,3,44,45],[4,5,6,7,43,46],[11,12,13,41,42],[24,25,31,]]
+        buildJSON(defaultSched);
+        location.reload(true);
     }
-
 </script>

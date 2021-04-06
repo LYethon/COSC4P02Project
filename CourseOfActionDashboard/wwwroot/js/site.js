@@ -77,7 +77,8 @@ function remove(el) {
 
 // Drag and drop: ______________________________________________________________________________
 
-maxYearCredits = 12; //CHANGE TO ACTUALLY CALC CREDIT WEIGHT AND ADD TO CONFIGURATIONS
+maxCredits = 6; //the max credits a student can take per year
+maxCreditCap = 7; //the max cap a year will physically hold
 
 drag_and_drop();
 colorCourseList();
@@ -98,15 +99,16 @@ function drag_and_drop() {
 
     containers.forEach(container => {
         container.addEventListener('dragover', e => {
-            var numElements = container.childElementCount;
             e.preventDefault()
             const afterElement = getDragAfterElement(container, e.clientY)
             const draggable = document.querySelector('.dragging')
 
+            var totalCredits = countCredits(container, draggable);
+
             //if user can add credit to container..
-            if (afterElement == null && !draggable.classList.contains('course_list') && numElements < maxYearCredits) {
+            if (afterElement == null && !draggable.classList.contains('course_list') && totalCredits < maxCreditCap) {
                 container.appendChild(draggable)
-            } else if (!draggable.classList.contains('course_list') && numElements < maxYearCredits) {
+            } else if (!draggable.classList.contains('course_list') && totalCredits < maxCreditCap) {
                 container.insertBefore(draggable, afterElement)
             }
             checkDuplicates();
@@ -116,17 +118,17 @@ function drag_and_drop() {
             e.preventDefault();
             const afterElement = getDragAfterElement(container, e.clientY)
             const draggable = document.querySelector('.dragging')
+            var totalCredits = countCredits(container, null);
 
-            var numElements = container.childElementCount;
+            if (afterElement == null && totalCredits < maxCreditCap) {
 
-            if (afterElement == null && numElements < maxYearCredits) {
                 if (draggable.classList.contains('course_list')) {
                     const droppable = convertToCSObj(draggable);
                     container.appendChild(droppable);
                 } else {
                     container.appendChild(draggable);
                 }
-            } else if (numElements < maxYearCredits) {  //insert element
+            } else if (totalCredits < maxCreditCap) {  //insert element
                 if (draggable.classList.contains('course_list')) {
                     const droppable = convertToCSObj(draggable);
                     container.insertBefore(droppable, afterElement);
@@ -134,13 +136,17 @@ function drag_and_drop() {
                     container.insertBefore(draggable, afterElement);
                 }
             }
+            /*if (totalCredits >= maxCredits) {
+                var numChildren = container.childElementCount;
+                highlightOverflow(container, numChildren);
+            }*/
             checkDuplicates();
             addDragTag();
             colorCourseList();
+            checkPrereq();
         })
     })
 }
-
 
 
 // getDragAfterElement: determines where the item should get dropped
@@ -159,6 +165,65 @@ function getDragAfterElement(container, y) {
     }, { offset: Number.NEGATIVE_INFINITY }).element
 }
 
+//highlights credits that exceed the max credit count
+function highlightOverflow(container, numChildren) {
+    console.log("enter highlightoverflow")
+   // const yearContainer = container.querySelectorAll('.credit_box')
+    console.log(container.childElementCount + " " + numChildren)
+    for (i = 0; i < container.childElementCount; i++) {
+        if (i >= numChildren) {
+            container.children[i].style.backgroundColor = "palegoldenrod";
+        }
+        else {
+            container.children[i].style.backgroundColor = "white";
+        }
+    }
+
+}
+
+
+//counts the total weight of the student's credits from the CP
+function countCredits(container, draggable) {
+    var totCredits = 0.0
+
+    const yearContainers = container.querySelectorAll('.credit_box')
+    //add current dragging weight to calculation
+    if (draggable != null) {
+        var dragText = draggable.children[0].textContent.trim().substr(4).trim()
+        var dragWeight = dragText[1]
+
+        if (dragWeight == 'P' || dragWeight == 'C' || dragWeight == 'Q' || dragWeight == 'R' || dragWeight == 'V') dragWeight = 0.5
+        else if (dragWeight == 'F' || dragWeight == 'G' || dragWeight == 'M') weight = 1.0
+        else if (dragWeight == 'N') weight = 0.0
+        else if (dragWeight == 'Y') weight = 0.25
+        else if (dragWeight == 'D') weight = 1.5
+        else if (dragWeight == 'L') weight = 2.0
+        else if (dragWeight == 'A') weight = 3.0
+        else if (dragWeight == 'B') weight = 4.5
+        else if (dragWeight == 'Z') weight = 5.0
+        else dragWeight = 0.0
+
+        totCredits = dragWeight;
+    }
+
+    yearContainers.forEach(year => {
+        var text = year.children[0].textContent.trim().substr(4).trim()
+        var weight = text[1] //get the second char of the code
+        if (weight == 'P' || weight == 'C' || weight == 'Q' || weight == 'R' || weight == 'V') weight = 0.5
+        else if (weight == 'F' || weight == 'G' || weight == 'M') weight = 1.0
+        else if (weight == 'N') weight = 0.0
+        else if (weight == 'Y') weight = 0.25
+        else if (weight == 'D') weight = 1.5
+        else if (weight == 'L') weight = 2.0
+        else if (weight == 'A') weight = 3.0
+        else if (weight == 'B') weight = 4.5
+        else if (weight == 'Z') weight = 5.0
+        else weight = 0.0
+        totCredits += weight;
+    })
+    return totCredits;
+}
+
 //looks for duplicate credits witihin the student's CP
 function checkDuplicates() {
     const yearContainers = document.querySelectorAll('.credit_box')
@@ -175,7 +240,8 @@ function checkDuplicates() {
             year.style.backgroundColor = "#ff969c";
         }
         else {
-            year.style.backgroundColor = "white";
+            if (year.style.backgroundColor != "palegoldenrod")
+                year.style.backgroundColor = "white";
         }
     })
 }
