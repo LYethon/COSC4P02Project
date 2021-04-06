@@ -46,11 +46,7 @@
                         <table style="width:400px;">
                             <tc>
                                 <td style="background-color:#00cc00;width:30px;border-radius:5px;">&nbsp;</td>
-                                <td>  Completed  </td>
-                            </tc>
-                            <tc>
-                                <td style="background-color:#ffcc00;width:30px;border-radius:5px;">&nbsp;</td>
-                                <td>  Planned  </td>
+                                <td>  Scheduled  </td>
                             </tc>
                             <tc>
                                 <td style="background-color:lightcoral;width:30px;border-radius:5px;">&nbsp;</td>
@@ -63,8 +59,7 @@
                     <!--Progress Bar-->
                     <div class="progressarea" style="padding-top:2.5%;">
                         <div class="progress" style="background-color:lightcoral">
-                            <div class="progress-bar-striped bg-success" id="percentCompleted" role="progressbar" style="width: 0%" aria-valuemin="0" aria-valuemax="100"></div><!--aria-valuenow="10"-->
-                            <div class="progress-bar-striped bg-warning" id="percentPlanned" role="progressbar" style="width: 0%" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar-striped bg-success" id="percentPlanned" role="progressbar" style="width: 0%" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </div>
 
@@ -76,34 +71,20 @@
                                     <table style="width:100%;margin:auto;">
                                         <tr style="font-weight:bold;">
                                             <tc><td>Credits</td></tc>
-                                            <tc><td>Planned</td></tc>
-                                            <tc><td>Completed</td></tc>
+                                            <tc><td>Scheduled</td></tc>
                                         </tr>
                                         <tr>
 
                                             <tc><td style="">Overall</td></tc>
                                             <tc><td id="overPlanned" style="">0/0</td></tc>
-                                            <tc><td id="overCompleted" style="">0/0</td></tc>
-                                        </tr>
-                                        <tr>
-                                            <tc><td style="">Major</td></tc>
-                                            <tc><td id="majorPlanned" style="">0/0</td></tc>
-                                            <tc><td id="majorCompleted" style="">0/0</td></tc>
-                                        </tr>
-                                        <tr>
-                                            <tc><td style="">Minor</td></tc>
-                                            <tc><td id="minorPlanned" style="">0/0</td></tc>
-                                            <tc><td id="minorCompleted" style="">0/0</td></tc>
                                         </tr>
                                         <tr>
                                             <tc><td style="">Social Science</td></tc>
                                             <tc><td id="socPlanned" style="">0/0</td></tc>
-                                            <tc><td id="socCompleted" style="">0/0</td></tc>
                                         </tr>
                                         <tr>
                                             <tc><td style="">Humanities</td></tc>
                                             <tc><td id="humPlanned" style="">0/0</td></tc>
-                                            <tc><td id="humCompleted" style="">0/0</td></tc>
                                         </tr>
                                     </table>
                                 </div>
@@ -112,28 +93,23 @@
                                     <table style="width:100%;margin:auto;">
                                         <tr style="font-weight:bold;">
                                             <tc><td>Credits</td></tc>
-                                            <tc><td>Planned</td></tc>
-                                            <tc><td>Completed</td></tc>
+                                            <tc><td>Scheduled</td></tc>
                                         </tr>
                                         <tr>
                                             <tc><td style="">1alpha00-1alpha99</td></tc>
                                             <tc><td id="1aPlanned" style="">0/0</td></tc>
-                                            <tc><td id="1aCompleted" style="">0/0</td></tc>
                                         </tr>
                                         <tr>
                                             <tc><td style="">2alpha00-2alpha99</td></tc>
                                             <tc><td id="2aPlanned" style="">0/0</td></tc>
-                                            <tc><td id="2aCompleted" style="">0/0</td></tc>
                                         </tr>
                                         <tr>
                                             <tc><td style="">3alpha00-3alpha99</td></tc>
                                             <tc><td id="3aPlanned" style="">0/0</td></tc>
-                                            <tc><td id="3aCompleted" style="">0/0</td></tc>
                                         </tr>
                                         <tr>
                                             <tc><td style="">4alpha00-4alpha99</td></tc>
                                             <tc><td id="4aPlanned" style="">0/0</td></tc>
-                                            <tc><td id="4aCompleted" style="">0/0</td></tc>
                                         </tr>
                                     </table>
                                 </div>
@@ -157,7 +133,7 @@
                                     <button type="button" class="btn btn-outline-primary add_year mr-2" onclick="addYear()">Add Year</button>
                                 </form>
                                 <form class="form-inline">
-                                    <button type="button" class="btn btn-outline-success mr-2" onclick="buildJSON()">Save</button>
+                                    <button type="button" class="btn btn-outline-success mr-2" onclick="buildJSON(); updateProgress()">Save</button>
                                     <button type="button" class="btn btn-outline-secondary mr-2" onclick="resetSchedule()">Reset</button>
                                     <button type="button" class="btn btn-outline-secondary" onclick="exportSchedule()">Export</button>
                                 </form>
@@ -609,6 +585,53 @@
             }
         });
     }
+    function updateProgress() {
+
+        //Required totals **these can be hardcoded if only relevant to computer science students
+        var totOverall = 20;
+        var totSocSci = 1;
+        var totHuman = 1;
+        var tot1alpha = 8;
+        var tot2alpha = 3;
+        var tot3alpha = 3;
+        var tot4alpha = 0;
+
+        //planned credits **a completed credit does not count as a planned credit**
+        //@{ 
+            double pOverall = 0;
+            double pSocSci = 0;
+            double pHuman = 0;
+            double p1alpha = 0;
+            double p2alpha = 0;
+            double p3alpha = 0;
+            double p4alpha = 0;
+
+            for (int y = 0; y < schedule.Courses.Count; y++) {
+                for (int i = 0; i < schedule.Courses[y].Count; i++) {
+
+                    pOverall += schedule.Courses[y][i].CreditValue; //every course adds their credit value
+                    if ((schedule.Courses[y][i].Context).Equals("SOCIAL SCIENCES                                                                                     ")) pSocSci += schedule.Courses[y][i].CreditValue; //if soc sci, then add that courses credit value
+                    if (schedule.Courses[y][i].Context.Equals("HUMANITIES                                                                                          ")) pHuman += schedule.Courses[y][i].CreditValue;
+                    if ((schedule.Courses[y][i].Code)[0] == '1') p1alpha += schedule.Courses[y][i].CreditValue;
+                    if ((schedule.Courses[y][i].Code)[0] == '2') p2alpha += schedule.Courses[y][i].CreditValue;
+                    if ((schedule.Courses[y][i].Code)[0] == '3') p3alpha += schedule.Courses[y][i].CreditValue;
+                    if ((schedule.Courses[y][i].Code)[0] == '4') p4alpha += schedule.Courses[y][i].CreditValue;
+                }
+            }
+            }
+
+                document.getElementById("overPlanned").innerHTML = (@pOverall) + " / " + totOverall + " required";
+                document.getElementById("socPlanned").innerHTML = (@pSocSci) + " / " + totSocSci + " required";
+                document.getElementById("humPlanned").innerHTML = (@pHuman) + " / " + totHuman + " required";
+                document.getElementById("1aPlanned").innerHTML = (@p1alpha) + " / " + tot1alpha + " max. allowed";
+                document.getElementById("2aPlanned").innerHTML = (@p2alpha) + " / " + tot2alpha + " required";
+                document.getElementById("3aPlanned").innerHTML = (@p3alpha) + " / " + tot3alpha + " required";
+                document.getElementById("4aPlanned").innerHTML = (@p4alpha) + " / " + tot4alpha + " required";
+
+                var percentPlanned = "width:" + ((@pOverall / totOverall) * 100) + "%";
+
+                document.getElementById("percentPlanned").setAttribute("style", percentPlanned);
+            }
 
 
 
