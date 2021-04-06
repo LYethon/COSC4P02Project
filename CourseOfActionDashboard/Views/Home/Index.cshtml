@@ -254,37 +254,26 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="container-fluid" style="background-color:brown">
-                    <button class="show-example-btn" aria-label="SuccessButton" onclick="alertMessage(0)">
-                        Success Test
-                    </button>
-                    <button class="show-example-btn" aria-label="DangerButton" onclick="alertMessage(1)">
-                        Danger Test
-                    </button>
-                    <button class="show-example-btn" aria-label="InfoButton" onclick="alertMessage(3)">
-                        Info Test
-                    </button>
-                    <button class="show-example-btn" aria-label="WarningButton" onclick="alertMessage(2)">
-                        Warning Test
-                    </button>
-                    <!--Error Box
-                    <div class="alert alert-success alert-dismissible">
-                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        <strong>Success!</strong> This alert box could indicate a successful or positive action.
+            <div class="row ">
+                <div class="col  p-0">
+                    <div class="container-fluid">
+                        <button class="alert alert-primary " aria-label="SuccessButton" onclick="warningTab()">
+                            Warning!
+                        </button>
+                        <button class="alert" aria-label="SuccessButton" onclick="recommendationTab()">
+                            Recommendation
+                        </button>
                     </div>
-                    <div class="alert alert-info alert-dismissible">
-                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        <strong>Info!</strong> This alert box could indicate a neutral informative change or action.
+                </div>
+                <div class="container-fluid">
+                    <div class="alert alert-primary" role="alert">
+                        <p style="font-size:30px" id="title"></p>
+                        
+                        <p id="science"></p>
+                        <p id="social"></p>
+                        <p id="humanities"></p>
+
                     </div>
-                    <div class="alert alert-warning alert-dismissible">
-                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        <strong>Warning!</strong> This alert box could indicate a warning that might need attention.
-                    </div>
-                    <div class="alert alert-danger alert-dismissible">
-                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        <strong>Danger!</strong> This alert box could indicate a dangerous or potentially negative action.
-                    </div>-->
                 </div>
             </div>
         </main>
@@ -317,20 +306,134 @@
     </p>
 </footer>
 <script type="text/javascript">
+    function warnDuplicates(duplicate) {
 
+        if (duplicate) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Warning!',
+                text: 'There are duplicated courses.',
+                showCloseButton: true,
+                showCancelButton: true,
+                confirmButtonText: 'Never show this again',
+                cancelButtonText: 'Cancel',
 
-    checkPrereq(); //you can get rid of me later;)
+            }).then((result) => {
+                if (result.value) {
+                    ignore = true;
+                }
+            })
+        }
+    }
 
-    function checkPrereq() {
-        //save list of IDs from student CP
+     function recommendationTab() {
+        document.getElementById("test").innerHTML = "Here are the recommended courses:"
+    }
+
+    function warningTab() {
+        document.getElementById("test").innerHTML = "Here are the warnings"
+    }
+
+    checkContext();
+    function checkContext() {
         const stdIdArray = [];
         const yearContainers = document.querySelectorAll('.courseName')
         yearContainers.forEach(course => {
-            stdIdArray.push(parseInt(course.id));
+            stdIdArray.push(course.id);
         })
-        console.log(stdIdArray);
 
-        //fetch prereqs based off IDs
+        $.ajax({
+            type: 'get',
+            url: "@(Url.Action("pullContext", "Home"))",
+            data: { 'idArray': stdIdArray},
+            dataType: 'json',
+            traditional: true,
+            success: function (data) {
+                console.log("Success Context");
+                var context = [];
+                var cid;
+                for (var i = 0; i < data.length; i++) {
+                    if (data[i] != "") {
+                        cid = data[i].split(",");
+                        for (var j = 0; j < cid.length; j++) {
+                            context.push(cid[j]);
+                        }
+                    }
+                }
+
+                checkValue(context);
+            },
+            error: function (e) {
+                console.log("Error Context");
+            }
+        });
+    }
+
+    function checkValue(context) {
+        const stdIdArray = [];
+        const yearContainers = document.querySelectorAll('.courseName')
+        yearContainers.forEach(course => {
+            stdIdArray.push(course.id);
+        })
+
+        $.ajax({
+            type: 'get',
+            url: "@(Url.Action("pullValue", "Home"))",
+            data: { 'idArray': stdIdArray},
+            dataType: 'json',
+            traditional: true,
+            success: function (data) {
+                console.log("Success Value");
+  
+                distribute(context, data);
+            },
+            error: function (e) {
+                console.log("Error Value");
+            }
+
+        });
+    }
+
+    function distribute(context, value) {
+        var warning = false;
+        var science = 0;
+        var social = 0;
+        var humanities = 0;
+        for (var i = 0; i < context.length; i++) {
+            if (context[i] == 'SCIENCE') {
+                science = science + value[i];
+            } else if (context[i] == 'SOCIAL SCIENCES') {
+                social = social + value[i];
+            }else if (context[i] == 'HUMANITIES') {
+                humanities = humanities + value[i];
+            } 
+        }
+        
+        if (science < 1) {
+            document.getElementById("science").innerHTML = "You are missing " + (1 - science) + " Science credits."
+            warning = true;
+        }
+        if (social < 1) {
+            document.getElementById("social").innerHTML = "You are missing " + (1 - social) + " Social credits."
+            warning = true;
+        }
+        if (humanities < 1) {
+            document.getElementById("humanities").innerHTML = "You are missing " + (1 - humanities) + " Humanities credits."
+            warning = true;
+        }
+
+        if (warning) {
+            document.getElementById("title").innerHTML = "Warning!"
+        }
+    }
+
+     function checkPrereq() {
+        const stdIdArray = [];
+        const yearContainers = document.querySelectorAll('.courseName')
+        yearContainers.forEach(course => {
+            stdIdArray.push(course.id);
+        })
+
         $.ajax({
             type: 'get',
             url: "@(Url.Action("pullPrereqs", "Home"))",
@@ -339,9 +442,19 @@
             traditional: true,
             success: function (data) {
                 console.log("Success Prereq");
-                //JAMES DO UR STUFF HERE V
-                console.log(data);
+                var preReq = [];
+                var cid;
+                for (var i = 0; i < data.length; i++) {
+                    if (data[i] != "") {
+                        cid = data[i].split(",");
+                        for (var j = 0; j < cid.length; j++) {
+                            preReq.push(cid[j]);
+                        }
+                    }
+                }
 
+                console.log(preReq);
+                testA(preReq, stdIdArray);
 
 
             },
@@ -350,7 +463,6 @@
             }
         });
     }
-
 
     function alertMessage(num) {
         switch (num) {
@@ -386,8 +498,6 @@
                 return;
         }
     }
-
-
 
     function saveSched() {
         var studentJson = @Html.Raw(Json.Serialize(@student));
