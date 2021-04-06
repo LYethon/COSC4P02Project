@@ -394,7 +394,6 @@
         });
     }
 
-<<<<<<< Updated upstream
     function distribute(context, value) {
         var warning = false;
         var science = 0;
@@ -422,10 +421,6 @@
             document.getElementById("humanities").innerHTML = "You are missing " + (1 - humanities) + " Humanities credits."
             warning = true;
         }
-=======
-    checkPrereq(); //you can get rid of me later;)
-    courseYear();
->>>>>>> Stashed changes
 
         if (warning) {
             document.getElementById("title").innerHTML = "Warning!"
@@ -438,10 +433,6 @@
         yearContainers.forEach(course => {
             stdIdArray.push(course.id);
         })
-<<<<<<< Updated upstream
-=======
-        //console.log(stdIdArray);
->>>>>>> Stashed changes
 
         $.ajax({
             type: 'get',
@@ -451,11 +442,6 @@
             traditional: true,
             success: function (data) {
                 console.log("Success Prereq");
-<<<<<<< Updated upstream
-=======
-                //JAMES DO UR STUFF HERE V
-                //Formatting preReqs
->>>>>>> Stashed changes
                 var preReq = [];
                 var cid;
                 for (var i = 0; i < data.length; i++) {
@@ -467,50 +453,10 @@
                     }
                 }
 
-<<<<<<< Updated upstream
                 console.log(preReq);
                 testA(preReq, stdIdArray);
-=======
-                var index, status;
-                for (var o = 0; o < preReq.length; o++) {
-                    for (var k = 0; k < stdIdArray.length; k++) {
-                        if (preReq[o] == stdIdArray[k]) {
-                            console.log("Sats");
-                            status = true;
-                            index = i;
-                            //console.log("Missing CID: " + preReq[i] + " for CID: " + stdIdArray[j]);
-                        } else {
-                            status = false;
-                        }
-                    }
-                }
-            },
-            error: function (e) {
-                console.log("Error Prereq");
-            }
-        });
-    }
->>>>>>> Stashed changes
 
-    function courseYear() {
-        //save list of IDs from student CP
-        const stdIdArray = [];
-        const yearContainers = document.querySelectorAll('.courseName')
-        yearContainers.forEach(course => {
-            stdIdArray.push(course.id);
-        })
 
-        //fetch course code based off IDs
-        $.ajax({
-            type: 'get',
-            url: "@(Url.Action("pullCode", "Home"))",
-            data: { 'idArray': stdIdArray},
-            dataType: 'json',
-            traditional: true,
-            success: function (data) {
-                console.log("Success Prereq");
-                //JAMES DO UR STUFF HERE V
-                console.log(data);
             },
             error: function (e) {
                 console.log("Error Prereq");
@@ -518,21 +464,6 @@
         });
     }
 
-<<<<<<< Updated upstream
-=======
-    //This method will check for duplicate preRequs
-    function checkDup(v, preReq) {
-        var t = false;
-        for (var i = 0; i < preReq.length; i++) {
-            if (v == preReq[i]) {
-                t = true;
-                break;
-            }
-        }
-        return t
-    }
-
->>>>>>> Stashed changes
     function alertMessage(num) {
         switch (num) {
             case 0:
