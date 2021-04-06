@@ -77,8 +77,14 @@ function remove(el) {
 
 // Drag and drop: ______________________________________________________________________________
 
-maxCredits = 6; //the max credits a student can take per year
-maxCreditCap = 7; //the max cap a year will physically hold
+creditValueData = [];
+totalCreditValue = 0.0;
+
+function callback(data, totWeight) {
+    creditValueData = data;
+    totalCreditValue = totWeight;
+    console.log("totalCreditValue: " + totalCreditValue + " _creditValueData: " + creditValueData)
+}
 
 drag_and_drop();
 colorCourseList();
@@ -102,13 +108,13 @@ function drag_and_drop() {
             e.preventDefault()
             const afterElement = getDragAfterElement(container, e.clientY)
             const draggable = document.querySelector('.dragging')
-
-            var totalCredits = countCredits(container, draggable);
+            getCreditValues(container) //update current credit weight count
+            //console.log("dragover " + totalCreditValue)
 
             //if user can add credit to container..
-            if (afterElement == null && !draggable.classList.contains('course_list') && totalCredits < maxCreditCap) {
+            if (afterElement == null && !draggable.classList.contains('course_list') && totalCreditValue < config.max_cap_cr_year) {
                 container.appendChild(draggable)
-            } else if (!draggable.classList.contains('course_list') && totalCredits < maxCreditCap) {
+            } else if (!draggable.classList.contains('course_list') && totalCreditValue < config.max_cap_cr_year) {
                 container.insertBefore(draggable, afterElement)
             }
             checkDuplicates();
@@ -118,9 +124,10 @@ function drag_and_drop() {
             e.preventDefault();
             const afterElement = getDragAfterElement(container, e.clientY)
             const draggable = document.querySelector('.dragging')
-            var totalCredits = countCredits(container, null);
+            getCreditValues(container) //update current credit weight count
+            //console.log("drop " + totalCreditValue)
 
-            if (afterElement == null && totalCredits < maxCreditCap) {
+            if (afterElement == null && totalCreditValue < config.max_cap_cr_year) {
 
                 if (draggable.classList.contains('course_list')) {
                     const droppable = convertToCSObj(draggable);
@@ -128,7 +135,7 @@ function drag_and_drop() {
                 } else {
                     container.appendChild(draggable);
                 }
-            } else if (totalCredits < maxCreditCap) {  //insert element
+            } else if (totalCreditValue < config.max_cap_cr_year) {  //insert element
                 if (draggable.classList.contains('course_list')) {
                     const droppable = convertToCSObj(draggable);
                     container.insertBefore(droppable, afterElement);
@@ -136,17 +143,46 @@ function drag_and_drop() {
                     container.insertBefore(draggable, afterElement);
                 }
             }
-            /*if (totalCredits >= maxCredits) {
-                var numChildren = container.childElementCount;
-                highlightOverflow(container, numChildren);
-            }*/
+            if (totalCreditValue > config.max_cr_year) { //if we have an overflow of weights in a year
+                console.log("OVERFLOW")
+                var data = creditValueData;
+                highlightOverflow(container, data);
+            }
             checkDuplicates();
             addDragTag();
             colorCourseList();
-            checkPrereq();
+            //highlightOverflow(container, creditValueData);
+
+           // checkPrereq();
         })
     })
 }
+
+
+//highlights credits that exceed the max credit count
+function highlightOverflow(container, data) {
+    //determine where the overflow occurs
+    var pos = 0;
+    var weights = 0.0;
+    for (p = 0; p < data.length; p++) {
+        if (weights >= config.max_cr_year) {
+            pos = p;
+            break;
+        }
+        else weights += data[p]
+    }
+    //highlight overflowing course elements
+    for (i = 0; i < container.childElementCount; i++) {
+        if (i >= pos) {
+            container.children[i].style.backgroundColor = "palegoldenrod";
+        }
+        else {
+            container.children[i].style.backgroundColor = "white";
+        }
+    }
+
+}
+
 
 
 // getDragAfterElement: determines where the item should get dropped
@@ -165,7 +201,7 @@ function getDragAfterElement(container, y) {
     }, { offset: Number.NEGATIVE_INFINITY }).element
 }
 
-//highlights credits that exceed the max credit count
+/*//highlights credits that exceed the max credit count
 function highlightOverflow(container, numChildren) {
     console.log("enter highlightoverflow")
    // const yearContainer = container.querySelectorAll('.credit_box')
@@ -180,10 +216,11 @@ function highlightOverflow(container, numChildren) {
     }
 
 }
+*/
 
 
 //counts the total weight of the student's credits from the CP
-function countCredits(container, draggable) {
+/*function countCredits(container, draggable) {
     var totCredits = 0.0
 
     const yearContainers = container.querySelectorAll('.credit_box')
@@ -205,7 +242,6 @@ function countCredits(container, draggable) {
 
         totCredits = dragWeight;
     }
-
     yearContainers.forEach(year => {
         var text = year.children[0].textContent.trim().substr(4).trim()
         var weight = text[1] //get the second char of the code
@@ -223,6 +259,8 @@ function countCredits(container, draggable) {
     })
     return totCredits;
 }
+*/
+
 
 //looks for duplicate credits witihin the student's CP
 function checkDuplicates() {

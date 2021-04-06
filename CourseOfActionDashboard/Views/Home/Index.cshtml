@@ -453,8 +453,53 @@
     }
 
     function resetSchedule() {
-        var defaultSched = [[1,2,3,44,45],[4,5,6,7,43,46],[11,12,13,41,42],[24,25,31,]]
-        buildJSON(defaultSched);
-        location.reload(true);
+        //const defaultSched = [[1,2,3,44,45],[4,5,6,7,43,46],[11,12,13,41,42],[24,25,31,]]
+        const defaultSched = config.default_sched
+        //console.log("here"+ defaultSched)
+        $.ajax({
+            type: 'POST',
+            url: "@(Url.Action("saveSchedule", "Home"))",
+            data: { idList: defaultSched, studentId:@student.Id},
+            success: function (msg) {
+                console.log("Success");
+            },
+            error: function (e) {
+                console.log("Error");
+            }
+        });
     }
+
+    //given a year container, this function will return the total weights of each course
+    function getCreditValues(container) {
+        const idArray = []
+        const cont = container.querySelectorAll('.credit_box ')
+        cont.forEach(course => {
+            //if (!course.classList.contains('.dragging'))
+            idArray.push(parseInt(course.children[0].id));
+        })
+       // console.log(idArray)
+        //fetch credit values based off IDs
+        $.ajax({
+            type: 'get',
+            url: "@(Url.Action("pullCreditValue", "Home"))",
+            data: { 'idArray': idArray },
+            dataType: 'json',
+            traditional: true,
+            success: function (data) {
+                //console.log("Success - CreditValue");
+                totalWeight = 0.0;
+                data.forEach(weight => {
+                    totalWeight += weight
+                })
+                //console.log("total weight: " + totalWeight)
+                callback(data, totalWeight)
+            },
+            error: function (e) {
+                console.log("Error Pull");
+            }
+        });
+    }
+
+
+
 </script>

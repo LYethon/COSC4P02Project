@@ -20,7 +20,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="jsconfig.json" />
     <Content Remove="wwwroot\css\LoginPage.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Properties\.editorconfig" />
+    <None Remove="Properties\file.tsx" />
   </ItemGroup>
 
   <ItemGroup>

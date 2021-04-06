@@ -183,6 +183,24 @@ namespace CourseOfActionDashboard.Controllers
         }//pullPrereqs
 
 
+        [HttpGet]
+        public List<double> pullCreditValue(int[] idArray)
+        {
+            List<double> creditValues = new List<double> { };
+
+            if (idArray != null)
+            {
+                for (int i = 0; i < idArray.Length; i++)
+                {
+                    var temp = idArray[i];
+                    Course course = _dbCourses.courseTable.Where(s => s.CID.Equals(temp)).FirstOrDefault();
+                    creditValues.Add(course.CreditValue);
+                }
+            }
+            else return null;
+            return creditValues;
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
