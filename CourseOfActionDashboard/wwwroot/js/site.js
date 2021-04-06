@@ -4,6 +4,9 @@
 //  updateProgress method: when changes are made to students schedule, use updateProgress
 //  to update the credit counter and progress bar
 
+var duplicate = false;
+var ignore = false;
+
 
 function updateProgress() {
     //Required totals **these can be hardcoded if only relevant to computer science students
@@ -151,9 +154,12 @@ function drag_and_drop() {
             checkDuplicates();
             addDragTag();
             colorCourseList();
-            //highlightOverflow(container, creditValueData);
-
-           // checkPrereq();
+            if (!ignore) {
+                warnDuplicates(duplicate);
+                if (!duplicate) {
+                    duplicate = false;
+                }
+            }
         })
     })
 }
@@ -264,6 +270,7 @@ function highlightOverflow(container, numChildren) {
 
 //looks for duplicate credits witihin the student's CP
 function checkDuplicates() {
+    duplicate = false;
     const yearContainers = document.querySelectorAll('.credit_box')
     var idArray = [];
     //find duplicates
@@ -276,6 +283,7 @@ function checkDuplicates() {
     yearContainers.forEach(year => {
         if (uniqueIds.has(year.children[0].id)) {
             year.style.backgroundColor = "#ff969c";
+            duplicate = true;
         }
         else {
             if (year.style.backgroundColor != "palegoldenrod")
