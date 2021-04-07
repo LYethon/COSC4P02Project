@@ -45,6 +45,42 @@ namespace CourseOfActionDashboard.Controllers
         }
 
         [HttpPost]
+        public Course getCourse(int id)
+        {
+            Course course = _dbCourses.courseTable.Where(s => s.CID.Equals(id)).FirstOrDefault();
+            return course;
+        }
+
+        [HttpPost]
+        public Schedule compareSchedules(int[][] requiredId, int[][] currentId)
+        {
+            string jsonSched = "{'Courses':[";
+
+            for (int i = 0; i < requiredId.Length; i++)
+            {
+                jsonSched += "[";
+                for (int q = 0; q < requiredId[i].Length; q++)
+                {
+
+                    for (int t = 0; t < currentId[i].Length; t++)
+                    {
+                        if (requiredId[i][q]== currentId[i][t]) {
+                            var temp = requiredId[i][q];
+                            Course course = _dbCourses.courseTable.Where(s => s.CID.Equals(temp)).FirstOrDefault();
+                            jsonSched += JsonConvert.SerializeObject(course) + ",";
+                        }
+                    }
+                }
+                jsonSched += "],";
+            }
+            jsonSched += "]}";
+
+            Schedule schedule = JsonConvert.DeserializeObject<Schedule>(jsonSched);
+
+            return schedule;
+        }
+
+        [HttpPost]
         public void saveSchedule(int[][] idList, int studentId)
         {
             string jsonSched = "{'Courses':[";

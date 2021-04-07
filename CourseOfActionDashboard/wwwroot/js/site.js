@@ -19,6 +19,7 @@ function remove(el) {
     parent.parentNode.removeChild(parent);
     checkDuplicates();
     colorCourseList();
+    checkRequiredCourses();
 }
 
 
@@ -109,6 +110,7 @@ function drag_and_drop() {
                     duplicate = false;
                 }
             }
+            checkRequiredCourses();
         })
     })
 }
