@@ -29,7 +29,7 @@
         </div>
     </nav>
 </header>
-<body>
+<body onload="updateProgress()">
 
     <div class="container">
         <main role="main" class="pb-3">
@@ -53,7 +53,6 @@
                                 <td>  Required  </td>
                             </tc>
                         </table>
-                        <button onclick="updateProgress()">Refresh Stats (test button)</button>
                     </div>
 
                     <!--Progress Bar-->
@@ -166,9 +165,9 @@
                                                     <span class="mt-3 ml-5 remove_year" style="cursor:pointer" onclick="removeYear(this)">
                                                         remove
                                                         @*<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="red" class="bi bi-trash" viewBox="0 0 16 16">
-                                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                                                </svg>*@
+                                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                                            </svg>*@
                                                     </span>
                                                 }
                                             </div>
@@ -202,9 +201,9 @@
                                                     <span class="mt-3 ml-5 remove_year" style="cursor:pointer" onclick="removeYear(this)">
                                                         remove
                                                         @*<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="red" class="bi bi-trash" viewBox="0 0 16 16">
-                                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                                                </svg>*@
+                                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                                            </svg>*@
                                                     </span>
                                                 }
                                             </div>
@@ -248,7 +247,7 @@
                 <div class="container-fluid">
                     <div class="alert alert-primary" role="alert">
                         <p style="font-size:30px" id="title"></p>
-                        
+
                         <p id="science"></p>
                         <p id="social"></p>
                         <p id="humanities"></p>
@@ -285,6 +284,9 @@
         Powered by <big>Team Rocket</big>
     </p>
 </footer>
+
+
+
 <script type="text/javascript">
     function warnDuplicates(duplicate) {
 
@@ -656,9 +658,129 @@
             }
         });
     }
-    function updateProgress() {
 
-        //Required totals **these can be hardcoded if only relevant to computer science students
+ function updateProgress() {
+
+        const idArray = [];
+        const yearContainers = document.querySelectorAll('.courseName')
+        yearContainers.forEach(course => {
+        idArray.push(course.id);
+        })
+
+        console.log(idArray);
+
+    //get number of 1alphas
+    $.ajax({
+            type: 'GET',
+            url: "@(Url.Action("PullAlpha1Values", "Home"))",
+            data: { 'idArray': idArray},
+            dataType: 'json',
+            traditional: true,
+            success: function (data) {
+                showProgress('1alpha',data); //send number and type to showdata method
+            },
+            error: function (e) {
+                console.log("Error");
+            }
+        });
+
+    //get number of 2 alphas
+    $.ajax({
+            type: 'GET',
+            url: "@(Url.Action("PullAlpha2Values", "Home"))",
+            data: { 'idArray': idArray},
+            dataType: 'json',
+            traditional: true,
+            success: function (data) {
+                showProgress('2alpha',data); //send number and type to showdata method
+            },
+            error: function (e) {
+                console.log("Error");
+            }
+        });
+
+    //get number of 3 alphas
+    $.ajax({
+            type: 'GET',
+            url: "@(Url.Action("PullAlpha3Values", "Home"))",
+            data: { 'idArray': idArray},
+            dataType: 'json',
+            traditional: true,
+            success: function (data) {
+                showProgress('3alpha',data); //send number and type to showdata method
+            },
+            error: function (e) {
+                console.log("Error");
+            }
+        });
+
+    //get number of 4 alphas
+    $.ajax({
+            type: 'GET',
+            url: "@(Url.Action("PullAlpha4Values", "Home"))",
+            data: { 'idArray': idArray},
+            dataType: 'json',
+            traditional: true,
+            success: function (data) {
+                showProgress('4alpha',data); //send number and type to showdata method
+            },
+            error: function (e) {
+                console.log("Error");
+            }
+        });
+
+    //get number of soc scis
+    $.ajax({
+            type: 'GET',
+            url: "@(Url.Action("PullSocSciValues", "Home"))",
+            data: { 'idArray': idArray},
+            dataType: 'json',
+            traditional: true,
+            success: function (data) {
+                showProgress('socSci',data); //send number and type to showdata method
+            },
+            error: function (e) {
+                console.log("Error");
+            }
+        });
+
+
+    //get number of humanities
+    $.ajax({
+            type: 'GET',
+            url: "@(Url.Action("PullHumanValues", "Home"))",
+            data: { 'idArray': idArray},
+            dataType: 'json',
+            traditional: true,
+            success: function (data) {
+                showProgress('human',data); //send number and type to showdata method
+            },
+            error: function (e) {
+                console.log("Error");
+            }
+        });
+
+    $(document).ready(function () {
+        checkRequiredCourses()
+    });
+
+     //get number of overall creds
+    $.ajax({
+            type: 'GET',
+            url: "@(Url.Action("PullTotalCredValues", "Home"))",
+            data: { 'idArray': idArray},
+            dataType: 'json',
+            traditional: true,
+            success: function (data) {
+                showProgress('total',data); //send number and type to showdata method
+            },
+            error: function (e) {
+                console.log("Error");
+            }
+        });
+      }
+
+    function showProgress(type,num){
         var totOverall = 20;
         var totSocSci = 1;
         var totHuman = 1;
@@ -667,45 +789,17 @@
         var tot3alpha = 3;
         var tot4alpha = 0;
 
-        //planned credits **a completed credit does not count as a planned credit**
-        //@{
-            double pOverall = 0;
-            double pSocSci = 0;
-            double pHuman = 0;
-            double p1alpha = 0;
-            double p2alpha = 0;
-            double p3alpha = 0;
-            double p4alpha = 0;
-
-            for (int y = 0; y < schedule.Courses.Count; y++) {
-                for (int i = 0; i < schedule.Courses[y].Count; i++) {
-
-                    pOverall += schedule.Courses[y][i].CreditValue; //every course adds their credit value
-                    if ((schedule.Courses[y][i].Context).Equals("SOCIAL SCIENCES                                                                                     ")) pSocSci += schedule.Courses[y][i].CreditValue; //if soc sci, then add that courses credit value
-                    if (schedule.Courses[y][i].Context.Equals("HUMANITIES                                                                                          ")) pHuman += schedule.Courses[y][i].CreditValue;
-                    if ((schedule.Courses[y][i].Code)[0] == '1') p1alpha += schedule.Courses[y][i].CreditValue;
-                    if ((schedule.Courses[y][i].Code)[0] == '2') p2alpha += schedule.Courses[y][i].CreditValue;
-                    if ((schedule.Courses[y][i].Code)[0] == '3') p3alpha += schedule.Courses[y][i].CreditValue;
-                    if ((schedule.Courses[y][i].Code)[0] == '4') p4alpha += schedule.Courses[y][i].CreditValue;
-                }
-            }
-            }
-
-                document.getElementById("overPlanned").innerHTML = (@pOverall) + " / " + totOverall + " required";
-                document.getElementById("socPlanned").innerHTML = (@pSocSci) + " / " + totSocSci + " required";
-                document.getElementById("humPlanned").innerHTML = (@pHuman) + " / " + totHuman + " required";
-                document.getElementById("1aPlanned").innerHTML = (@p1alpha) + " / " + tot1alpha + " max. allowed";
-                document.getElementById("2aPlanned").innerHTML = (@p2alpha) + " / " + tot2alpha + " required";
-                document.getElementById("3aPlanned").innerHTML = (@p3alpha) + " / " + tot3alpha + " required";
-                document.getElementById("4aPlanned").innerHTML = (@p4alpha) + " / " + tot4alpha + " required";
-
-                var percentPlanned = "width:" + ((@pOverall / totOverall) * 100) + "%";
-
-                document.getElementById("percentPlanned").setAttribute("style", percentPlanned);
-            }
-
-    $(document).ready(function () {
-        checkRequiredCourses()
-    });
+    if(type == '1alpha') document.getElementById("1aPlanned").innerHTML = (num) + " / " + tot1alpha + " max. allowed";
+    if(type == '2alpha') document.getElementById("2aPlanned").innerHTML = (num) + " / " + tot2alpha + " required";
+    if(type == '3alpha') document.getElementById("3aPlanned").innerHTML = (num) + " / " + tot3alpha + " required";
+    if(type == '4alpha') document.getElementById("4aPlanned").innerHTML = (num) + " / " + tot4alpha + " required";
+    if(type == 'socSci') document.getElementById("socPlanned").innerHTML = (num) + " / " + totSocSci + " required";
+    if(type == 'human') document.getElementById("humPlanned").innerHTML = (num) + " / " + totHuman + " required";
+    if(type == 'total'){
+    document.getElementById("overPlanned").innerHTML = (num) + " / " + totOverall + " required";
+    var percentPlanned = "width:" + ((num / totOverall) * 100) + "%";
+    document.getElementById("percentPlanned").setAttribute("style", percentPlanned);
+    }
+    }
 
 </script>

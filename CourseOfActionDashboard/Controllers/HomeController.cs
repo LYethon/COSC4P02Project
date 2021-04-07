@@ -279,6 +279,158 @@ namespace CourseOfActionDashboard.Controllers
             return creditValues;
         }
 
+        //The following 7 methods are all used for checking students course stats such as 1palpha courses or psyc courses etc
+
+        [HttpGet]
+        public double PullAlpha1Values(int[] idArray){
+            
+            double creditValues = 0;
+
+            if (idArray != null)
+            {
+                for (int i = 0; i < idArray.Length; i++)
+                {
+                    var temp = idArray[i];
+                    Course course = _dbCourses.courseTable.Where(s => s.CID.Equals(temp)).FirstOrDefault();
+                    if(course.Code[0]=='1')
+                    {
+                        creditValues += course.CreditValue;
+                    }
+                }
+            }
+            else return 0;
+            return creditValues;
+        }
+
+        [HttpGet]
+        public double PullAlpha2Values(int[] idArray)
+        {
+
+            double creditValues = 0;
+
+            if (idArray != null)
+            {
+                for (int i = 0; i < idArray.Length; i++)
+                {
+                    var temp = idArray[i];
+                    Course course = _dbCourses.courseTable.Where(s => s.CID.Equals(temp)).FirstOrDefault();
+                    if (course.Code[0] == '2')
+                    {
+                        creditValues += course.CreditValue;
+                    }
+                }
+            }
+            else return 0;
+            return creditValues;
+        }
+
+        [HttpGet]
+        public double PullAlpha3Values(int[] idArray)
+        {
+
+            double creditValues = 0;
+
+            if (idArray != null)
+            {
+                for (int i = 0; i < idArray.Length; i++)
+                {
+                    var temp = idArray[i];
+                    Course course = _dbCourses.courseTable.Where(s => s.CID.Equals(temp)).FirstOrDefault();
+                    if (course.Code[0] == '3')
+                    {
+                        creditValues += course.CreditValue;
+                    }
+                }
+            }
+            else return 0;
+            return creditValues;
+        }
+
+        [HttpGet]
+        public double PullAlpha4Values(int[] idArray)
+        {
+
+            double creditValues = 0;
+
+            if (idArray != null)
+            {
+                for (int i = 0; i < idArray.Length; i++)
+                {
+                    var temp = idArray[i];
+                    Course course = _dbCourses.courseTable.Where(s => s.CID.Equals(temp)).FirstOrDefault();
+                    if (course.Code[0] == '4')
+                    {
+                        creditValues += course.CreditValue;
+                    }
+                }
+            }
+            else return 0;
+            return creditValues;
+        }
+
+        [HttpGet]
+        public double PullSocSciValues(int[] idArray)
+        {
+
+            double creditValues = 0;
+
+            if (idArray != null)
+            {
+                for (int i = 0; i < idArray.Length; i++)
+                {
+                    var temp = idArray[i];
+                    Course course = _dbCourses.courseTable.Where(s => s.CID.Equals(temp)).FirstOrDefault();
+                    if (course.Context == "SOCIAL SCIENCES")
+                    {
+                        creditValues += course.CreditValue;
+                    }
+                }
+            }
+            else return 0;
+            return creditValues;
+        }
+
+
+        [HttpGet]
+        public double PullHumanValues(int[] idArray)
+        {
+
+            double creditValues = 0;
+
+            if (idArray != null)
+            {
+                for (int i = 0; i < idArray.Length; i++)
+                {
+                    var temp = idArray[i];
+                    Course course = _dbCourses.courseTable.Where(s => s.CID.Equals(temp)).FirstOrDefault();
+                    if (course.Context == "HUMANITIES")
+                    {
+                        creditValues += course.CreditValue;
+                    }
+                }
+            }
+            else return 0;
+            return creditValues;
+        }
+
+        public double PullTotalCredValues(int[] idArray)
+        {
+
+            double creditValues = 0;
+
+            if (idArray != null)
+            {
+                for (int i = 0; i < idArray.Length; i++)
+                {
+                    var temp = idArray[i];
+                    Course course = _dbCourses.courseTable.Where(s => s.CID.Equals(temp)).FirstOrDefault();
+                    creditValues += course.CreditValue;
+         
+                }
+            }
+            else return 0;
+            return creditValues;
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

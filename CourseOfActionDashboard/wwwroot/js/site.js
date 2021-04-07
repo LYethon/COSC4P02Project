@@ -20,6 +20,7 @@ function remove(el) {
     checkDuplicates();
     colorCourseList();
     checkRequiredCourses();
+    updateProgress();
 }
 
 
@@ -104,6 +105,7 @@ function drag_and_drop() {
             checkDuplicates();
             addDragTag();
             colorCourseList();
+            updateProgress();
             if (!ignore) {
                 warnDuplicates(duplicate);
                 if (!duplicate) {
