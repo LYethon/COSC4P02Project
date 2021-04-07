@@ -36,10 +36,9 @@ function callback(data, totWeight) {
 drag_and_drop();
 colorCourseList();
 
-
-function drag_and_drop() {
+// addDragTag: adds any newely added elements that has class 'draggable' into the query
+function addDragTag() {
     const draggables = document.querySelectorAll('.draggable')
-    const containers = document.querySelectorAll('.ul_container')
 
     draggables.forEach(draggable => {
         draggable.addEventListener('dragstart', () => {
@@ -49,7 +48,13 @@ function drag_and_drop() {
             draggable.classList.remove('dragging')
         })
     })
+}
 
+
+function drag_and_drop() {
+    const containers = document.querySelectorAll('.ul_container')
+    addDragTag();
+    
     containers.forEach(container => {
         container.addEventListener('dragover', e => {
             e.preventDefault()
@@ -271,6 +276,63 @@ function addYear() {
 
         // attach the styles for the newUl and append to parent
         newUl.classList.add('ul_container', 'ul_format');
+
+        newUl.addEventListener('dragover', e => {
+            e.preventDefault()
+            const afterElement = getDragAfterElement(newUl, e.clientY)
+            const draggable = document.querySelector('.dragging')
+            getCreditValues(newUl) //update current credit weight count
+            //console.log("dragover " + totalCreditValue)
+
+            //if user can add credit to newUl..
+            if (afterElement == null && !draggable.classList.contains('course_list') && totalCreditValue < config.max_cap_cr_year) {
+                newUl.appendChild(draggable)
+            } else if (!draggable.classList.contains('course_list') && totalCreditValue < config.max_cap_cr_year) {
+                newUl.insertBefore(draggable, afterElement)
+            }
+            checkDuplicates();
+
+        })
+        newUl.addEventListener('drop', e => {
+            e.preventDefault();
+            const afterElement = getDragAfterElement(newUl, e.clientY)
+            const draggable = document.querySelector('.dragging')
+            getCreditValues(newUl) //update current credit weight count
+            //console.log("drop " + totalCreditValue)
+
+            if (afterElement == null && totalCreditValue < config.max_cap_cr_year) {
+
+                if (draggable.classList.contains('course_list')) {
+                    const droppable = convertToCSObj(draggable);
+                    newUl.appendChild(droppable);
+                } else {
+                    newUl.appendChild(draggable);
+                }
+            } else if (totalCreditValue < config.max_cap_cr_year) {  //insert element
+                if (draggable.classList.contains('course_list')) {
+                    const droppable = convertToCSObj(draggable);
+                    newUl.insertBefore(droppable, afterElement);
+                } else {
+                    newUl.insertBefore(draggable, afterElement);
+                }
+            }
+            if (totalCreditValue > config.max_cr_year) { //if we have an overflow of weights in a year
+                console.log("OVERFLOW")
+                var data = creditValueData;
+                highlightOverflow(newUl, data);
+            }
+            checkDuplicates();
+            addDragTag();
+            colorCourseList();
+            if (!ignore) {
+                warnDuplicates(duplicate);
+                if (!duplicate) {
+                    duplicate = false;
+                }
+            }
+        })
+
+
         newUl.style.minHeight = "400px";
         newUlDiv.appendChild(newUl);
 
@@ -294,13 +356,13 @@ function addYear() {
 
         // add the new element to the course planner container
         document.getElementById("course_planner").appendChild(newYearDiv);
-        drag_and_drop(); //update the drag and droppable lists
     }
     //ELSE: SHOULD NOTIFY USER THAT THEY CANNOT ADD MORE THAN 10 YEARS
 }
 
 
 // Course List filter: ________________________________________________________________________
+
 
 function filterFunction() {
     var input, filter, ul, li, a, i, txtValue;
@@ -363,7 +425,7 @@ function colorCourseList() {
             courseList.item(i).classList.remove('list-group-item-success');
         }
         for (j = 0; j < courseSchd.length; j++) {
-            if (courseList.item(i).innerText == courseSchd.item(j).innerText) {
+            if (courseList.item(i).innerText.substring(0, 9) == courseSchd.item(j).innerText.substring(0.9)) {
                 courseList.item(i).classList.add('list-group-item-success');
                 break;
             }
@@ -371,17 +433,3 @@ function colorCourseList() {
     }
 }
 
-// addDragTag: adds any newely added elements that has class 'draggable' into the query
-function addDragTag() {
-    const draggables = document.querySelectorAll('.draggable')
-
-    draggables.forEach(draggable => {
-        draggable.addEventListener('dragstart', () => {
-            draggable.classList.add('dragging')
-        })
-        draggable.addEventListener('dragend', () => {
-            draggable.classList.remove('dragging')
-        })
-    })
-
-}
