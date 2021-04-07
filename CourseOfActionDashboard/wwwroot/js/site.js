@@ -19,6 +19,7 @@ function remove(el) {
     parent.parentNode.removeChild(parent);
     checkDuplicates();
     colorCourseList();
+    updateProgress();
 }
 
 
@@ -103,6 +104,7 @@ function drag_and_drop() {
             checkDuplicates();
             addDragTag();
             colorCourseList();
+            updateProgress();
             if (!ignore) {
                 warnDuplicates(duplicate);
                 if (!duplicate) {
