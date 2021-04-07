@@ -21,6 +21,7 @@ function remove(el) {
     colorCourseList();
     checkRequiredCourses();
     updateProgress();
+    buildJSON();
 }
 
 
@@ -113,6 +114,7 @@ function drag_and_drop() {
                 }
             }
             checkRequiredCourses();
+            buildJSON();
         })
     })
 }
