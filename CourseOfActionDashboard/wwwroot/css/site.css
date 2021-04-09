@@ -81,4 +81,11 @@ body {
     position: absolute;
     display: block;
     margin-left: -15rem;
+    background-color: #E4F5FC;
+}
+
+.innerCourseCheckBox {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 6.7px 5.3px rgb(0 0 0 / 5%);
 }
