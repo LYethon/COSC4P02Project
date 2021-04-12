@@ -61,13 +61,16 @@ namespace CourseOfActionDashboard.Controllers
                 jsonSched += "[";
                 for (int q = 0; q < requiredId[i].Length; q++)
                 {
-
-                    for (int t = 0; t < currentId[i].Length; t++)
+                    for (int t = 0; t < currentId.Length; t++)
                     {
-                        if (requiredId[i][q]== currentId[i][t]) {
-                            var temp = requiredId[i][q];
-                            Course course = _dbCourses.courseTable.Where(s => s.CID.Equals(temp)).FirstOrDefault();
-                            jsonSched += JsonConvert.SerializeObject(course) + ",";
+                        for (int p = 0; p < currentId[t].Length; p++)
+                        {
+                            if (requiredId[i][q] == currentId[t][p])
+                            {
+                                var temp = requiredId[i][q];
+                                Course course = _dbCourses.courseTable.Where(s => s.CID.Equals(temp)).FirstOrDefault();
+                                jsonSched += JsonConvert.SerializeObject(course) + ",";
+                            }
                         }
                     }
                 }
