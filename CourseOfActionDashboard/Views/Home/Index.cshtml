@@ -29,18 +29,19 @@
         </div>
     </nav>
 </header>
-<body onload="start()">
+<body onload="updateProgress()">
 
     <div class="container">
-        <main role="main" class="pb-3">
+        <div role="main" class="pb-3">
             @{ if (student != null)
                 {
                     <h1>Welcome @student.FullName()</h1>
                     <h1>Email: @student.Email</h1>
                 }
             }
+        </div>
             <div class="row">
-                <div class="container-fluid" style="">
+                <div class="container-fluid">
                     <!--Progress Bar Legend-->
                     <div class="legendarea" style="padding-top:3%;">
                         <table style="width:400px;">
@@ -118,146 +119,167 @@
                     </div>
                 </div>
             </div>
-
-            <!--Required Courses-->
-            <div class="row">
-                <div class="courseCheckBox">
-                    <div class="innerCourseCheckBox m-2">
-                        <a class="navbar-brand ml-3 mr-0">Required Courses</a>
-                        <ul id="requiredC">
-                        </ul>
-                    </div>
-                </div>
-                <!--Schedule Options-->
-                <div class="container-fluid col-8 p-0">
-                    <nav class="navbar navbar-expand-lg navbar-light bg-transparent">
-                        <a class="navbar-brand">Course Scheduler</a>
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                            <div class="navbar-nav">
-                                <form id="btn_bar" class="form-inline">
-                                    <button type="button" class="btn btn-outline-primary add_year mr-2" onclick="addYear()">Add Year</button>
-                                </form>
-                                <form class="form-inline">
-                                    <button type="button" class="btn btn-outline-success mr-2" onclick="buildJSON(); updateProgress()">Save</button>
-                                    <button type="button" class="btn btn-outline-secondary mr-2" onclick="resetSchedule()">Reset</button>
-                                    <button type="button" class="btn btn-outline-secondary" onclick="exportSchedule()">Export</button>
-                                </form>
-                            </div>
-                        </div>
-                    </nav>
-                    <!--Course Planner-->
-                    <div style="margin: 10px 0px; background-color: #E4F5FC; overflow-x: auto; min-height: 500px">
-                        <div id="course_planner" class="ml-1 d-inline-flex" style="white-space: nowrap; width: 93%; min-height: 480px;">
-                            @if (schedule != null)
-                            {
-                                int yearNum = -1;
-                                for (int y = 0; y < schedule.Courses.Count; y++)
-                                {
-                                    if (schedule.Courses[y][0] != null)
-                                    {
-                                        yearNum++;
-                                        <div class="col-3 year_container align-top mt-2 ml-1 mr-1 mb-2 pb-1">
-                                            <div class="row year">
-                                                <span class="mb-2 mt-3" style="user-select: none">
-                                                    Year @(yearNum + 1)
-                                                </span>
-                                                @if (y >= 4)
-                                                {
-                                                    <span class="mt-3 ml-5 remove_year" style="cursor:pointer" onclick="removeYear(this)">
-                                                        remove
-                                                        @*<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="red" class="bi bi-trash" viewBox="0 0 16 16">
-                                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                                                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                                                            </svg>*@
-                                                    </span>
-                                                }
-                                            </div>
-                                            <div>
-                                                <ul id="ul_year" class="ul_container ul_format" style="min-height: 400px;">
-                                                    @for (int i = 0; i < schedule.Courses[y].Count; i++)
-                                                    {
-                                                        if (schedule.Courses[y][i] != null)
-                                                        {
-                                                            <li class="row credit_box draggable p-2" draggable="true" style="white-space: normal;">
-                                                                <div id="@schedule.Courses[y][i].CID" class="col-10 courseName pl-2 pr-1">@schedule.Courses[y][i].Subject @schedule.Courses[y][i].Code</div>
-                                                                <span class="col-1 remove_btn pl-2" onclick="remove(this)">x</span>
-                                                            </li>
-                                                        }
-                                                    }
-                                                </ul>
-
-                                            </div>
-                                        </div>
-                                    }
-                                    else if (schedule.Courses[y][0] == null && y < 4)
-                                    {
-                                        yearNum++;
-                                        <div class="col-4 year_container align-top mt-2 ml-1 mr-1 mb-2 pb-1">
-                                            <div class="row year">
-                                                <span class="mb-2 mt-3" style="user-select: none">
-                                                    Year @(yearNum + 1)
-                                                </span>
-                                                @if (y >= 4)
-                                                {
-                                                    <span class="mt-3 ml-5 remove_year" style="cursor:pointer" onclick="removeYear(this)">
-                                                        remove
-                                                        @*<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="red" class="bi bi-trash" viewBox="0 0 16 16">
-                                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                                                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                                                            </svg>*@
-                                                    </span>
-                                                }
-                                            </div>
-                                            <div>
-                                                <ul id="ul_year" class="ul_container ul_format" style="min-height: 400px;">
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    }
-                                }
-                            }
-                        </div>
-                    </div>
-                </div>
-
-                <!--Course List-->
-                <div class="container-fluid col-3 overflow-auto" style="background-color:darkseagreen">
-                    <input type="text" id="myInput" onkeyup="filterFunction()" placeholder="Search for courses..">
-                    <ul id="myUL" style="overflow-y:scroll; max-height: 400px">
-                        @for (int i = 0; i < courses.Count; i++)
-                        {
-                            <li class="list-group-item draggable course_list" draggable="true">
-                                <div id="@courses[i].CID" style="text-align: center">@courses[i].Subject @courses[i].Code</div>
-                            </li>
-                        }
+    </div>
+    <div class="row">
+        <!--Required Courses-->
+        <div class="col-2 ml-2">
+            <div class="courseCheckBox p-2" style="display:none">
+                <div class="innerCourseCheckBox">
+                    <a class="navbar-brand ml-5 mr-0">Required Courses</a>
+                    <ul id="requiredC" class="mb-0">
                     </ul>
                 </div>
             </div>
-
-            <div class="row" id="message">
-                <div class="col  p-0">
-                    <div class="container-fluid">
-                        <button class="alert alert-primary " aria-label="SuccessButton" onclick="switchToWarning()">
-                            Warning!
-                        </button>
-                        <button class="alert" aria-label="SuccessButton" onclick="switchToRecommendation()">
-                            Recommendation
-                        </button>
+        </div>
+        <!--Schedule Options-->
+        <div class="container-fluid col-5 p-0">
+            <nav class="navbar navbar-expand-lg navbar-light bg-transparent">
+                <a class="navbar-brand">Course Scheduler</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <form id="btn_bar" class="form-inline">
+                            <button type="button" class="btn btn-outline-primary add_year mr-2" onclick="addYear()">Add Year</button>
+                        </form>
+                        <form class="form-inline">
+                            <button type="button" class="btn btn-outline-success mr-2" onclick="buildJSON(); updateProgress()">Save</button>
+                            <button type="button" class="btn btn-outline-secondary mr-2" onclick="resetSchedule()">Reset</button>
+                            <button type="button" class="btn btn-outline-secondary" onclick="exportSchedule()">Export</button>
+                        </form>
                     </div>
                 </div>
-                <div class="container-fluid">
-                    <div class="alert alert-primary" role="alert">
-                        <p style="font-size:30px" id="warningTitle"></p>
-                        <p id="prerequisites"></p>
-                        <p id="social"></p>
-                        <p id="humanities"></p>
-                    </div>
+            </nav>
+            <!--Course Planner-->
+            <div style="margin: 10px 0px; background-color: #E4F5FC; overflow-x: auto; min-height: 500px; width: 103%;">
+                <div id="course_planner" class="ml-1 d-inline-flex" style="white-space: nowrap; width: 94%; min-height: 490px;">
+                    @if (schedule != null)
+                    {
+                        int yearNum = -1;
+                        for (int y = 0; y < schedule.Courses.Count; y++)
+                        {
+                            if (schedule.Courses[y][0] != null)
+                            {
+                                yearNum++;
+                                <div class="col-3 year_container align-top mt-2 ml-1 mr-1 mb-2 pb-1">
+                                    <div class="row year">
+                                        <span class="mb-2 mt-3" style="user-select: none">
+                                            Year @(yearNum + 1)
+                                        </span>
+                                        @if (y >= 4)
+                                        {
+                                            <span class="mt-3 ml-5 remove_year" style="cursor:pointer" onclick="removeYear(this)">
+                                                remove
+                                                @*<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="red" class="bi bi-trash" viewBox="0 0 16 16">
+                                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                                </svg>*@
+                                            </span>
+                                        }
+                                    </div>
+                                    <div>
+                                        <ul id="ul_year" class="ul_container ul_format">
+                                            @for (int i = 0; i < schedule.Courses[y].Count; i++)
+                                            {
+                                                if (schedule.Courses[y][i] != null)
+                                                {
+                                                    <li class="row credit_box draggable p-2" draggable="true" style="white-space: normal;">
+                                                        <div id="@schedule.Courses[y][i].CID" creditv="@courses[i].CreditValue" class="col-10 courseName pl-2 pr-1">@schedule.Courses[y][i].Subject @schedule.Courses[y][i].Code</div>
+                                                        <span class="col-1 remove_btn pl-2" onclick="remove(this)">x</span>
+                                                    </li>
+                                                }
+                                            }
+                                        </ul>
+
+                                    </div>
+                                </div>
+                            }
+                            else if (schedule.Courses[y][0] == null && y < 4)
+                            {
+                                yearNum++;
+                                <div class="col-3 year_container align-top mt-2 ml-1 mr-1 mb-2 pb-1">
+                                    <div class="row year">
+                                        <span class="mb-2 mt-3" style="user-select: none">
+                                            Year @(yearNum + 1)
+                                        </span>
+                                        @if (y >= 4)
+                                        {
+                                            <span class="mt-3 ml-5 remove_year" style="cursor:pointer" onclick="removeYear(this)">
+                                                remove
+                                                @*<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="red" class="bi bi-trash" viewBox="0 0 16 16">
+                                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                                </svg>*@
+                                            </span>
+                                        }
+                                    </div>
+                                    <div>
+                                        <ul id="ul_year" class="ul_container ul_format" style="min-height: 400px;">
+                                        </ul>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    }
                 </div>
             </div>
-        </main>
+        </div>
+
+        <!--Course List-->
+        <div class="container-fluid col-2 overflow-auto">
+            <input style="min-height: 43px; padding-left: 10px; width: 100%; margin-top: 12px; margin-left: -15px; border-radius: 3px" type="text" id="myInput" onkeyup="filterFunction()" placeholder="Search for courses... ">
+            <ul id="myUL" style="overflow-y:scroll; max-height: 475px; width: 125%; margin: 10px 0 0 -55px">
+                @for (int i = 0; i < courses.Count; i++)
+                {
+                    <li class="list-group-item draggable course_list" draggable="true" onmouseover="displayCourseInfo(@courses[i].CID)" onmouseout="hideCourseInfo(@courses[i].CID)">
+                        <div id="@courses[i].CID" creditv="@courses[i].CreditValue" style="text-align: center">@courses[i].Subject @courses[i].Code</div>
+                    </li>
+                }
+            </ul>
+        </div>
+
+        <!--Course Info-->
+        <div id="courseInfo" class="container-fluid col-2 overflow-auto" style="visibility:visible; max-height:500px">
+            <div class="navbar-brand">Course Details:</div>
+            <div id="courseInfo_name" style="font-family:fantasy"></div>
+            <div id="courseInfo_description"></div>
+            @for (int i = 0; i < courses.Count; i++)
+            {
+                <div style="visibility:hidden">
+                    <div id="courseInfo_name @courses[i].CID" class="navbar-brand">@courses[i].Code @courses[i].Name:</div>
+                    <div id="courseInfo_description @courses[i].CID">@courses[i].Description</div>
+                </div>
+            }
+        </div>
+
+    </div>
+    <div class="container">
+        <div class="row ">
+            <div class="col  p-0">
+                <div class="container-fluid">
+                    <button class="alert alert-primary " aria-label="SuccessButton" onclick="warningTab()">
+                        Warning!
+                    </button>
+                    <button class="alert" aria-label="SuccessButton" onclick="recommendationTab()">
+                        Recommendation
+                    </button>
+                    <button class="alert" aria-label="SuccessButton" onclick="showRequired(this)">
+                        Show Required Courses
+                    </button>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="alert alert-primary" role="alert">
+                    <p style="font-size:30px" id="title"></p>
+
+                    <p id="science"></p>
+                    <p id="social"></p>
+                    <p id="humanities"></p>
+
+                </div>
+            </div>
+        </div>
     </div>
 
 </body>
@@ -290,20 +312,6 @@
 
 
 <script type="text/javascript">
-    var showWarning = false;
-    var intro = false;
-    var scrollM = false;
-
-    function start() {
-        checkPrereq();
-        updateProgress();
-
-        switchToWarning();
-
-    }
-
-
-
     function warnDuplicates(duplicate) {
 
         if (duplicate) {
@@ -324,10 +332,15 @@
         }
     }
 
+     function recommendationTab() {
+        document.getElementById("test").innerHTML = "Here are the recommended courses:"
+    }
 
+    function warningTab() {
+        document.getElementById("test").innerHTML = "Here are the warnings"
+    }
 
-
-
+    checkContext();
     function checkContext() {
         const stdIdArray = [];
         const yearContainers = document.querySelectorAll('.courseName')
@@ -342,7 +355,7 @@
             dataType: 'json',
             traditional: true,
             success: function (data) {
-                console.log("Success Context");
+                //console.log("Success Context");
                 var context = [];
                 var cid;
                 for (var i = 0; i < data.length; i++) {
@@ -376,7 +389,7 @@
             dataType: 'json',
             traditional: true,
             success: function (data) {
-                console.log("Success Value");
+               // console.log("Success Value");
 
                 distribute(context, data);
             },
@@ -387,190 +400,56 @@
         });
     }
 
+    function showRequired(b) {
+        var elem = $(".courseCheckBox")[0];
+        if (elem.style.display === "none") {
+            elem.style.display = "block";
+            b.innerText = "Hide Required Courses";
+        } else {
+            elem.style.display = "none";
+            b.innerText = "Show Required Courses";
+        }
+    }
+
     function distribute(context, value) {
-
-        var socialC = [];
-        var humanitiesC = [];
-
-
+        var warning = false;
+        var science = 0;
+        var social = 0;
+        var humanities = 0;
         for (var i = 0; i < context.length; i++) {
-            if (context[i] == 'SOCIAL SCIENCES') {
-                socialC.push(value[i]);
+            if (context[i] == 'SCIENCE') {
+                science = science + value[i];
+            } else if (context[i] == 'SOCIAL SCIENCES') {
+                social = social + value[i];
             }else if (context[i] == 'HUMANITIES') {
-                humanitiesC.push(value[i]);
+                humanities = humanities + value[i];
             }
         }
-        warningTab(socialC, humanitiesC);
-    }
 
-    function switchToWarning () {
-        showWarning = true;
-        checkContext();
-    }
-
-    function switchToRecommendation() {
-        showWarning = false;
-        checkContext();
-    }
-
-    function warningTab(socialC, humanitiesC) {
-    var sWarning = false;
-    var hWarning = false;
-        sRecommend = false;
-        hRecommend = false;
-    if (socialC.length < 2) {
-        document.getElementById("social").innerHTML = "You are missing " + (1 - socialC) + " Social credits."
-        sRecommend = true;
-        sWarning = true;
-
-    } else {
-        document.getElementById("social").innerHTML = ""
-    }
-    if (humanitiesC.length < 2) {
-        document.getElementById("humanities").innerHTML = "You are missing " + (1 - humanitiesC) + " Humanities credits."
-        hRecommend = true;
-        hWarning = true;
-    } else {
-        document.getElementById("humanities").innerHTML = ""
-    }
-        //prob do if click recommendation tab, next to warning
-    if (sWarning || hWarning) {
-        document.getElementById("warningTitle").innerHTML = "Warning!"
-        if (!showWarning) {
-            document.getElementById("prerequisites").innerHTML = "";
-            document.getElementById("warningTitle").innerHTML = "We recommend:"
-        if (sRecommend) {
-            var tempSched = config.social_rec;
-            var schedu = [];
-            for (var i = 0; i < tempSched.length; i++) {
-                schedu.push(tempSched[i]);
-
-            }
-            var temp = schedu.length;
-            const stdIdArray = [];
-            const yearContainers = document.querySelectorAll('.courseName')
-            yearContainers.forEach(course => {
-                stdIdArray.push(course.id);
-            })
-            //check if recommended courses already taken, if taken, remove courses that needs to be recommended
-            for (var i = 0; i < stdIdArray.length; i++) {
-                for (var j = 0; j < temp; j++) {
-                    if (stdIdArray[i] == schedu[j]) {
-                        schedu.splice(j, 1);
-                    }
-                }
-            }
-
-            for (var i = socialC.length; i > 0; i--) {
-                schedu.splice(i, 1);
-            }
-            console.log(schedu);
-            $.ajax({
-                type: 'get',
-                url: "@(Url.Action("pullCourseCode", "Home"))",
-                data: { 'idArray': schedu},
-                dataType: 'json',
-                traditional: true,
-                success: function (data) {
-                    console.log("Success Value");
-                    document.getElementById("social").innerHTML = data + " for Social Science Credits"
-
-                },
-                error: function (e) {
-                    console.log("Error Value");
-                }
-
-
-            });
-        } else {
-            document.getElementById("social").innerHTML = ""
+        if (science < 1) {
+            document.getElementById("science").innerHTML = "You are missing " + (1 - science) + " Science credits."
+            warning = true;
+        }
+        if (social < 1) {
+            document.getElementById("social").innerHTML = "You are missing " + (1 - social) + " Social credits."
+            warning = true;
+        }
+        if (humanities < 1) {
+            document.getElementById("humanities").innerHTML = "You are missing " + (1 - humanities) + " Humanities credits."
+            warning = true;
         }
 
-        if (hRecommend) {
-            var tempSched = config.human_rec;
-            var schedu = [];
-            for (var i = 0; i < tempSched.length; i++) {
-                schedu.push(tempSched[i]);
-
-            }
-            var temp = schedu.length;
-            const stdIdArray = [];
-            const yearContainers = document.querySelectorAll('.courseName')
-            yearContainers.forEach(course => {
-                stdIdArray.push(course.id);
-            })
-            //check if recommended courses already taken, if taken, remove courses that needs to be recommended
-            for (var i = 0; i < stdIdArray.length; i++) {
-                for (var j = 0; j < temp; j++) {
-                    if (stdIdArray[i] == schedu[j]) {
-                        schedu.splice(j, 1);
-                    }
-                }
-            }
-
-            for (var i = humanitiesC.length; i > 0; i--) {
-                schedu.splice(i, 1);
-            }
-
-            $.ajax({
-                type: 'get',
-                url: "@(Url.Action("pullCourseCode", "Home"))",
-                data: { 'idArray': schedu },
-                dataType: 'json',
-                traditional: true,
-                success: function (data) {
-                    console.log("Success Value");
-                    document.getElementById("humanities").innerHTML = data + " for Humanities Credits"
-
-                },
-                error: function (e) {
-                    console.log("Error Value");
-                }
-
-
-            });
-        } else {
-            document.getElementById("humanities").innerHTML = ""
-        }
-        }
-
-        if (!intro && !scrollM) {
-            document.getElementById('message').scrollIntoView({ behavior: 'smooth', block: 'end' });
-            intro = true;
-        } else if (intro && !scrollM) {
-            document.getElementById('message').scrollIntoView({ behavior: 'smooth', block: 'end' });
-            scrollM = true;
-        }
-    } else {
-        document.getElementById("warningTitle").innerHTML = ""
-    }
-
-    }
-
-   const preReq = [];
-    //This will check for duplicate prerequisites code
-    function checkDup(cid) {
-        var same = false;
-        for (var i = 0; i < preReq.length; i++) {
-            if (preReq[i] == cid) {
-                same = true;
-                break;
-            }
-        }
-        if (same == false) {
-            preReq.push(cid);
+        if (warning) {
+            document.getElementById("title").innerHTML = "Warning!"
         }
     }
 
-    //This method will get the preReqs for all the courses on the planner
      function checkPrereq() {
-         const stdIdArray = [];
-         const courseName = [];
+        const stdIdArray = [];
         const yearContainers = document.querySelectorAll('.courseName')
-         yearContainers.forEach(course => {
-             stdIdArray.push(course.id);
-             courseName.push(course.textContent);
-         })
+        yearContainers.forEach(course => {
+            stdIdArray.push(course.id);
+        })
 
         $.ajax({
             type: 'get',
@@ -579,74 +458,19 @@
             dataType: 'json',
             traditional: true,
             success: function (data) {
-                console.log("Success Prereq");
+                //console.log("Success Prereq");
+                var preReq = [];
                 var cid;
-                const preReqOG = []
                 for (var i = 0; i < data.length; i++) {
-                    preReqOG.push(data[i]);
                     if (data[i] != "") {
                         cid = data[i].split(",");
                         for (var j = 0; j < cid.length; j++) {
-                            checkDup(cid[j]);
+                            preReq.push(cid[j]);
                         }
                     }
                 }
-                  const courseSub = [];
-                  //get the course name
-                  $.ajax({
-                    type: 'get',
-                    url: "@(Url.Action("pullCourseCode", "Home"))",
-                    data: { 'idArray': preReq},
-                    dataType: 'json',
-                    traditional: true,
-                    success: function (data) {
-                        console.log("Success course subject");
-                        //Store the course subject for later
-                        for (var i = 0; i < data.length; i++) {
-                            courseSub.push(data[i]);
-                        }
-                        console.log(preReqOG, "WHY?");
-                        console.log(courseSub, "course code");
-                        console.log(courseName, "Course List in containter");
-                        var unsatisfied = false;
-                        var ss = []; //preReqs for a course with more than 1
-                        for (var i = 0; i < preReqOG.length; i++) {
-                            ss.push(preReqOG[i].split(","));
-                        }
-                        var prereqM = "";
-                        for (var i = 0; i < preReq.length; i++) {
-                            for (var j = 0; j < stdIdArray.length; j++) {
-                                //Works only for exactly one preReq
-                                if (preReq[i] != stdIdArray[j]) {
-                                    unsatisfied = true;
-                                } else {
-                                    unsatisfied = false;
-                                    break;
-                                }
-                            }
-                            //This part will display the warning
-                            if (unsatisfied) {
-
-                                for (var k = 0; k < stdIdArray.length; k++) {
-                                    for (var j = 0; j < preReqOG[k].length; j++) {
-                                        if (preReq[i] == ss[k][j]) {
-                                            console.log(courseName[k], " required course(s): ", courseSub[i]);
-                                            prereqM += courseName[k] + " required course(s): " + courseSub[i] + "<br><br><br>";
-
-                                        }
-                                    }
-                                }
-
-                                unsatisfied = false;
-                            }
-                        }
-                        document.getElementById("prerequisites").innerHTML = prereqM;
-
-                    },
-                    error: function (e) {
-                        console.log("Error Prereq");
-                    }
-                  });
+               // console.log(preReq);
+                testA(preReq, stdIdArray);
             },
             error: function (e) {
                 console.log("Error Prereq");
@@ -697,7 +521,7 @@
             url: "@(Url.Action("saveSchedule", "Home"))",
             data: { json: JSON.stringify(studentJson) },
             success: function (msg) {
-                console.log("Success");
+               // console.log("Success");
             },
             error: function (e) {
                 console.log("Error");
@@ -706,7 +530,9 @@
     }
     function clearChecks() {
         for (var c = 0; c < $(".courseCheck").length; c++) {
-            $($(".courseCheck")[c]).attr('checked', false);
+            //$($(".courseCheck")[c]).attr('checked', false);
+            $($(".courseCheck")[c]).find(".checkmark").css("display", "none");;
+            $($(".courseCheck")[c]).find(".questionmark").css("display", "block");;
         }
 
     }
@@ -746,8 +572,8 @@
                                 async: false,
                                 data: { id: defaultSched[p][q] },
                                 success: function (data) {
-                                    console.log("Success");
-                                    $("#requiredC").append('<li class="pb-1 row" style="list-style-type: none"><div class="col-8">'+ data.subject + ' ' + data.code + ' </div><input id="' + data.cid + '" type="checkbox" class="col-3 courseCheck" disabled></li>');
+                                   // console.log("Success");
+                                    $("#requiredC").append('<li class="pb-1 row" style="list-style-type: none"><div class="col-8">' + data.subject + ' ' + data.code + ' </div><div id="' + data.cid + '" class="col-3 pl-0 courseCheck"><span title="Course in Schedule" class="checkmark" style="display:none">&#10004</span><span title="Missing Course in Schedule" class="questionmark" style="display:block">&#10068</span></div></li>');
                                 },
                                 error: function (e) {
                                     console.log("Error");
@@ -761,8 +587,10 @@
                     for (var b = 0; b < currentRequiredCourses.courses[a].length; b++) {
                         for (var c = 0; c < $(".courseCheck").length; c++) {
                             if ($($(".courseCheck")[c]).attr('id') == currentRequiredCourses.courses[a][b].cid) {
-                                $($(".courseCheck")[c]).attr('checked', true);
+                                $($(".courseCheck")[c]).find(".checkmark").css("display", "block");
+                                $($(".courseCheck")[c]).find(".questionmark").css("display", "none");
                             }
+                           
                         }
                     }
                 }
@@ -788,13 +616,14 @@
             }
             courseArray.push(idArray);
         }
+        //console.log(courseArray);
 
         $.ajax({
             type: 'POST',
             url: "@(Url.Action("saveSchedule", "Home"))",
             data: { idList: courseArray, studentId:@student.Id},
             success: function (msg) {
-                console.log("Success");
+                //console.log("Success");
             },
             error: function (e) {
                 console.log("Error");
@@ -821,15 +650,13 @@
     }
 
     function resetSchedule() {
-        //const defaultSched = [[1,2,3,44,45],[4,5,6,7,43,46],[11,12,13,41,42],[24,25,31,]]
         const defaultSched = config.default_sched;
-        //console.log("here"+ defaultSched)
         $.ajax({
             type: 'POST',
             url: "@(Url.Action("saveSchedule", "Home"))",
             data: { idList: defaultSched, studentId:@student.Id},
             success: function (msg) {
-                console.log("Success");
+               // console.log("Success");
             },
             error: function (e) {
                 console.log("Error");
@@ -841,7 +668,7 @@
     //given a year container, this function will return the total weights of each course
     function getCreditValues(container) {
         const idArray = []
-        const cont = container.querySelectorAll('.credit_box ')
+        const cont = container.querySelectorAll('.credit_box')
         cont.forEach(course => {
             //if (!course.classList.contains('.dragging'))
             idArray.push(parseInt(course.children[0].id));
@@ -877,6 +704,7 @@
         idArray.push(course.id);
         })
 
+       // console.log(idArray);
 
     //get number of 1alphas
     $.ajax({
@@ -1010,6 +838,5 @@
     document.getElementById("percentPlanned").setAttribute("style", percentPlanned);
     }
     }
-
 
 </script>
