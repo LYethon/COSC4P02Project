@@ -401,16 +401,34 @@ function colorCourseList() {
     }
 }
 
+
 function displayCourseInfo(cid) {
     var nameID = 'courseInfo_name ' + cid;
     var descriptID = 'courseInfo_description ' + cid;
+    var creditVID = 'courseInfo_creditValue ' + cid;
     var nameText = document.getElementById(nameID).textContent;
     var descriptText = document.getElementById(descriptID).textContent;
+    var creditVText = 'Credit Value: ' + document.getElementById(creditVID).textContent;
     document.getElementById('courseInfo_name').textContent = nameText;
     document.getElementById('courseInfo_description').textContent = descriptText;
+    document.getElementById('courseInfo_creditValue').textContent = creditVText;
 
-    //document.getElementById('course_info').style.visibility = 'visible';
+    document.getElementById('courseInfo').style.visibility = 'visible';
 }
+
+
+/*function displayCourseInfo(cid) {
+    var nameID = 'courseInfo_name ' + cid;
+    var descriptID = 'courseInfo_description ' + cid;
+    var cvID = 'courseInfo_creditv' + cid;
+    var nameText = document.getElementById(nameID).textContent;
+    var descriptText = document.getElementById(descriptID).textContent;
+    var creditValue = document.getElementById(cvID).textContent;
+    document.getElementById('courseInfo_name').textContent = nameText;
+    document.getElementById('courseInfo_description').textContent = descriptText;
+    document.getElementById('courseInfo_creditv').textContent = creditValue;
+    //document.getElementById('course_info').style.visibility = 'visible';
+}*/
 
 function hideCourseInfo(cid) {
     //document.getElementById('course_info').style.visibility = 'hidden';

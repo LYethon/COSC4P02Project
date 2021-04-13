@@ -228,8 +228,8 @@
 
         <!--Course List-->
         <div class="container-fluid col-2 overflow-auto">
-            <input style="min-height: 43px; padding-left: 10px; width: 100%; margin-top: 12px; margin-left: -15px; border-radius: 3px" type="text" id="myInput" onkeyup="filterFunction()" placeholder="Search for courses... ">
-            <ul id="myUL" style="overflow-y:scroll; max-height: 475px; width: 125%; margin: 10px 0 0 -55px">
+            <input style="min-height: 43px; padding-left: 10px; width: 100%; margin-top: 10px; margin-left: -15px; border-radius: 3px" type="text" id="myInput" onkeyup="filterFunction()" placeholder="Search for courses... ">
+            <ul id="myUL" style="overflow-y:scroll; max-height: 475px; width: 125%; margin: 12px 0 0 -55px">
                 @for (int i = 0; i < courses.Count; i++)
                 {
                     <li class="list-group-item draggable course_list" draggable="true" onmouseover="displayCourseInfo(@courses[i].CID)" onmouseout="hideCourseInfo(@courses[i].CID)">
@@ -240,19 +240,21 @@
         </div>
 
         <!--Course Info-->
-        <div id="courseInfo" class="container-fluid col-2 overflow-auto" style="visibility:visible; max-height:500px">
-            <div class="navbar-brand">Course Details:</div>
-            <div id="courseInfo_name" style="font-family:fantasy"></div>
-            <div id="courseInfo_description"></div>
+        <div id="courseInfo" class="container-fluid col-2 overflow-hidden" style="visibility:visible; max-height:500px; border: 1px solid #808080; border-radius: 5px;">
+            <div class="navbar-brand">Course Details</div>
+            <div id="courseInfo_name" style="margin-top: 10px; font-size: 110%; font-weight:600"></div>
+            <div id="courseInfo_description" style="margin-top: 10px;"></div>
+            <div id="courseInfo_creditValue" style="margin-top: 10px; font-weight: 600"></div>
+
             @for (int i = 0; i < courses.Count; i++)
             {
-                <div style="visibility:hidden">
-                    <div id="courseInfo_name @courses[i].CID" class="navbar-brand">@courses[i].Code @courses[i].Name:</div>
-                    <div id="courseInfo_description @courses[i].CID">@courses[i].Description</div>
-                </div>
+            <div style="visibility:hidden">
+                <div id="courseInfo_name @courses[i].CID" class="navbar-brand">@courses[i].Code @courses[i].Name</div>
+                <div id="courseInfo_description @courses[i].CID">@courses[i].Description</div>
+                <div id="courseInfo_creditValue @courses[i].CID">@courses[i].CreditValue</div>
+            </div>
             }
         </div>
-
     </div>
     <div class="container">
         <div class="row " id="message">
