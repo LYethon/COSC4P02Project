@@ -125,7 +125,7 @@
         <div class="col-2 ml-2">
             <div class="courseCheckBox p-2" style="display:none">
                 <div class="innerCourseCheckBox">
-                    <a class="navbar-brand ml-3 mr-0">Required Courses</a>
+                    <a class="navbar-brand ml-5 mr-0">Required Courses</a>
                     <ul id="requiredC" class="mb-0">
                     </ul>
                 </div>
@@ -254,8 +254,8 @@
                     <button class="alert" aria-label="SuccessButton" onclick="recommendationTab()">
                         Recommendation
                     </button>
-                    <button class="alert" aria-label="SuccessButton" onclick="showRequired()">
-                        Required Courses
+                    <button class="alert" aria-label="SuccessButton" onclick="showRequired(this)">
+                        Show Required Courses
                     </button>
                 </div>
             </div>
@@ -390,12 +390,14 @@
         });
     }
 
-    function showRequired() {
+    function showRequired(b) {
         var elem = $(".courseCheckBox")[0];
         if (elem.style.display === "none") {
             elem.style.display = "block";
+            b.innerText = "Hide Required Courses";
         } else {
             elem.style.display = "none";
+            b.innerText = "Show Required Courses";
         }
     }
 
@@ -518,7 +520,9 @@
     }
     function clearChecks() {
         for (var c = 0; c < $(".courseCheck").length; c++) {
-            $($(".courseCheck")[c]).attr('checked', false);
+            //$($(".courseCheck")[c]).attr('checked', false);
+            $($(".courseCheck")[c]).find(".checkmark").css("display", "none");;
+            $($(".courseCheck")[c]).find(".questionmark").css("display", "block");;
         }
 
     }
@@ -559,7 +563,7 @@
                                 data: { id: defaultSched[p][q] },
                                 success: function (data) {
                                    // console.log("Success");
-                                    $("#requiredC").append('<li class="pb-1 row" style="list-style-type: none"><div class="col-8">'+ data.subject + ' ' + data.code + ' </div><input id="' + data.cid + '" type="checkbox" class="col-3 courseCheck" disabled></li>');
+                                    $("#requiredC").append('<li class="pb-1 row" style="list-style-type: none"><div class="col-8">' + data.subject + ' ' + data.code + ' </div><div id="' + data.cid + '" class="col-3 pl-0 courseCheck"><span title="Course in Schedule" class="checkmark" style="display:none">&#10004</span><span title="Missing Course in Schedule" class="questionmark" style="display:block">&#10068</span></div></li>');
                                 },
                                 error: function (e) {
                                     console.log("Error");
@@ -573,8 +577,10 @@
                     for (var b = 0; b < currentRequiredCourses.courses[a].length; b++) {
                         for (var c = 0; c < $(".courseCheck").length; c++) {
                             if ($($(".courseCheck")[c]).attr('id') == currentRequiredCourses.courses[a][b].cid) {
-                                $($(".courseCheck")[c]).attr('checked', true);
+                                $($(".courseCheck")[c]).find(".checkmark").css("display", "block");
+                                $($(".courseCheck")[c]).find(".questionmark").css("display", "none");
                             }
+                           
                         }
                     }
                 }
