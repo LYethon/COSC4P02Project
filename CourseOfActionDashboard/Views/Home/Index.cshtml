@@ -29,7 +29,7 @@
         </div>
     </nav>
 </header>
-<body onload="updateProgress()">
+<body onload="start()">
 
     <div class="container">
         <div role="main" class="pb-3">
@@ -254,14 +254,14 @@
         </div>
 
     </div>
-    <div class="container">
-        <div class="row ">
+    <div class="container" >
+        <div class="row "id="message">
             <div class="col  p-0">
                 <div class="container-fluid">
-                    <button class="alert alert-primary " aria-label="SuccessButton" onclick="warningTab()">
+                    <button class="alert alert-primary " aria-label="SuccessButton" onclick="switchToWarning()">
                         Warning!
                     </button>
-                    <button class="alert" aria-label="SuccessButton" onclick="recommendationTab()">
+                    <button class="alert" aria-label="SuccessButton" onclick="switchToRecommendation()">
                         Recommendation
                     </button>
                     <button class="alert" aria-label="SuccessButton" onclick="showRequired(this)">
@@ -271,9 +271,8 @@
             </div>
             <div class="container-fluid">
                 <div class="alert alert-primary" role="alert">
-                    <p style="font-size:30px" id="title"></p>
-
-                    <p id="science"></p>
+                    <p style="font-size:30px" id="warningTitle"></p>
+                    <p id="prerequisites"></p>
                     <p id="social"></p>
                     <p id="humanities"></p>
 
@@ -312,6 +311,17 @@
 
 
 <script type="text/javascript">
+    var showWarning = false;
+    var intro = false;
+    var scrollM = false;
+
+    function start() {
+        checkPrereq();
+        updateProgress();
+        switchToWarning();
+
+    }
+
     function warnDuplicates(duplicate) {
 
         if (duplicate) {
@@ -332,16 +342,7 @@
         }
     }
 
-     function recommendationTab() {
-        document.getElementById("test").innerHTML = "Here are the recommended courses:"
-    }
-
-    function warningTab() {
-        document.getElementById("test").innerHTML = "Here are the warnings"
-    }
-
-    checkContext();
-    function checkContext() {
+         function checkContext() {
         const stdIdArray = [];
         const yearContainers = document.querySelectorAll('.courseName')
         yearContainers.forEach(course => {
@@ -355,7 +356,7 @@
             dataType: 'json',
             traditional: true,
             success: function (data) {
-                //console.log("Success Context");
+                console.log("Success Context");
                 var context = [];
                 var cid;
                 for (var i = 0; i < data.length; i++) {
@@ -389,7 +390,7 @@
             dataType: 'json',
             traditional: true,
             success: function (data) {
-               // console.log("Success Value");
+                console.log("Success Value");
 
                 distribute(context, data);
             },
@@ -397,6 +398,274 @@
                 console.log("Error Value");
             }
 
+        });
+    }
+
+    function distribute(context, value) {
+
+        var socialC = [];
+        var humanitiesC = [];
+
+
+        for (var i = 0; i < context.length; i++) {
+            if (context[i] == 'SOCIAL SCIENCES') {
+                socialC.push(value[i]);
+            }else if (context[i] == 'HUMANITIES') {
+                humanitiesC.push(value[i]);
+            }
+        }
+        warningTab(socialC, humanitiesC);
+    }
+
+    function switchToWarning() {
+        console.log("bruhhhhh");
+        showWarning = true;
+        checkContext();
+    }
+
+    function switchToRecommendation() {
+        showWarning = false;
+        checkContext();
+    }
+
+    function warningTab(socialC, humanitiesC) {
+    var sWarning = false;
+    var hWarning = false;
+        sRecommend = false;
+        hRecommend = false;
+    if (socialC.length < 2) {
+        document.getElementById("social").innerHTML = "You are missing " + (1 - socialC) + " Social credits."
+        sRecommend = true;
+        sWarning = true;
+
+    } else {
+        document.getElementById("social").innerHTML = ""
+    }
+    if (humanitiesC.length < 2) {
+        document.getElementById("humanities").innerHTML = "You are missing " + (1 - humanitiesC) + " Humanities credits."
+        hRecommend = true;
+        hWarning = true;
+    } else {
+        document.getElementById("humanities").innerHTML = ""
+    }
+        //prob do if click recommendation tab, next to warning
+    if (sWarning || hWarning) {
+        document.getElementById("warningTitle").innerHTML = "Warning!"
+        if (!showWarning) {
+            document.getElementById("prerequisites").innerHTML = "";
+            document.getElementById("warningTitle").innerHTML = "We recommend:"
+        if (sRecommend) {
+            var tempSched = config.social_rec;
+            var schedu = [];
+            for (var i = 0; i < tempSched.length; i++) {
+                schedu.push(tempSched[i]);
+
+            }
+            var temp = schedu.length;
+            const stdIdArray = [];
+            const yearContainers = document.querySelectorAll('.courseName')
+            yearContainers.forEach(course => {
+                stdIdArray.push(course.id);
+            })
+            //check if recommended courses already taken, if taken, remove courses that needs to be recommended
+            for (var i = 0; i < stdIdArray.length; i++) {
+                for (var j = 0; j < temp; j++) {
+                    if (stdIdArray[i] == schedu[j]) {
+                        schedu.splice(j, 1);
+                    }
+                }
+            }
+
+            for (var i = socialC.length; i > 0; i--) {
+                schedu.splice(i, 1);
+            }
+            console.log(schedu);
+            $.ajax({
+                type: 'get',
+                url: "@(Url.Action("pullCourseCode", "Home"))",
+                data: { 'idArray': schedu},
+                dataType: 'json',
+                traditional: true,
+                success: function (data) {
+                    console.log("Success Value");
+                    document.getElementById("social").innerHTML = data + " for Social Science Credits"
+
+                },
+                error: function (e) {
+                    console.log("Error Value");
+                }
+
+
+            });
+        } else {
+            document.getElementById("social").innerHTML = ""
+        }
+
+        if (hRecommend) {
+            var tempSched = config.human_rec;
+            var schedu = [];
+            for (var i = 0; i < tempSched.length; i++) {
+                schedu.push(tempSched[i]);
+
+            }
+            var temp = schedu.length;
+            const stdIdArray = [];
+            const yearContainers = document.querySelectorAll('.courseName')
+            yearContainers.forEach(course => {
+                stdIdArray.push(course.id);
+            })
+            //check if recommended courses already taken, if taken, remove courses that needs to be recommended
+            for (var i = 0; i < stdIdArray.length; i++) {
+                for (var j = 0; j < temp; j++) {
+                    if (stdIdArray[i] == schedu[j]) {
+                        schedu.splice(j, 1);
+                    }
+                }
+            }
+
+            for (var i = humanitiesC.length; i > 0; i--) {
+                schedu.splice(i, 1);
+            }
+
+            $.ajax({
+                type: 'get',
+                url: "@(Url.Action("pullCourseCode", "Home"))",
+                data: { 'idArray': schedu },
+                dataType: 'json',
+                traditional: true,
+                success: function (data) {
+                    console.log("Success Value");
+                    document.getElementById("humanities").innerHTML = data + " for Humanities Credits"
+
+                },
+                error: function (e) {
+                    console.log("Error Value");
+                }
+
+
+            });
+        } else {
+            document.getElementById("humanities").innerHTML = ""
+        }
+        }
+
+        if (!intro && !scrollM) {
+            document.getElementById('message').scrollIntoView({ behavior: 'smooth', block: 'end' });
+            intro = true;
+        } else if (intro && !scrollM) {
+            document.getElementById('message').scrollIntoView({ behavior: 'smooth', block: 'end' });
+            scrollM = true;
+        }
+    } else {
+        document.getElementById("warningTitle").innerHTML = ""
+    }
+
+    }
+
+   const preReq = [];
+    //This will check for duplicate prerequisites code
+    function checkDup(cid) {
+        var same = false;
+        for (var i = 0; i < preReq.length; i++) {
+            if (preReq[i] == cid) {
+                same = true;
+                break;
+            }
+        }
+        if (same == false) {
+            preReq.push(cid);
+        }
+    }
+
+    //This method will get the preReqs for all the courses on the planner
+     function checkPrereq() {
+         const stdIdArray = [];
+         const courseName = [];
+        const yearContainers = document.querySelectorAll('.courseName')
+         yearContainers.forEach(course => {
+             stdIdArray.push(course.id);
+             courseName.push(course.textContent);
+         })
+
+        $.ajax({
+            type: 'get',
+            url: "@(Url.Action("pullPrereqs", "Home"))",
+            data: { 'idArray': stdIdArray},
+            dataType: 'json',
+            traditional: true,
+            success: function (data) {
+                console.log("Success Prereq");
+                var cid;
+                const preReqOG = []
+                for (var i = 0; i < data.length; i++) {
+                    preReqOG.push(data[i]);
+                    if (data[i] != "") {
+                        cid = data[i].split(",");
+                        for (var j = 0; j < cid.length; j++) {
+                            checkDup(cid[j]);
+                        }
+                    }
+                }
+                  const courseSub = [];
+                  //get the course name
+                  $.ajax({
+                    type: 'get',
+                    url: "@(Url.Action("pullCourseCode", "Home"))",
+                    data: { 'idArray': preReq},
+                    dataType: 'json',
+                    traditional: true,
+                    success: function (data) {
+                        console.log("Success course subject");
+                        //Store the course subject for later
+                        for (var i = 0; i < data.length; i++) {
+                            courseSub.push(data[i]);
+                        }
+                        console.log(preReqOG, "WHY?");
+                        console.log(courseSub, "course code");
+                        console.log(courseName, "Course List in containter");
+                        var unsatisfied = false;
+                        var ss = []; //preReqs for a course with more than 1
+                        for (var i = 0; i < preReqOG.length; i++) {
+                            ss.push(preReqOG[i].split(","));
+                        }
+                        var prereqM = "";
+                        for (var i = 0; i < preReq.length; i++) {
+                            for (var j = 0; j < stdIdArray.length; j++) {
+                                //Works only for exactly one preReq
+                                if (preReq[i] != stdIdArray[j]) {
+                                    unsatisfied = true;
+                                } else {
+                                    unsatisfied = false;
+                                    break;
+                                }
+                            }
+                            //This part will display the warning
+                            if (unsatisfied) {
+
+                                for (var k = 0; k < stdIdArray.length; k++) {
+                                    for (var j = 0; j < preReqOG[k].length; j++) {
+                                        if (preReq[i] == ss[k][j]) {
+                                            console.log(courseName[k], " required course(s): ", courseSub[i]);
+                                            prereqM += courseName[k] + " required course(s): " + courseSub[i] + "<br><br><br>";
+
+                                        }
+                                    }
+                                }
+
+                                unsatisfied = false;
+                            }
+                        }
+                        document.getElementById("prerequisites").innerHTML = prereqM;
+
+                    },
+                    error: function (e) {
+                        console.log("Error Prereq");
+                    }
+                  });
+            },
+            error: function (e) {
+                console.log("Error Prereq");
+            }
         });
     }
 
@@ -411,72 +680,7 @@
         }
     }
 
-    function distribute(context, value) {
-        var warning = false;
-        var science = 0;
-        var social = 0;
-        var humanities = 0;
-        for (var i = 0; i < context.length; i++) {
-            if (context[i] == 'SCIENCE') {
-                science = science + value[i];
-            } else if (context[i] == 'SOCIAL SCIENCES') {
-                social = social + value[i];
-            }else if (context[i] == 'HUMANITIES') {
-                humanities = humanities + value[i];
-            }
-        }
 
-        if (science < 1) {
-            document.getElementById("science").innerHTML = "You are missing " + (1 - science) + " Science credits."
-            warning = true;
-        }
-        if (social < 1) {
-            document.getElementById("social").innerHTML = "You are missing " + (1 - social) + " Social credits."
-            warning = true;
-        }
-        if (humanities < 1) {
-            document.getElementById("humanities").innerHTML = "You are missing " + (1 - humanities) + " Humanities credits."
-            warning = true;
-        }
-
-        if (warning) {
-            document.getElementById("title").innerHTML = "Warning!"
-        }
-    }
-
-     function checkPrereq() {
-        const stdIdArray = [];
-        const yearContainers = document.querySelectorAll('.courseName')
-        yearContainers.forEach(course => {
-            stdIdArray.push(course.id);
-        })
-
-        $.ajax({
-            type: 'get',
-            url: "@(Url.Action("pullPrereqs", "Home"))",
-            data: { 'idArray': stdIdArray},
-            dataType: 'json',
-            traditional: true,
-            success: function (data) {
-                //console.log("Success Prereq");
-                var preReq = [];
-                var cid;
-                for (var i = 0; i < data.length; i++) {
-                    if (data[i] != "") {
-                        cid = data[i].split(",");
-                        for (var j = 0; j < cid.length; j++) {
-                            preReq.push(cid[j]);
-                        }
-                    }
-                }
-               // console.log(preReq);
-                testA(preReq, stdIdArray);
-            },
-            error: function (e) {
-                console.log("Error Prereq");
-            }
-        });
-    }
 
     function alertMessage(num) {
         switch (num) {
@@ -590,7 +794,7 @@
                                 $($(".courseCheck")[c]).find(".checkmark").css("display", "block");
                                 $($(".courseCheck")[c]).find(".questionmark").css("display", "none");
                             }
-                           
+
                         }
                     }
                 }
