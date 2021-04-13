@@ -257,7 +257,6 @@ function addYear() {
                 newUl.insertBefore(draggable, afterElement)
             }
             checkDuplicates();
-
         })
         newUl.addEventListener('drop', e => {
             e.preventDefault();
@@ -319,6 +318,7 @@ function addYear() {
         // add the new element to the course planner container
         document.getElementById("course_planner").appendChild(newYearDiv);
     }
+    
     //ELSE: SHOULD NOTIFY USER THAT THEY CANNOT ADD MORE THAN 10 YEARS
 }
 
@@ -397,3 +397,17 @@ function colorCourseList() {
     }
 }
 
+function displayCourseInfo(cid) {
+    var nameID = 'courseInfo_name ' + cid;
+    var descriptID = 'courseInfo_description ' + cid;
+    var nameText = document.getElementById(nameID).textContent;
+    var descriptText = document.getElementById(descriptID).textContent;
+    document.getElementById('courseInfo_name').textContent = nameText;
+    document.getElementById('courseInfo_description').textContent = descriptText;
+
+    //document.getElementById('course_info').style.visibility = 'visible';
+}
+
+function hideCourseInfo(cid) {
+    //document.getElementById('course_info').style.visibility = 'hidden';
+}

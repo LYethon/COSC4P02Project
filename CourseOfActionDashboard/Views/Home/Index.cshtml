@@ -232,7 +232,7 @@
             <ul id="myUL" style="overflow-y:scroll; max-height: 400px">
                 @for (int i = 0; i < courses.Count; i++)
                 {
-                    <li class="list-group-item draggable course_list" draggable="true">
+                    <li class="list-group-item draggable course_list" draggable="true" onmouseover="displayCourseInfo(@courses[i].CID)" onmouseout="hideCourseInfo(@courses[i].CID)">
                         <div id="@courses[i].CID" creditv="@courses[i].CreditValue" style="text-align: center">@courses[i].Subject @courses[i].Code</div>
                     </li>
                 }
@@ -240,7 +240,17 @@
         </div>
 
         <!--Course Info-->
-        <div id="courseInfo" class="container-fluid col-2 overflow-auto" style="visibility:hidden">
+        <div id="courseInfo" class="container-fluid col-2 overflow-auto" style="visibility:visible; max-height:500px">
+            <div class="navbar-brand">Course Details:</div>
+            <div id="courseInfo_name" style="font-family:fantasy"></div>
+            <div id="courseInfo_description"></div>
+            @for (int i = 0; i < courses.Count; i++)
+            {
+                <div style="visibility:hidden">
+                    <div id="courseInfo_name @courses[i].CID" class="navbar-brand">@courses[i].Code @courses[i].Name:</div>
+                    <div id="courseInfo_description @courses[i].CID">@courses[i].Description</div>
+                </div>
+            }
         </div>
 
     </div>
