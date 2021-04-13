@@ -152,8 +152,8 @@
                 </div>
             </nav>
             <!--Course Planner-->
-            <div style="margin: 10px 0px; background-color: #E4F5FC; overflow-x: auto; min-height: 500px">
-                <div id="course_planner" class="ml-1 d-inline-flex" style="white-space: nowrap; width: 93%; min-height: 480px;">
+            <div style="margin: 10px 0px; background-color: #E4F5FC; overflow-x: auto; min-height: 500px; width: 103%;">
+                <div id="course_planner" class="ml-1 d-inline-flex" style="white-space: nowrap; width: 94%; min-height: 490px;">
                     @if (schedule != null)
                     {
                         int yearNum = -1;
@@ -227,9 +227,9 @@
         </div>
 
         <!--Course List-->
-        <div class="container-fluid col-2 overflow-auto" style="background-color:darkseagreen">
-            <input type="text" id="myInput" onkeyup="filterFunction()" placeholder="Search for courses..">
-            <ul id="myUL" style="overflow-y:scroll; max-height: 400px">
+        <div class="container-fluid col-2 overflow-auto">
+            <input style="min-height: 43px; padding-left: 10px; width: 100%; margin-top: 12px; margin-left: -15px; border-radius: 3px" type="text" id="myInput" onkeyup="filterFunction()" placeholder="Search for courses... ">
+            <ul id="myUL" style="overflow-y:scroll; max-height: 475px; width: 125%; margin: 10px 0 0 -55px">
                 @for (int i = 0; i < courses.Count; i++)
                 {
                     <li class="list-group-item draggable course_list" draggable="true" onmouseover="displayCourseInfo(@courses[i].CID)" onmouseout="hideCourseInfo(@courses[i].CID)">
