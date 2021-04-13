@@ -8,6 +8,9 @@ var duplicate = false;
 var ignore = false;
 
 
+
+
+
 // Remove button: ______________________________________________________________________________
 
 function remove(el) {
@@ -18,23 +21,23 @@ function remove(el) {
     colorCourseList();
     checkRequiredCourses();
     updateProgress();
-    checkPrereq();
-    switchToWarning();
     buildJSON();
 }
 
 
 // Drag and drop: ______________________________________________________________________________
 
-drag_and_drop();
-colorCourseList();
-
+creditValueData = [];
+totalCreditValue = 0.0;
 
 function callback(data, totWeight) {
     creditValueData = data;
     totalCreditValue = totWeight;
+    console.log("totalCreditValue: " + totalCreditValue + " _creditValueData: " + creditValueData)
 }
 
+drag_and_drop();
+colorCourseList();
 
 // addDragTag: adds any newely added elements that has class 'draggable' into the query
 function addDragTag() {
@@ -51,78 +54,59 @@ function addDragTag() {
 }
 
 
-function calcTotalCredits(el) {
-    var totValue = 0.0;
-    for (i = 0; i < el.childElementCount; i++) {
-        totValue += parseFloat($(el.children[i].children[0]).attr("creditv"));
-    }
-    return totValue;
-}
-
-
-/**
- * drag_and_drop: 
- *  This function controls the drag and drop functionality of the course planner. It reads the dragged element along with the exact position that
- *  it is hovering over. The dragged item will either get inserted above or below another item depending on its distance away from the item's centre.
- *  When dropping a course list item into the course planner, it will get converted into a course planner element before insertion. If duplicates exist
- *  within the planner, then they duplicated item along with the original item will get highlighted until all duplicates are removed. Each year container
- *  has a max capacity of credits that it can hold. When a container is nearly full, it will highlight the elements at the end of its list to indicate that
- *  it has nearly reached its max capacity. Each time an item is dragged/dropped, a series of functions gets called on update.
- */
 function drag_and_drop() {
-    const containers = document.querySelectorAll('.year_container')
+    const containers = document.querySelectorAll('.ul_container')
     addDragTag();
-
+    
     containers.forEach(container => {
-
         container.addEventListener('dragover', e => {
             e.preventDefault()
-            const afterElement = getDragAfterElement(container.children[1].children[0], e.clientY)
+            const afterElement = getDragAfterElement(container, e.clientY)
             const draggable = document.querySelector('.dragging')
-            var totalCreditValue = calcTotalCredits(container.children[1].children[0]);
+            getCreditValues(container) //update current credit weight count
+            //console.log("dragover " + totalCreditValue)
 
             //if user can add credit to container..
             if (afterElement == null && !draggable.classList.contains('course_list') && totalCreditValue < config.max_cap_cr_year) {
-                container.children[1].children[0].appendChild(draggable)
+                container.appendChild(draggable)
             } else if (!draggable.classList.contains('course_list') && totalCreditValue < config.max_cap_cr_year) {
-                container.children[1].children[0].insertBefore(draggable, afterElement)
+                container.insertBefore(draggable, afterElement)
             }
             checkDuplicates();
 
         })
         container.addEventListener('drop', e => {
             e.preventDefault();
-            const afterElement = getDragAfterElement(container.children[1].children[0], e.clientY)
+            const afterElement = getDragAfterElement(container, e.clientY)
             const draggable = document.querySelector('.dragging')
-            var totalCreditValue = calcTotalCredits(container.children[1].children[0]);
+            getCreditValues(container) //update current credit weight count
+            //console.log("drop " + totalCreditValue)
 
-            const og_year = draggable.parentNode.parentNode.parentNode.children[0].textContent.trim().substr(5) //the draggable's original year number
-            const this_year = container.children[0].textContent.trim().substr(5) //the dragover's year number
-            
-            if (afterElement == null && totalCreditValue < config.max_cap_cr_year || afterElement == null && og_year == this_year) {
+            if (afterElement == null && totalCreditValue < config.max_cap_cr_year) {
+
                 if (draggable.classList.contains('course_list')) {
                     const droppable = convertToCSObj(draggable);
-                    container.children[1].children[0].appendChild(droppable);
+                    container.appendChild(droppable);
                 } else {
-                    container.children[1].children[0].appendChild(draggable);
+                    container.appendChild(draggable);
                 }
-            } else if (totalCreditValue < config.max_cap_cr_year || og_year == this_year) {  //insert element
+            } else if (totalCreditValue < config.max_cap_cr_year) {  //insert element
                 if (draggable.classList.contains('course_list')) {
                     const droppable = convertToCSObj(draggable);
-                    container.children[1].children[0].insertBefore(droppable, afterElement);
+                    container.insertBefore(droppable, afterElement);
                 } else {
-                    container.children[1].children[0].insertBefore(draggable, afterElement);
+                    container.insertBefore(draggable, afterElement);
                 }
             }
-           /* if (totalCreditValue > config.max_cr_year) { //if we have an overflow of weights in a year
+            if (totalCreditValue > config.max_cr_year) { //if we have an overflow of weights in a year
                 console.log("OVERFLOW")
-                highlightOverflow(container, creditValueData);
-            }*/
+                var data = creditValueData;
+                highlightOverflow(container, data);
+            }
             checkDuplicates();
             addDragTag();
             colorCourseList();
             updateProgress();
-            switchToWarning();
             if (!ignore) {
                 warnDuplicates(duplicate);
                 if (!duplicate) {
@@ -130,7 +114,6 @@ function drag_and_drop() {
                 }
             }
             checkRequiredCourses();
-            checkPrereq();
             buildJSON();
         })
     })
@@ -151,25 +134,17 @@ function highlightOverflow(container, data) {
     }
     //highlight overflowing course elements
     for (i = 0; i < container.childElementCount; i++) {
-        if (i >= pos && container.children[i].style.backgroundColor != "lightcoral") {
+        if (i >= pos) {
             container.children[i].style.backgroundColor = "palegoldenrod";
         }
         else {
             container.children[i].style.backgroundColor = "white";
         }
     }
+
 }
 
-function refreshHighlights() {
-    const containers = document.querySelectorAll('.ul_container')
-    containers.forEach(item => {
-        getCreditValues(item) //update container's current credit count
-        for (i = 0; i < item.childElementCount; i++) {
-            if (item.children[i].style.backgroundColor != "lightcoral" && i < config.max_cr_year)
-                item.children[i].style.backgroundColor = "white";
-        }
-    })
-}
+
 
 // getDragAfterElement: determines where the item should get dropped
 function getDragAfterElement(container, y) {
@@ -187,6 +162,66 @@ function getDragAfterElement(container, y) {
     }, { offset: Number.NEGATIVE_INFINITY }).element
 }
 
+/*//highlights credits that exceed the max credit count
+function highlightOverflow(container, numChildren) {
+    console.log("enter highlightoverflow")
+   // const yearContainer = container.querySelectorAll('.credit_box')
+    console.log(container.childElementCount + " " + numChildren)
+    for (i = 0; i < container.childElementCount; i++) {
+        if (i >= numChildren) {
+            container.children[i].style.backgroundColor = "palegoldenrod";
+        }
+        else {
+            container.children[i].style.backgroundColor = "white";
+        }
+    }
+
+}
+*/
+
+
+//counts the total weight of the student's credits from the CP
+/*function countCredits(container, draggable) {
+    var totCredits = 0.0
+
+    const yearContainers = container.querySelectorAll('.credit_box')
+    //add current dragging weight to calculation
+    if (draggable != null) {
+        var dragText = draggable.children[0].textContent.trim().substr(4).trim()
+        var dragWeight = dragText[1]
+
+        if (dragWeight == 'P' || dragWeight == 'C' || dragWeight == 'Q' || dragWeight == 'R' || dragWeight == 'V') dragWeight = 0.5
+        else if (dragWeight == 'F' || dragWeight == 'G' || dragWeight == 'M') weight = 1.0
+        else if (dragWeight == 'N') weight = 0.0
+        else if (dragWeight == 'Y') weight = 0.25
+        else if (dragWeight == 'D') weight = 1.5
+        else if (dragWeight == 'L') weight = 2.0
+        else if (dragWeight == 'A') weight = 3.0
+        else if (dragWeight == 'B') weight = 4.5
+        else if (dragWeight == 'Z') weight = 5.0
+        else dragWeight = 0.0
+
+        totCredits = dragWeight;
+    }
+    yearContainers.forEach(year => {
+        var text = year.children[0].textContent.trim().substr(4).trim()
+        var weight = text[1] //get the second char of the code
+        if (weight == 'P' || weight == 'C' || weight == 'Q' || weight == 'R' || weight == 'V') weight = 0.5
+        else if (weight == 'F' || weight == 'G' || weight == 'M') weight = 1.0
+        else if (weight == 'N') weight = 0.0
+        else if (weight == 'Y') weight = 0.25
+        else if (weight == 'D') weight = 1.5
+        else if (weight == 'L') weight = 2.0
+        else if (weight == 'A') weight = 3.0
+        else if (weight == 'B') weight = 4.5
+        else if (weight == 'Z') weight = 5.0
+        else weight = 0.0
+        totCredits += weight;
+    })
+    return totCredits;
+}
+*/
+
 
 //looks for duplicate credits witihin the student's CP
 function checkDuplicates() {
@@ -202,7 +237,7 @@ function checkDuplicates() {
     //highlight duplicates
     yearContainers.forEach(year => {
         if (uniqueIds.has(year.children[0].id)) {
-            year.style.backgroundColor = "lightcoral";
+            year.style.backgroundColor = "#ff969c";
             duplicate = true;
         }
         else {
@@ -253,6 +288,7 @@ function addYear() {
             const afterElement = getDragAfterElement(newUl, e.clientY)
             const draggable = document.querySelector('.dragging')
             getCreditValues(newUl) //update current credit weight count
+            //console.log("dragover " + totalCreditValue)
 
             //if user can add credit to newUl..
             if (afterElement == null && !draggable.classList.contains('course_list') && totalCreditValue < config.max_cap_cr_year) {
@@ -261,12 +297,14 @@ function addYear() {
                 newUl.insertBefore(draggable, afterElement)
             }
             checkDuplicates();
+
         })
         newUl.addEventListener('drop', e => {
             e.preventDefault();
             const afterElement = getDragAfterElement(newUl, e.clientY)
             const draggable = document.querySelector('.dragging')
             getCreditValues(newUl) //update current credit weight count
+            //console.log("drop " + totalCreditValue)
 
             if (afterElement == null && totalCreditValue < config.max_cap_cr_year) {
 
@@ -299,6 +337,9 @@ function addYear() {
                 }
             }
         })
+
+
+        newUl.style.minHeight = "400px";
         newUlDiv.appendChild(newUl);
 
         // attach the styles and content for the spans and append to parent
@@ -322,7 +363,6 @@ function addYear() {
         // add the new element to the course planner container
         document.getElementById("course_planner").appendChild(newYearDiv);
     }
-    
     //ELSE: SHOULD NOTIFY USER THAT THEY CANNOT ADD MORE THAN 10 YEARS
 }
 
@@ -354,7 +394,6 @@ function convertToCSObj(draggable) {
     const newTitle = document.createElement("div");
     const newBtn = document.createElement("span");
     const id = draggable.children[0].id;
-    const creditv = $(draggable.children[0]).attr("creditv");
 
     // attach the styles for the newBtn
     newBtn.classList.add('col-1', 'pl-2', 'remove_btn');
@@ -364,7 +403,6 @@ function convertToCSObj(draggable) {
 
     // attach the styles and content to the newTitle 
     newTitle.id = id;
-    $(newTitle).attr("creditv", creditv);
     newTitle.classList.add('col-10', 'pl-2', 'courseName');
 
     const course_name = draggable.innerText;
@@ -401,17 +439,3 @@ function colorCourseList() {
     }
 }
 
-function displayCourseInfo(cid) {
-    var nameID = 'courseInfo_name ' + cid;
-    var descriptID = 'courseInfo_description ' + cid;
-    var nameText = document.getElementById(nameID).textContent;
-    var descriptText = document.getElementById(descriptID).textContent;
-    document.getElementById('courseInfo_name').textContent = nameText;
-    document.getElementById('courseInfo_description').textContent = descriptText;
-
-    //document.getElementById('course_info').style.visibility = 'visible';
-}
-
-function hideCourseInfo(cid) {
-    //document.getElementById('course_info').style.visibility = 'hidden';
-}

@@ -76,6 +76,11 @@ body {
 -------------------------------------------------- */
 
 .courseCheckBox {
+    width: 200px;
+    height: 600px;
+    position: absolute;
+    display: block;
+    margin-left: -15rem;
     background-color: #E4F5FC;
 }
 
