@@ -32,15 +32,16 @@
 <body onload="updateProgress()">
 
     <div class="container">
-        <main role="main" class="pb-3">
+        <div role="main" class="pb-3">
             @{ if (student != null)
                 {
                     <h1>Welcome @student.FullName()</h1>
                     <h1>Email: @student.Email</h1>
                 }
             }
+        </div>
             <div class="row">
-                <div class="container-fluid" style="">
+                <div class="container-fluid">
                     <!--Progress Bar Legend-->
                     <div class="legendarea" style="padding-top:3%;">
                         <table style="width:400px;">
@@ -118,148 +119,157 @@
                     </div>
                 </div>
             </div>
-
-            <!--Required Courses-->
-            <div class="row">
-                <div class="courseCheckBox">
-                    <div class="innerCourseCheckBox m-2">
-                        <a class="navbar-brand ml-3 mr-0">Required Courses</a>
-                        <ul id="requiredC">
-                        </ul>
-                    </div>
-                </div>
-                <!--Schedule Options-->
-                <div class="container-fluid col-8 p-0">
-                    <nav class="navbar navbar-expand-lg navbar-light bg-transparent">
-                        <a class="navbar-brand">Course Scheduler</a>
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                            <div class="navbar-nav">
-                                <form id="btn_bar" class="form-inline">
-                                    <button type="button" class="btn btn-outline-primary add_year mr-2" onclick="addYear()">Add Year</button>
-                                </form>
-                                <form class="form-inline">
-                                    <button type="button" class="btn btn-outline-success mr-2" onclick="buildJSON(); updateProgress()">Save</button>
-                                    <button type="button" class="btn btn-outline-secondary mr-2" onclick="resetSchedule()">Reset</button>
-                                    <button type="button" class="btn btn-outline-secondary" onclick="exportSchedule()">Export</button>
-                                </form>
-                            </div>
-                        </div>
-                    </nav>
-                    <!--Course Planner-->
-                    <div style="margin: 10px 0px; background-color: #E4F5FC; overflow-x: auto; min-height: 500px">
-                        <div id="course_planner" class="ml-1 d-inline-flex" style="white-space: nowrap; width: 93%; min-height: 480px;">
-                            @if (schedule != null)
-                            {
-                                int yearNum = -1;
-                                for (int y = 0; y < schedule.Courses.Count; y++)
-                                {
-                                    if (schedule.Courses[y][0] != null)
-                                    {
-                                        yearNum++;
-                                        <div class="col-3 year_container align-top mt-2 ml-1 mr-1 mb-2 pb-1">
-                                            <div class="row year">
-                                                <span class="mb-2 mt-3" style="user-select: none">
-                                                    Year @(yearNum + 1)
-                                                </span>
-                                                @if (y >= 4)
-                                                {
-                                                    <span class="mt-3 ml-5 remove_year" style="cursor:pointer" onclick="removeYear(this)">
-                                                        remove
-                                                        @*<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="red" class="bi bi-trash" viewBox="0 0 16 16">
-                                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                                                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                                                    </svg>*@
-                                                    </span>
-                                                }
-                                            </div>
-                                            <div>
-                                                <ul id="ul_year" class="ul_container ul_format">
-                                                    @for (int i = 0; i < schedule.Courses[y].Count; i++)
-                                                    {
-                                                        if (schedule.Courses[y][i] != null)
-                                                        {
-                                                            <li class="row credit_box draggable p-2" draggable="true" style="white-space: normal;">
-                                                                <div id="@schedule.Courses[y][i].CID" creditv="@courses[i].CreditValue" class="col-10 courseName pl-2 pr-1">@schedule.Courses[y][i].Subject @schedule.Courses[y][i].Code</div>
-                                                                <span class="col-1 remove_btn pl-2" onclick="remove(this)">x</span>
-                                                            </li>
-                                                        }
-                                                    }
-                                                </ul>
-
-                                            </div>
-                                        </div>
-                                    }
-                                    else if (schedule.Courses[y][0] == null && y < 4)
-                                    {
-                                        yearNum++;
-                                        <div class="col-3 year_container align-top mt-2 ml-1 mr-1 mb-2 pb-1">
-                                            <div class="row year">
-                                                <span class="mb-2 mt-3" style="user-select: none">
-                                                    Year @(yearNum + 1)
-                                                </span>
-                                                @if (y >= 4)
-                                                {
-                                                    <span class="mt-3 ml-5 remove_year" style="cursor:pointer" onclick="removeYear(this)">
-                                                        remove
-                                                        @*<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="red" class="bi bi-trash" viewBox="0 0 16 16">
-                                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                                                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                                                    </svg>*@
-                                                    </span>
-                                                }
-                                            </div>
-                                            <div>
-                                                <ul id="ul_year" class="ul_container ul_format" style="min-height: 400px;">
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    }
-                                }
-                            }
-                        </div>
-                    </div>
-                </div>
-
-                <!--Course List-->
-                <div class="container-fluid col-3 overflow-auto" style="background-color:darkseagreen">
-                    <input type="text" id="myInput" onkeyup="filterFunction()" placeholder="Search for courses..">
-                    <ul id="myUL" style="overflow-y:scroll; max-height: 400px">
-                        @for (int i = 0; i < courses.Count; i++)
-                        {
-                            <li class="list-group-item draggable course_list" draggable="true">
-                                <div id="@courses[i].CID" creditv="@courses[i].CreditValue" style="text-align: center">@courses[i].Subject @courses[i].Code</div>
-                            </li>
-                        }
+    </div>
+    <div class="row">
+        <!--Required Courses-->
+        <div class="col-2 ml-2">
+            <div class="courseCheckBox p-2" style="display:none">
+                <div class="innerCourseCheckBox">
+                    <a class="navbar-brand ml-3 mr-0">Required Courses</a>
+                    <ul id="requiredC" class="mb-0">
                     </ul>
                 </div>
             </div>
-
-            <div class="row ">
-                <div class="col  p-0">
-                    <div class="container-fluid">
-                        <button class="alert alert-primary " aria-label="SuccessButton" onclick="warningTab()">
-                            Warning!
-                        </button>
-                        <button class="alert" aria-label="SuccessButton" onclick="recommendationTab()">
-                            Recommendation
-                        </button>
+        </div>
+        <!--Schedule Options-->
+        <div class="container-fluid col-5 p-0">
+            <nav class="navbar navbar-expand-lg navbar-light bg-transparent">
+                <a class="navbar-brand">Course Scheduler</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <form id="btn_bar" class="form-inline">
+                            <button type="button" class="btn btn-outline-primary add_year mr-2" onclick="addYear()">Add Year</button>
+                        </form>
+                        <form class="form-inline">
+                            <button type="button" class="btn btn-outline-success mr-2" onclick="buildJSON(); updateProgress()">Save</button>
+                            <button type="button" class="btn btn-outline-secondary mr-2" onclick="resetSchedule()">Reset</button>
+                            <button type="button" class="btn btn-outline-secondary" onclick="exportSchedule()">Export</button>
+                        </form>
                     </div>
                 </div>
-                <div class="container-fluid">
-                    <div class="alert alert-primary" role="alert">
-                        <p style="font-size:30px" id="title"></p>
+            </nav>
+            <!--Course Planner-->
+            <div style="margin: 10px 0px; background-color: #E4F5FC; overflow-x: auto; min-height: 500px">
+                <div id="course_planner" class="ml-1 d-inline-flex" style="white-space: nowrap; width: 93%; min-height: 480px;">
+                    @if (schedule != null)
+                    {
+                        int yearNum = -1;
+                        for (int y = 0; y < schedule.Courses.Count; y++)
+                        {
+                            if (schedule.Courses[y][0] != null)
+                            {
+                                yearNum++;
+                                <div class="col-3 year_container align-top mt-2 ml-1 mr-1 mb-2 pb-1">
+                                    <div class="row year">
+                                        <span class="mb-2 mt-3" style="user-select: none">
+                                            Year @(yearNum + 1)
+                                        </span>
+                                        @if (y >= 4)
+                                        {
+                                            <span class="mt-3 ml-5 remove_year" style="cursor:pointer" onclick="removeYear(this)">
+                                                remove
+                                                @*<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="red" class="bi bi-trash" viewBox="0 0 16 16">
+                                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                                </svg>*@
+                                            </span>
+                                        }
+                                    </div>
+                                    <div>
+                                        <ul id="ul_year" class="ul_container ul_format">
+                                            @for (int i = 0; i < schedule.Courses[y].Count; i++)
+                                            {
+                                                if (schedule.Courses[y][i] != null)
+                                                {
+                                                    <li class="row credit_box draggable p-2" draggable="true" style="white-space: normal;">
+                                                        <div id="@schedule.Courses[y][i].CID" creditv="@courses[i].CreditValue" class="col-10 courseName pl-2 pr-1">@schedule.Courses[y][i].Subject @schedule.Courses[y][i].Code</div>
+                                                        <span class="col-1 remove_btn pl-2" onclick="remove(this)">x</span>
+                                                    </li>
+                                                }
+                                            }
+                                        </ul>
 
-                        <p id="science"></p>
-                        <p id="social"></p>
-                        <p id="humanities"></p>
-
-                    </div>
+                                    </div>
+                                </div>
+                            }
+                            else if (schedule.Courses[y][0] == null && y < 4)
+                            {
+                                yearNum++;
+                                <div class="col-3 year_container align-top mt-2 ml-1 mr-1 mb-2 pb-1">
+                                    <div class="row year">
+                                        <span class="mb-2 mt-3" style="user-select: none">
+                                            Year @(yearNum + 1)
+                                        </span>
+                                        @if (y >= 4)
+                                        {
+                                            <span class="mt-3 ml-5 remove_year" style="cursor:pointer" onclick="removeYear(this)">
+                                                remove
+                                                @*<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="red" class="bi bi-trash" viewBox="0 0 16 16">
+                                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                                </svg>*@
+                                            </span>
+                                        }
+                                    </div>
+                                    <div>
+                                        <ul id="ul_year" class="ul_container ul_format" style="min-height: 400px;">
+                                        </ul>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    }
                 </div>
             </div>
-        </main>
+        </div>
+
+        <!--Course List-->
+        <div class="container-fluid col-2 overflow-auto" style="background-color:darkseagreen">
+            <input type="text" id="myInput" onkeyup="filterFunction()" placeholder="Search for courses..">
+            <ul id="myUL" style="overflow-y:scroll; max-height: 400px">
+                @for (int i = 0; i < courses.Count; i++)
+                {
+                    <li class="list-group-item draggable course_list" draggable="true">
+                        <div id="@courses[i].CID" creditv="@courses[i].CreditValue" style="text-align: center">@courses[i].Subject @courses[i].Code</div>
+                    </li>
+                }
+            </ul>
+        </div>
+
+        <!--Course Info-->
+        <div id="courseInfo" class="container-fluid col-2 overflow-auto" style="visibility:hidden">
+        </div>
+
+    </div>
+    <div class="container">
+        <div class="row ">
+            <div class="col  p-0">
+                <div class="container-fluid">
+                    <button class="alert alert-primary " aria-label="SuccessButton" onclick="warningTab()">
+                        Warning!
+                    </button>
+                    <button class="alert" aria-label="SuccessButton" onclick="recommendationTab()">
+                        Recommendation
+                    </button>
+                    <button class="alert" aria-label="SuccessButton" onclick="showRequired()">
+                        Required Courses
+                    </button>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="alert alert-primary" role="alert">
+                    <p style="font-size:30px" id="title"></p>
+
+                    <p id="science"></p>
+                    <p id="social"></p>
+                    <p id="humanities"></p>
+
+                </div>
+            </div>
+        </div>
     </div>
 
 </body>
@@ -378,6 +388,15 @@
             }
 
         });
+    }
+
+    function showRequired() {
+        var elem = $(".courseCheckBox")[0];
+        if (elem.style.display === "none") {
+            elem.style.display = "block";
+        } else {
+            elem.style.display = "none";
+        }
     }
 
     function distribute(context, value) {
@@ -501,7 +520,7 @@
         for (var c = 0; c < $(".courseCheck").length; c++) {
             $($(".courseCheck")[c]).attr('checked', false);
         }
-        
+
     }
     function checkRequiredCourses() {
         //Clear Checks
@@ -594,7 +613,7 @@
                 console.log("Error");
             }
         });
-        
+
     }
 
     // export student schedule as a csv
