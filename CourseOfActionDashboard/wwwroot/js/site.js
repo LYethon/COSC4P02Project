@@ -18,6 +18,8 @@ function remove(el) {
     colorCourseList();
     checkRequiredCourses();
     updateProgress();
+    checkPrereq();
+    switchToWarning();
     buildJSON();
 }
 
@@ -120,6 +122,7 @@ function drag_and_drop() {
             addDragTag();
             colorCourseList();
             updateProgress();
+            switchToWarning();
             if (!ignore) {
                 warnDuplicates(duplicate);
                 if (!duplicate) {
@@ -127,6 +130,7 @@ function drag_and_drop() {
                 }
             }
             checkRequiredCourses();
+            checkPrereq();
             buildJSON();
         })
     })

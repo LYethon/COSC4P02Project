@@ -16,7 +16,7 @@ using System.Data.Entity;
 using System.IO;
 
 namespace CourseOfActionDashboard.Controllers
-{ 
+{
     public class HomeController : Controller
     {
         private DB_Entities _db = new DB_Entities();
@@ -33,15 +33,17 @@ namespace CourseOfActionDashboard.Controllers
         {
             List<Course> courses = _dbCourses.courseTable.ToList();
             ViewData["Student"] = student;
-            if (student.Schedule != null){
+            if (student.Schedule != null)
+            {
                 Schedule schedule = JsonConvert.DeserializeObject<Schedule>(student.Schedule);
                 ViewData["Schedule"] = schedule;
             }
-            else{
+            else
+            {
                 ViewData["Schedule"] = null;
             }
             ViewData["Courses"] = courses;
-            return View("Index",student);
+            return View("Index", student);
         }
 
         [HttpPost]
@@ -95,7 +97,7 @@ namespace CourseOfActionDashboard.Controllers
                 {
                     var temp = idList[i][q];
                     Course course = _dbCourses.courseTable.Where(s => s.CID.Equals(temp)).FirstOrDefault();
-                    jsonSched += JsonConvert.SerializeObject(course)+",";
+                    jsonSched += JsonConvert.SerializeObject(course) + ",";
                 }
                 jsonSched += "],";
             }
@@ -113,7 +115,8 @@ namespace CourseOfActionDashboard.Controllers
             string csv = "";
             Student student = _db.Students.Where(s => s.Id.Equals(studentId)).FirstOrDefault();
 
-            if (student != null) {
+            if (student != null)
+            {
 
                 Schedule schedule = JsonConvert.DeserializeObject<Schedule>(student.Schedule);
 
@@ -154,9 +157,9 @@ namespace CourseOfActionDashboard.Controllers
             if (ModelState.IsValid)
             {
                 //var f_password = GetMD5(password);
-                var data = _db.Students.Where(s => s.Email.Equals(email) && s.Password.Equals(password)).ToList();        
+                var data = _db.Students.Where(s => s.Email.Equals(email) && s.Password.Equals(password)).ToList();
                 if (data.Count() > 0)
-                {                   
+                {
                     //Return to Index Page View with the student object that logged in
                     return Index(_db.Students.Where(s => s.Email.Equals(email) && s.Password.Equals(password)).FirstOrDefault());
                 }
@@ -173,7 +176,7 @@ namespace CourseOfActionDashboard.Controllers
 
         //Logout
         public ActionResult Logout()
-        {            
+        {
             HttpContext.Session.Clear();//remove session
             return RedirectToAction("LoginPage");
         }
@@ -207,10 +210,16 @@ namespace CourseOfActionDashboard.Controllers
                     var temp = idArray[i];
                     var test = _dbCourses.courseTable.Where(s => s.CID.Equals(temp)).ToList();
                     Course course = _dbCourses.courseTable.Where(s => s.CID.Equals(temp)).FirstOrDefault();
-                    if (course.Prerequisites != null) 
+                    if (course.Prerequisites != null)
+                    {
+                        String courseTitle = course.Subject + course.Code;
                         testList.Add(course.Prerequisites);
+                    }
                     else
+                    {
                         testList.Add("");
+                    }
+
                 }
             }
             else
@@ -219,6 +228,51 @@ namespace CourseOfActionDashboard.Controllers
             }
             return testList;
         }//pullPrereqs
+
+        [HttpGet]
+        public List<String> pullCourseName(int[] idArray)
+        {
+            List<String> testList = new List<String>();
+            if (idArray != null)
+            {
+                for (int i = 0; i < idArray.Length; i++)
+                {
+                    var temp = idArray[i];
+                    var test = _dbCourses.courseTable.Where(s => s.CID.Equals(temp)).ToList();
+                    Course course = _dbCourses.courseTable.Where(s => s.CID.Equals(temp)).FirstOrDefault();
+                    testList.Add(course.Subject);
+                }
+            }
+            else
+            {
+                return null;
+            }
+            return testList;
+        }//pullCourseName
+
+        [HttpGet]
+        public List<String> pullCourseCode(int[] idArray)
+        {
+            List<String> testList = new List<String>();
+            if (idArray != null)
+            {
+                for (int i = 0; i < idArray.Length; i++)
+                {
+
+                    var temp = idArray[i];
+                    var test = _dbCourses.courseTable.Where(s => s.CID.Equals(temp)).ToList();
+                    Course course = _dbCourses.courseTable.Where(s => s.CID.Equals(temp)).FirstOrDefault();
+                    string s = course.Subject + " " + course.Code;
+                    testList.Add(s);
+
+                }
+            }
+            else
+            {
+                return null;
+            }
+            return testList;
+        }//pullCourseCode
 
         [HttpGet]
         public List<String> pullContext(int[] idArray)
@@ -285,8 +339,9 @@ namespace CourseOfActionDashboard.Controllers
         //The following 7 methods are all used for checking students course stats such as 1palpha courses or psyc courses etc
 
         [HttpGet]
-        public double PullAlpha1Values(int[] idArray){
-            
+        public double PullAlpha1Values(int[] idArray)
+        {
+
             double creditValues = 0;
 
             if (idArray != null)
@@ -295,7 +350,7 @@ namespace CourseOfActionDashboard.Controllers
                 {
                     var temp = idArray[i];
                     Course course = _dbCourses.courseTable.Where(s => s.CID.Equals(temp)).FirstOrDefault();
-                    if(course.Code[0]=='1')
+                    if (course.Code[0] == '1')
                     {
                         creditValues += course.CreditValue;
                     }
@@ -428,7 +483,7 @@ namespace CourseOfActionDashboard.Controllers
                     var temp = idArray[i];
                     Course course = _dbCourses.courseTable.Where(s => s.CID.Equals(temp)).FirstOrDefault();
                     creditValues += course.CreditValue;
-         
+
                 }
             }
             else return 0;
