@@ -29,8 +29,10 @@ namespace CourseOfActionDashboard.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index(Student student)
+        public IActionResult Index(int id)
         {
+            if (id == 0) { id = 1; }
+            Student student = _db.Students.Where(s => s.Id.Equals(id)).FirstOrDefault();
             List<Course> courses = _dbCourses.courseTable.ToList();
             ViewData["Student"] = student;
             if (student.Schedule != null){
@@ -41,7 +43,7 @@ namespace CourseOfActionDashboard.Controllers
                 ViewData["Schedule"] = null;
             }
             ViewData["Courses"] = courses;
-            return View("Index",student);
+            return View("Index", id);
         }
 
         [HttpPost]
@@ -139,6 +141,20 @@ namespace CourseOfActionDashboard.Controllers
             return View();
         }
 
+        public IActionResult ProfilePage(int id)
+        {
+            
+            Student student = _db.Students.Where(s  => s.Id.Equals(id)).FirstOrDefault();
+            ViewData["Student"] = student;
+            
+            return View();
+        }
+
+        public IActionResult ReturnToSchedule(int id)
+        {
+            return Index(id);
+        }
+
         public IActionResult LoginPage()
         {
             return View();
@@ -153,9 +169,10 @@ namespace CourseOfActionDashboard.Controllers
                 //var f_password = GetMD5(password);
                 var data = _db.Students.Where(s => s.Email.Equals(email) && s.Password.Equals(password)).ToList();        
                 if (data.Count() > 0)
-                {                   
+                {
                     //Return to Index Page View with the student object that logged in
-                    return Index(_db.Students.Where(s => s.Email.Equals(email) && s.Password.Equals(password)).FirstOrDefault());
+                    int id = _db.Students.Where(s => s.Email.Equals(email) && s.Password.Equals(password)).FirstOrDefault().Id;
+                    return Index(id);
                 }
                 else
                 {
