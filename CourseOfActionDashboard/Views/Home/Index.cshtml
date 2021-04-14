@@ -407,16 +407,20 @@
 
         var socialC = [];
         var humanitiesC = [];
+        var sTotal = 0;
+        var hTotal = 0;
 
 
         for (var i = 0; i < context.length; i++) {
             if (context[i] == 'SOCIAL SCIENCES') {
                 socialC.push(value[i]);
+                sTotal += value[i];
             }else if (context[i] == 'HUMANITIES') {
                 humanitiesC.push(value[i]);
+                hTotal += value[i];
             }
         }
-        warningTab(socialC, humanitiesC);
+        warningTab(socialC, humanitiesC, sTotal, hTotal);
     }
 
     function switchToWarning() {
@@ -430,21 +434,21 @@
         checkContext();
     }
 
-    function warningTab(socialC, humanitiesC) {
+    function warningTab(socialC, humanitiesC, sTotal, hTotal) {
     var sWarning = false;
     var hWarning = false;
         sRecommend = false;
         hRecommend = false;
-    if (socialC.length < 2) {
-        document.getElementById("social").innerHTML = "You are missing " + (1 - socialC) + " Social credits."
+    if (sTotal < 1) {
+        document.getElementById("social").innerHTML = "You are missing " + (1 - sTotal) + " Social credits."
         sRecommend = true;
         sWarning = true;
 
     } else {
         document.getElementById("social").innerHTML = ""
     }
-    if (humanitiesC.length < 2) {
-        document.getElementById("humanities").innerHTML = "You are missing " + (1 - humanitiesC) + " Humanities credits."
+    if (hTotal < 1) {
+        document.getElementById("humanities").innerHTML = "You are missing " + (1 - hTotal) + " Humanities credits."
         hRecommend = true;
         hWarning = true;
     } else {
