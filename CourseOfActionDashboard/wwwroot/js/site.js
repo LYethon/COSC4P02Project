@@ -82,9 +82,9 @@ function drag_and_drop() {
             var totalCreditValue = calcTotalCredits(container.children[1].children[0]);
 
             //if user can add credit to container..
-            if (afterElement == null && !draggable.classList.contains('course_list') && totalCreditValue < config.max_cap_cr_year) {
+            if (afterElement == null && !draggable.classList.contains('course_list') && totalCreditValue < config.max_cr_year) {
                 container.children[1].children[0].appendChild(draggable)
-            } else if (!draggable.classList.contains('course_list') && totalCreditValue < config.max_cap_cr_year) {
+            } else if (!draggable.classList.contains('course_list') && totalCreditValue < config.max_cr_year) {
                 container.children[1].children[0].insertBefore(draggable, afterElement)
             }
             checkDuplicates();
@@ -99,14 +99,14 @@ function drag_and_drop() {
             const og_year = draggable.parentNode.parentNode.parentNode.children[0].textContent.trim().substr(5) //the draggable's original year number
             const this_year = container.children[0].textContent.trim().substr(5) //the dragover's year number
             
-            if (afterElement == null && totalCreditValue < config.max_cap_cr_year || afterElement == null && og_year == this_year) {
+            if (afterElement == null && totalCreditValue < config.max_cr_year || afterElement == null && og_year == this_year) {
                 if (draggable.classList.contains('course_list')) {
                     const droppable = convertToCSObj(draggable);
                     container.children[1].children[0].appendChild(droppable);
                 } else {
                     container.children[1].children[0].appendChild(draggable);
                 }
-            } else if (totalCreditValue < config.max_cap_cr_year || og_year == this_year) {  //insert element
+            } else if (totalCreditValue < config.max_cr_year || og_year == this_year) {  //insert element
                 if (draggable.classList.contains('course_list')) {
                     const droppable = convertToCSObj(draggable);
                     container.children[1].children[0].insertBefore(droppable, afterElement);
@@ -114,10 +114,6 @@ function drag_and_drop() {
                     container.children[1].children[0].insertBefore(draggable, afterElement);
                 }
             }
-           /* if (totalCreditValue > config.max_cr_year) { //if we have an overflow of weights in a year
-                console.log("OVERFLOW")
-                highlightOverflow(container, creditValueData);
-            }*/
             checkDuplicates();
             addDragTag();
             colorCourseList();
@@ -136,40 +132,6 @@ function drag_and_drop() {
     })
 }
 
-
-//highlights credits that exceed the max credit count
-function highlightOverflow(container, data) {
-    //determine where the overflow occurs
-    var pos = 0;
-    var weights = 0.0;
-    for (p = 0; p < data.length; p++) {
-        if (weights >= config.max_cr_year) {
-            pos = p;
-            break;
-        }
-        else weights += data[p]
-    }
-    //highlight overflowing course elements
-    for (i = 0; i < container.childElementCount; i++) {
-        if (i >= pos && container.children[i].style.backgroundColor != "lightcoral") {
-            container.children[i].style.backgroundColor = "palegoldenrod";
-        }
-        else {
-            container.children[i].style.backgroundColor = "white";
-        }
-    }
-}
-
-function refreshHighlights() {
-    const containers = document.querySelectorAll('.ul_container')
-    containers.forEach(item => {
-        getCreditValues(item) //update container's current credit count
-        for (i = 0; i < item.childElementCount; i++) {
-            if (item.children[i].style.backgroundColor != "lightcoral" && i < config.max_cr_year)
-                item.children[i].style.backgroundColor = "white";
-        }
-    })
-}
 
 // getDragAfterElement: determines where the item should get dropped
 function getDragAfterElement(container, y) {
@@ -237,46 +199,64 @@ function addYear() {
     var yearNum = document.getElementById('course_planner').childElementCount;
     if (yearNum < 10) {
         yearNum++;
-        // create an empty newYear element and its inner empty elements
+
+        // create the empty html elements
         const newYearDiv = document.createElement("div");
         const newTitleDiv = document.createElement("div");
-        const newUlDiv = document.createElement("div");
+        const newTitleSpan = document.createElement("span");
+        const newXSpan = document.createElement("span");
+        const newDiv = document.createElement("div");
         const newUl = document.createElement("ul");
-        const newSpan1 = document.createElement("span");
-        const newSpan2 = document.createElement("span");
 
-        // attach the styles for the newUl and append to parent
+        // add the appropriate styles/classes to each element
         newUl.classList.add('ul_container', 'ul_format');
 
-        newUl.addEventListener('dragover', e => {
+        newTitleSpan.classList.add('mb-2', 'mt-3');
+        newTitleSpan.style.userSelect = "none";
+        newTitleSpan.appendChild(document.createTextNode("Year " + yearNum));
+
+        newXSpan.classList.add('mt-3', 'ml-5', 'remove_year');
+        newXSpan.style.cursor = "pointer";
+        newXSpan.setAttribute("onclick", "removeYear(this)");
+        newXSpan.appendChild(document.createTextNode("remove"));
+
+        newTitleDiv.classList.add('row', 'year');
+        newTitleDiv.style.userSelect = "none";
+
+        // add the styles/classes and event listners to the newYearDiv
+        newYearDiv.classList.add('col-3', 'year_container', 'align-top', 'mt-2', 'mb-2', 'ml-1', 'pb-1', 'mr-1');
+
+        newYearDiv.addEventListener('dragover', e => {
             e.preventDefault()
             const afterElement = getDragAfterElement(newUl, e.clientY)
             const draggable = document.querySelector('.dragging')
-            getCreditValues(newUl) //update current credit weight count
+            var totalCreditValue = calcTotalCredits(newUl);
 
-            //if user can add credit to newUl..
-            if (afterElement == null && !draggable.classList.contains('course_list') && totalCreditValue < config.max_cap_cr_year) {
+            //if user can add credit to container..
+            if (afterElement == null && !draggable.classList.contains('course_list') && totalCreditValue < config.max_cr_year) {
                 newUl.appendChild(draggable)
-            } else if (!draggable.classList.contains('course_list') && totalCreditValue < config.max_cap_cr_year) {
+            } else if (!draggable.classList.contains('course_list') && totalCreditValue < config.max_cr_year) {
                 newUl.insertBefore(draggable, afterElement)
             }
             checkDuplicates();
         })
-        newUl.addEventListener('drop', e => {
+        newYearDiv.addEventListener('drop', e => {
             e.preventDefault();
             const afterElement = getDragAfterElement(newUl, e.clientY)
             const draggable = document.querySelector('.dragging')
-            getCreditValues(newUl) //update current credit weight count
+            var totalCreditValue = calcTotalCredits(newUl);
 
-            if (afterElement == null && totalCreditValue < config.max_cap_cr_year) {
+            const og_year = draggable.parentNode.parentNode.parentNode.children[0].textContent.trim().substr(5) //the draggable's original year number
+            const this_year = newTitleDiv.textContent.trim().substr(5) //the dragover's year number
 
+            if (afterElement == null && totalCreditValue < config.max_cr_year || afterElement == null && og_year == this_year) {
                 if (draggable.classList.contains('course_list')) {
                     const droppable = convertToCSObj(draggable);
                     newUl.appendChild(droppable);
                 } else {
                     newUl.appendChild(draggable);
                 }
-            } else if (totalCreditValue < config.max_cap_cr_year) {  //insert element
+            } else if (totalCreditValue < config.max_cr_year || og_year == this_year) {  //insert element
                 if (draggable.classList.contains('course_list')) {
                     const droppable = convertToCSObj(draggable);
                     newUl.insertBefore(droppable, afterElement);
@@ -284,14 +264,11 @@ function addYear() {
                     newUl.insertBefore(draggable, afterElement);
                 }
             }
-            if (totalCreditValue > config.max_cr_year) { //if we have an overflow of weights in a year
-                console.log("OVERFLOW")
-                var data = creditValueData;
-                highlightOverflow(newUl, data);
-            }
             checkDuplicates();
             addDragTag();
             colorCourseList();
+            updateProgress();
+            switchToWarning();
             if (!ignore) {
                 warnDuplicates(duplicate);
                 if (!duplicate) {
@@ -299,31 +276,17 @@ function addYear() {
                 }
             }
         })
-        newUlDiv.appendChild(newUl);
 
-        // attach the styles and content for the spans and append to parent
-        newSpan1.classList.add('mb-2', 'mt-3');
-        newSpan1.style.userSelect = "none";
-        newSpan1.appendChild(document.createTextNode("Year " + yearNum));
-        newSpan2.classList.add('mt-3', 'ml-5', 'remove_year');
-        newSpan2.style.cursor = "pointer";
-        newSpan2.appendChild(document.createTextNode("remove"));
-        newSpan2.setAttribute("onclick", "removeYear(this)");
-        newTitleDiv.appendChild(newSpan1);
-        newTitleDiv.appendChild(newSpan2);
-        newTitleDiv.classList.add('row', 'year');
-        newTitleDiv.style.userSelect = "none";
-
-        // add newUlDiv and newTitleDiv and attach the styles and content for the newYearDiv
+        // append each child element to its parent
+        newDiv.appendChild(newUl);
+        newTitleDiv.appendChild(newTitleSpan);
+        newTitleDiv.appendChild(newXSpan);
         newYearDiv.appendChild(newTitleDiv);
-        newYearDiv.appendChild(newUlDiv);
-        newYearDiv.classList.add('col-3', 'year_container', 'align-top', 'mt-2', 'mb-2', 'ml-1', 'pb-1', 'mr-1', 'd-inline-block');
+        newYearDiv.appendChild(newDiv);
 
         // add the new element to the course planner container
         document.getElementById("course_planner").appendChild(newYearDiv);
     }
-    
-    //ELSE: SHOULD NOTIFY USER THAT THEY CANNOT ADD MORE THAN 10 YEARS
 }
 
 
@@ -420,17 +383,3 @@ function displayCourseInfo(cid) {
 /*function hideCourseInfo(cid) {
     //document.getElementById('course_info').style.visibility = 'hidden';
 }*/
-
-/*function revert_drag_appearance(el) {
-    el.style.margin = "0px";
-    el.style.width = "100%";
-    el.style.borderRadius = "0px";
-}
-
-function drag_cl_item(el) {
-    el.style.margin = "auto";
-    el.style.width = "75%";
-    el.style.borderRadius = "5px";
-    onmouseup(revert_drag_appearance(el));
-}
-*/
