@@ -1,4 +1,30 @@
-﻿/* The course scheduler (CS) title 'COAD' */
+﻿body {
+    overflow-x: hidden;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 15px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #d5d8de;
+    border-radius: 5px;
+}
+
+/* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #b7b9bd;
+    }
+    
+/* The course scheduler (CS) title 'COAD' */
 .cs_title {
     font-size: 120%;
 }
