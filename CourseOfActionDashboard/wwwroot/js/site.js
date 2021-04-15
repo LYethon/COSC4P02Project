@@ -389,12 +389,12 @@ function colorCourseList() {
     var courseList = document.querySelectorAll('.course_list');
     var courseSchd = document.querySelectorAll('.col-10');
     for (i = 0; i < courseList.length; i++) {
-        if (courseList.item(i).classList.contains('list-group-item-success')) {
-            courseList.item(i).classList.remove('list-group-item-success');
+        if (courseList.item(i).classList.contains('list-group-item-secondary')) {
+            courseList.item(i).classList.remove('list-group-item-secondary');
         }
         for (j = 0; j < courseSchd.length; j++) {
             if (courseList.item(i).innerText.substring(0, 9) == courseSchd.item(j).innerText.substring(0.9)) {
-                courseList.item(i).classList.add('list-group-item-success');
+                courseList.item(i).classList.add('list-group-item-secondary');
                 break;
             }
         }
@@ -414,22 +414,23 @@ function displayCourseInfo(cid) {
     document.getElementById('courseInfo_creditValue').textContent = creditVText;
 
     document.getElementById('courseInfo').style.visibility = 'visible';
+    document.getElementById('courseInfo').style.position = 'static';
 }
 
-
-/*function displayCourseInfo(cid) {
-    var nameID = 'courseInfo_name ' + cid;
-    var descriptID = 'courseInfo_description ' + cid;
-    var cvID = 'courseInfo_creditv' + cid;
-    var nameText = document.getElementById(nameID).textContent;
-    var descriptText = document.getElementById(descriptID).textContent;
-    var creditValue = document.getElementById(cvID).textContent;
-    document.getElementById('courseInfo_name').textContent = nameText;
-    document.getElementById('courseInfo_description').textContent = descriptText;
-    document.getElementById('courseInfo_creditv').textContent = creditValue;
-    //document.getElementById('course_info').style.visibility = 'visible';
+/*function hideCourseInfo(cid) {
+    //document.getElementById('course_info').style.visibility = 'hidden';
 }*/
 
-function hideCourseInfo(cid) {
-    //document.getElementById('course_info').style.visibility = 'hidden';
+/*function revert_drag_appearance(el) {
+    el.style.margin = "0px";
+    el.style.width = "100%";
+    el.style.borderRadius = "0px";
 }
+
+function drag_cl_item(el) {
+    el.style.margin = "auto";
+    el.style.width = "75%";
+    el.style.borderRadius = "5px";
+    onmouseup(revert_drag_appearance(el));
+}
+*/
