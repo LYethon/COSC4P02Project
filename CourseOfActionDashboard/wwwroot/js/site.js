@@ -28,6 +28,7 @@ function remove(el) {
 
 drag_and_drop();
 colorCourseList();
+checkDuplicates();
 
 
 function callback(data, totWeight) {
@@ -164,13 +165,10 @@ function checkDuplicates() {
     //highlight duplicates
     yearContainers.forEach(year => {
         if (uniqueIds.has(year.children[0].id)) {
-            year.style.backgroundColor = "lightcoral";
+            year.style.backgroundColor = "#FFE0C4";
             duplicate = true;
         }
-        else {
-            if (year.style.backgroundColor != "palegoldenrod")
-                year.style.backgroundColor = "white";
-        }
+        else { year.style.backgroundColor = "white"; }
     })
 }
 

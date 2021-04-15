@@ -148,15 +148,15 @@
                             </form>
                             <form class="form-inline">
                                 <button type="button" class="btn btn-outline-success mr-2" onclick="buildJSON(); updateProgress(); showSaveMsg()">Save</button>
-                                <button type="button" class="btn mr-2" style="color:red; border-color:red" onclick="resetSchedule()">Reset</button>
+                                <button type="button" class="btn btn-outline-danger mr-2" onclick="resetSchedule()">Reset</button>
                                 <button type="button" class="btn btn-outline-secondary" onclick="exportSchedule()">Export</button>
                             </form>
                         </div>
                     </div>
                 </nav>
                 <!--Course Planner-->
-                <div style="margin: 10px 0px; background-color: #E4F5FC; overflow-x: auto; min-height: 500px; width: 100%; border-radius: 10px;">
-                    <div id="course_planner" class="ml-1 d-inline-flex" style="white-space: nowrap; width: 94%; min-height: 490px;">
+                <div style="margin: 10px 0px; background-color: #DFF3FF; overflow-x: auto; min-height: 500px; width: 100%; border-radius: 10px;">
+                    <div id="course_planner" class="ml-1 d-inline-flex" style="white-space: nowrap; width: 95%; min-height: 495px;">
                         @if (schedule != null)
                         {
                             int yearNum = -1;
