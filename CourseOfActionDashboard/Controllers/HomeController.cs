@@ -126,7 +126,7 @@ namespace CourseOfActionDashboard.Controllers
                     csv += "Year " + i + ",";
                     foreach (var course in year)
                     {
-                        csv += course.Code + ",";
+                        if(course!=null) csv += course.Code + ",";
                     }
                     csv += "\n";
                     i++;

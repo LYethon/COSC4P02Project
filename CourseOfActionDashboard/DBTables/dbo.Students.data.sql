@@ -240,138 +240,7 @@ INSERT INTO [dbo].[Students] ([Id], [FirstName], [LastName], [Email], [Password]
 ]
 ]
 }')
-INSERT INTO [dbo].[Students] ([Id], [FirstName], [LastName], [Email], [Password], [Schedule]) VALUES (1001, N'First', N'Year', N'1@brocku.ca', N'abc', N'{"Courses":
-[
-[
-{
-"CID": 1,
-"Name": "Introduction to Computer Science",
-"Code": "1P02",
-"Description": "Foundations of Computer Science and computer programming in a high-level language (normally Java). Topics include computer fundamentals, representation of information, problem solving and software development, programming language syntax and semantics, methods, input/output, control structures and data types.",
-"CreditValue": 0.5,
-"Subject": "COSC",
-"AlternativeSubject1": null,
-"AlternativeSubject2": null,
-"Prerequisites": null,
-"Context": "SCIENCE"
-},
-{
-"CID": 2,
-"Name": "Introduction to Data Structures",
-"Code": "1P03",
-"Description": "Programming and problem solving in a high-level programming language (normally Java). Data structures including arrays and linked-lists. Modularity, abstraction and abstract data types including stacks, queues and lists. Introduction to searching and sorting, recursion, algorithm analysis and object-orientation.",
-"CreditValue": 0.5,
-"Subject": "COSC",
-"AlternativeSubject1": null,
-"AlternativeSubject2": null,
-"Prerequisites": 1,
-"Context": "SCIENCE"
-},
-{
-"CID": 3,
-"Name": "Integrity and Literacy in the Information Age",
-"Code": "1P50",
-"Description": "Issues in use of information technology including historic and social perspectives; legal, ethical and moral issues; intellectual property, licensing and copyright; privacy and freedom of expression; professional conduct and information literacy.",
-"CreditValue": 0.5,
-"Subject": "COSC",
-"AlternativeSubject1": "APCO",
-"AlternativeSubject2": "IASC",
-"Prerequisites": null,
-"Context": "SCIENCE"
-},
-{
-"CID": 44,
-"Name": "Mathematical Reasoning",
-"Code": "1P66",
-"Description": "Introduction to mathematical reasoning, logic and proofs including mathematical induction. Basics of set theory.",
-"CreditValue": 0.5,
-"Subject": "MATH",
-"AlternativeSubject1": null,
-"AlternativeSubject2": null,
-"Prerequisites": null,
-"Context": "SCIENCE"
-},
-{
-"CID": 45,
-"Name": "Mathematics for Computer Science",
-"Code": "1P67",
-"Description": "Development and analysis of algorithms, complexity of algorithms, recursion solving recurrence relations and relations and functions.",
-"CreditValue": 0.5,
-"Subject": "MATH",
-"AlternativeSubject1": null,
-"AlternativeSubject2": null,
-"Prerequisites": 44,
-"Context": "SCIENCE"
-}
-]
-]
-}')
-INSERT INTO [dbo].[Students] ([Id], [FirstName], [LastName], [Email], [Password], [Schedule]) VALUES (1002, N'bug', N'bug', N'bug@brocku.ca', N'bug', N'{"Courses":
-[
-[
-{
-"CID": 1,
-"Name": "Introduction to Computer Science",
-"Code": "1P02",
-"Description": "Foundations of Computer Science and computer programming in a high-level language (normally Java). Topics include computer fundamentals, representation of information, problem solving and software development, programming language syntax and semantics, methods, input/output, control structures and data types.",
-"CreditValue": 0.5,
-"Subject": "COSC",
-"AlternativeSubject1": null,
-"AlternativeSubject2": null,
-"Prerequisites": null,
-"Context": "SCIENCE"
-},
-{
-"CID": 2,
-"Name": "Introduction to Data Structures",
-"Code": "1P03",
-"Description": "Programming and problem solving in a high-level programming language (normally Java). Data structures including arrays and linked-lists. Modularity, abstraction and abstract data types including stacks, queues and lists. Introduction to searching and sorting, recursion, algorithm analysis and object-orientation.",
-"CreditValue": 0.5,
-"Subject": "COSC",
-"AlternativeSubject1": null,
-"AlternativeSubject2": null,
-"Prerequisites": 1,
-"Context": "SCIENCE"
-},
-{
-"CID": 3,
-"Name": "Integrity and Literacy in the Information Age",
-"Code": "1P50",
-"Description": "Issues in use of information technology including historic and social perspectives; legal, ethical and moral issues; intellectual property, licensing and copyright; privacy and freedom of expression; professional conduct and information literacy.",
-"CreditValue": 0.5,
-"Subject": "COSC",
-"AlternativeSubject1": "APCO",
-"AlternativeSubject2": "IASC",
-"Prerequisites": null,
-"Context": "SCIENCE"
-},
-{
-"CID": 44,
-"Name": "Mathematical Reasoning",
-"Code": "1P66",
-"Description": "Introduction to mathematical reasoning, logic and proofs including mathematical induction. Basics of set theory.",
-"CreditValue": 0.5,
-"Subject": "MATH",
-"AlternativeSubject1": null,
-"AlternativeSubject2": null,
-"Prerequisites": null,
-"Context": "SCIENCE"
-},
-{
-"CID": 45,
-"Name": "Mathematics for Computer Science",
-"Code": "1P67",
-"Description": "Development and analysis of algorithms, complexity of algorithms, recursion solving recurrence relations and relations and functions.",
-"CreditValue": 0.5,
-"Subject": "MATH",
-"AlternativeSubject1": null,
-"AlternativeSubject2": null,
-"Prerequisites": 44,
-"Context": "SCIENCE"
-}
-]
-]
-}')
+INSERT INTO [dbo].[Students] ([Id], [FirstName], [LastName], [Email], [Password], [Schedule]) VALUES (1001, N'First', N'Year', N'1@brocku.ca', N'abc', N'{''Courses'':[[{"CID":1,"Name":"Introduction to Computer Science","Code":"1P02","Subject":"COSC","AlternativeSubject1":null,"AlternativeSubject2":null,"Description":"Foundations of Computer Science and computer programming in a high-level language (normally Java). Topics include computer fundamentals, representation of information, problem solving and software development, programming language syntax and semantics, methods, input/output, control structures and data types.","CreditValue":0.5,"Prerequisites":null,"Context":"SCIENCE"},{"CID":2,"Name":"Introduction to Data Structures","Code":"1P03","Subject":"COSC","AlternativeSubject1":null,"AlternativeSubject2":null,"Description":"Programming and problem solving in a high-level programming language (normally Java). Data structures including arrays and linked-lists. Modularity, abstraction and abstract data types including stacks, queues and lists. Introduction to searching and sorting, recursion, algorithm analysis and object-orientation.","CreditValue":0.5,"Prerequisites":"1","Context":"SCIENCE"},{"CID":3,"Name":"Integrity and Literacy in the Information Age","Code":"1P50","Subject":"COSC","AlternativeSubject1":"APCO","AlternativeSubject2":"IASC","Description":"Issues in use of information technology including historic and social perspectives; legal, ethical and moral issues; intellectual property, licensing and copyright; privacy and freedom of expression; professional conduct and information literacy.","CreditValue":0.5,"Prerequisites":null,"Context":"SCIENCE"},{"CID":44,"Name":"Mathematical Reasoning","Code":"1P66","Subject":"MATH","AlternativeSubject1":null,"AlternativeSubject2":null,"Description":"Introduction to mathematical reasoning, logic and proofs including mathematical induction. Basics of set theory.","CreditValue":0.5,"Prerequisites":null,"Context":"SCIENCE"},{"CID":45,"Name":"Mathematics for Computer Science","Code":"1P67","Subject":"MATH","AlternativeSubject1":null,"AlternativeSubject2":null,"Description":"Development and analysis of algorithms, complexity of algorithms, recursion solving recurrence relations and relations and functions.","CreditValue":0.5,"Prerequisites":"44","Context":"SCIENCE"},],[null,],[null,],[null,],]}')
 INSERT INTO [dbo].[Students] ([Id], [FirstName], [LastName], [Email], [Password], [Schedule]) VALUES (1003, N'James', N'Zhao', N'jz16pt@brocku.ca', N'abc', N'{"Courses":
 [
 [
@@ -877,6 +746,286 @@ INSERT INTO [dbo].[Students] ([Id], [FirstName], [LastName], [Email], [Password]
 "AlternativeSubject1": null,
 "AlternativeSubject2": null,
 "Prerequisites": 13,
+"Context": "SCIENCE"
+}
+]
+]
+}')
+INSERT INTO [dbo].[Students] ([Id], [FirstName], [LastName], [Email], [Password], [Schedule]) VALUES (2001, N'Second', N'Year', N'3@brocku.ca', N'abc', N'{"Courses":
+[
+[
+{
+"CID": 1,
+"Name": "Introduction to Computer Science",
+"Code": "1P02",
+"Description": "Foundations of Computer Science and computer programming in a high-level language (normally Java). Topics include computer fundamentals, representation of information, problem solving and software development, programming language syntax and semantics, methods, input/output, control structures and data types.",
+"CreditValue": 0.5,
+"Subject": "COSC",
+"AlternativeSubject1": null,
+"AlternativeSubject2": null,
+"Prerequisites": null,
+"Context": "SCIENCE"
+},
+{
+"CID": 2,
+"Name": "Introduction to Data Structures",
+"Code": "1P03",
+"Description": "Programming and problem solving in a high-level programming language (normally Java). Data structures including arrays and linked-lists. Modularity, abstraction and abstract data types including stacks, queues and lists. Introduction to searching and sorting, recursion, algorithm analysis and object-orientation.",
+"CreditValue": 0.5,
+"Subject": "COSC",
+"AlternativeSubject1": null,
+"AlternativeSubject2": null,
+"Prerequisites": 1,
+"Context": "SCIENCE"
+},
+{
+"CID": 3,
+"Name": "Integrity and Literacy in the Information Age",
+"Code": "1P50",
+"Description": "Issues in use of information technology including historic and social perspectives; legal, ethical and moral issues; intellectual property, licensing and copyright; privacy and freedom of expression; professional conduct and information literacy.",
+"CreditValue": 0.5,
+"Subject": "COSC",
+"AlternativeSubject1": "APCO",
+"AlternativeSubject2": "IASC",
+"Prerequisites": null,
+"Context": "SCIENCE"
+},
+{
+"CID": 44,
+"Name": "Mathematical Reasoning",
+"Code": "1P66",
+"Description": "Introduction to mathematical reasoning, logic and proofs including mathematical induction. Basics of set theory.",
+"CreditValue": 0.5,
+"Subject": "MATH",
+"AlternativeSubject1": null,
+"AlternativeSubject2": null,
+"Prerequisites": null,
+"Context": "SCIENCE"
+},
+{
+"CID": 45,
+"Name": "Mathematics for Computer Science",
+"Code": "1P67",
+"Description": "Development and analysis of algorithms, complexity of algorithms, recursion solving recurrence relations and relations and functions.",
+"CreditValue": 0.5,
+"Subject": "MATH",
+"AlternativeSubject1": null,
+"AlternativeSubject2": null,
+"Prerequisites": 44,
+"Context": "SCIENCE"
+}
+],
+[
+{
+"CID": 4,
+"Name": "Advanced Data Structures",
+"Code": "2P03",
+"Description": "Implementation and use of advanced data structures including trees, graphs, hash tables and advanced list structures, sorting and searching, recursion and traversals. Analysis of algorithms.",
+"CreditValue": 0.5,
+"Subject": "COSC",
+"AlternativeSubject1": null,
+"AlternativeSubject2": null,
+"Prerequisites": 2,
+"Context": "SCIENCE"
+},
+{
+"CID": 5,
+"Name": "Programming Languages",
+"Code": "2P05",
+"Description": "Fundamental concepts of programming languages including syntax, semantics, program translation, virtual machines, control, data types, multi-threading, exception handling and abstraction mechanisms. Introduction to programming paradigms including imperative, applicative, logic and object-oriented.",
+"CreditValue": 0.5,
+"Subject": "COSC",
+"AlternativeSubject1": null,
+"AlternativeSubject2": null, 
+"Prerequisites": 4,
+"Context": "SCIENCE"
+},
+{
+"CID": 6,
+"Name": "Introduction to Computer Architecture",
+"Code": "2P12",
+"Description": "Evolution of digital computer. Computer organization including functional units, instruction cycle, control, buses and memory. Instruction types and memory access, instruction sequencing and call/return. Basic assembly language programming.",
+"CreditValue": 0.5,
+"Subject": "COSC",
+"AlternativeSubject1": null,
+"AlternativeSubject2": null, 
+"Prerequisites": 2,
+"Context": "SCIENCE"
+},
+{
+"CID": 7,
+"Name": "Computer Systems",
+"Code": "2P13",
+"Description": "Operating systems and networking. Resource sharing including file, processor, I/O and memory management. Concurrency including: context switching, interprocess communication, and synchronization. Protection and security including encryption. Distributed systems and networking including: ISO model and packet routing.",
+"CreditValue": 0.5,
+"Subject": "COSC",
+"AlternativeSubject1": null,
+"AlternativeSubject2": null,
+"Prerequisites": 4,
+"Context": "SCIENCE"
+},
+{
+"CID": 43,
+"Name": "Applied Linear Algebra",
+"Code": "1P12",
+"Description": "Systems of linear equations with applications. Matrix algebra. Determinants. Vector geometry in R2 and R3 dot product, norm and projections, cross product, lines and planes. Complex numbers. Euclidean n-space. Linear transformations from Rn to Rm. Focus on applications of linear algebra to sciences and integrated use of a computer algebra system.",
+"CreditValue": 0.5,
+"Subject": "MATH",
+"AlternativeSubject1": null,
+"AlternativeSubject2": null,
+"Prerequisites": null,
+"Context": "SCIENCE"
+},
+{
+"CID": 46,
+"Name": "Practical Statistics",
+"Code": "1P98",
+"Description": "Descriptive statistics; probability of events; counting rules; discrete and continuous probability distributions: binomial, Poisson and normal distributions; Central Limit Theorem; confidence intervals and hypothesis testing; analysis of variance; contingency tables; correlation and regression; emphasis on real-world applications throughout; use of statistical computer software.",
+"CreditValue": 0.5,
+"Subject": "MATH",
+"AlternativeSubject1": null,
+"AlternativeSubject2": null,
+"Prerequisites": null,
+"Context": "SCIENCE"
+}
+]
+]
+}')
+INSERT INTO [dbo].[Students] ([Id], [FirstName], [LastName], [Email], [Password], [Schedule]) VALUES (2002, N'terst1', N'test', N'test@brocku.ca', N'abc', N'{"Courses":
+[
+[
+{
+"CID": 1,
+"Name": "Introduction to Computer Science",
+"Code": "1P02",
+"Description": "Foundations of Computer Science and computer programming in a high-level language (normally Java). Topics include computer fundamentals, representation of information, problem solving and software development, programming language syntax and semantics, methods, input/output, control structures and data types.",
+"CreditValue": 0.5,
+"Subject": "COSC",
+"AlternativeSubject1": null,
+"AlternativeSubject2": null,
+"Prerequisites": null,
+"Context": "SCIENCE"
+},
+{
+"CID": 2,
+"Name": "Introduction to Data Structures",
+"Code": "1P03",
+"Description": "Programming and problem solving in a high-level programming language (normally Java). Data structures including arrays and linked-lists. Modularity, abstraction and abstract data types including stacks, queues and lists. Introduction to searching and sorting, recursion, algorithm analysis and object-orientation.",
+"CreditValue": 0.5,
+"Subject": "COSC",
+"AlternativeSubject1": null,
+"AlternativeSubject2": null,
+"Prerequisites": 1,
+"Context": "SCIENCE"
+},
+{
+"CID": 3,
+"Name": "Integrity and Literacy in the Information Age",
+"Code": "1P50",
+"Description": "Issues in use of information technology including historic and social perspectives; legal, ethical and moral issues; intellectual property, licensing and copyright; privacy and freedom of expression; professional conduct and information literacy.",
+"CreditValue": 0.5,
+"Subject": "COSC",
+"AlternativeSubject1": "APCO",
+"AlternativeSubject2": "IASC",
+"Prerequisites": null,
+"Context": "SCIENCE"
+},
+{
+"CID": 44,
+"Name": "Mathematical Reasoning",
+"Code": "1P66",
+"Description": "Introduction to mathematical reasoning, logic and proofs including mathematical induction. Basics of set theory.",
+"CreditValue": 0.5,
+"Subject": "MATH",
+"AlternativeSubject1": null,
+"AlternativeSubject2": null,
+"Prerequisites": null,
+"Context": "SCIENCE"
+},
+{
+"CID": 45,
+"Name": "Mathematics for Computer Science",
+"Code": "1P67",
+"Description": "Development and analysis of algorithms, complexity of algorithms, recursion solving recurrence relations and relations and functions.",
+"CreditValue": 0.5,
+"Subject": "MATH",
+"AlternativeSubject1": null,
+"AlternativeSubject2": null,
+"Prerequisites": 44,
+"Context": "SCIENCE"
+}
+],
+[
+{
+"CID": 4,
+"Name": "Advanced Data Structures",
+"Code": "2P03",
+"Description": "Implementation and use of advanced data structures including trees, graphs, hash tables and advanced list structures, sorting and searching, recursion and traversals. Analysis of algorithms.",
+"CreditValue": 0.5,
+"Subject": "COSC",
+"AlternativeSubject1": null,
+"AlternativeSubject2": null,
+"Prerequisites": 2,
+"Context": "SCIENCE"
+},
+{
+"CID": 5,
+"Name": "Programming Languages",
+"Code": "2P05",
+"Description": "Fundamental concepts of programming languages including syntax, semantics, program translation, virtual machines, control, data types, multi-threading, exception handling and abstraction mechanisms. Introduction to programming paradigms including imperative, applicative, logic and object-oriented.",
+"CreditValue": 0.5,
+"Subject": "COSC",
+"AlternativeSubject1": null,
+"AlternativeSubject2": null, 
+"Prerequisites": 4,
+"Context": "SCIENCE"
+},
+{
+"CID": 6,
+"Name": "Introduction to Computer Architecture",
+"Code": "2P12",
+"Description": "Evolution of digital computer. Computer organization including functional units, instruction cycle, control, buses and memory. Instruction types and memory access, instruction sequencing and call/return. Basic assembly language programming.",
+"CreditValue": 0.5,
+"Subject": "COSC",
+"AlternativeSubject1": null,
+"AlternativeSubject2": null, 
+"Prerequisites": 2,
+"Context": "SCIENCE"
+},
+{
+"CID": 7,
+"Name": "Computer Systems",
+"Code": "2P13",
+"Description": "Operating systems and networking. Resource sharing including file, processor, I/O and memory management. Concurrency including: context switching, interprocess communication, and synchronization. Protection and security including encryption. Distributed systems and networking including: ISO model and packet routing.",
+"CreditValue": 0.5,
+"Subject": "COSC",
+"AlternativeSubject1": null,
+"AlternativeSubject2": null,
+"Prerequisites": 4,
+"Context": "SCIENCE"
+},
+{
+"CID": 43,
+"Name": "Applied Linear Algebra",
+"Code": "1P12",
+"Description": "Systems of linear equations with applications. Matrix algebra. Determinants. Vector geometry in R2 and R3 dot product, norm and projections, cross product, lines and planes. Complex numbers. Euclidean n-space. Linear transformations from Rn to Rm. Focus on applications of linear algebra to sciences and integrated use of a computer algebra system.",
+"CreditValue": 0.5,
+"Subject": "MATH",
+"AlternativeSubject1": null,
+"AlternativeSubject2": null,
+"Prerequisites": null,
+"Context": "SCIENCE"
+},
+{
+"CID": 46,
+"Name": "Practical Statistics",
+"Code": "1P98",
+"Description": "Descriptive statistics; probability of events; counting rules; discrete and continuous probability distributions: binomial, Poisson and normal distributions; Central Limit Theorem; confidence intervals and hypothesis testing; analysis of variance; contingency tables; correlation and regression; emphasis on real-world applications throughout; use of statistical computer software.",
+"CreditValue": 0.5,
+"Subject": "MATH",
+"AlternativeSubject1": null,
+"AlternativeSubject2": null,
+"Prerequisites": null,
 "Context": "SCIENCE"
 }
 ]
