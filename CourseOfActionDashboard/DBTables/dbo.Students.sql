@@ -5,6 +5,6 @@
     [Email]     NVARCHAR (MAX) NOT NULL,
     [Password]  NVARCHAR (MAX) NOT NULL,
     [Schedule]  NVARCHAR (MAX) NOT NULL,
+	[CurrentYear] INT NOT NULL,
     CONSTRAINT [PK_dbo.Students] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
-
