@@ -31,6 +31,9 @@ namespace CourseOfActionDashboard.Models
         //[RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,15}$")]
         public string Schedule { get; set; }
 
+        [Required]
+        public int CurrentYear { get; set; }
+
         public string FullName()
         {
             return this.FirstName + " " + this.LastName;
