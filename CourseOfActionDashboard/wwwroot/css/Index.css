@@ -94,6 +94,18 @@
     white-space: !important normal;
 }
 
+.credit_box_disabled {
+    font-size: 90%;
+    padding: 2px 4px;
+    margin: 5px -5px;
+    background-color: #d6d8db;
+    cursor: grab;
+    margin-left: -5px;
+    border: 1px solid grey;
+    border-radius: 5px;
+    white-space: !important normal;
+}
+
 /* The CS course/credit list formatting */
 .ul_format {
     margin: 0;

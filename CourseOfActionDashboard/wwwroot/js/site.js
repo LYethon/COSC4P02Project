@@ -71,7 +71,7 @@ function calcTotalCredits(el) {
  *  it has nearly reached its max capacity. Each time an item is dragged/dropped, a series of functions gets called on update.
  */
 function drag_and_drop() {
-    const containers = document.querySelectorAll('.year_container')
+    const containers = document.querySelectorAll('.year')
     addDragTag();
 
     containers.forEach(container => {
@@ -222,7 +222,7 @@ function addYear() {
         newTitleDiv.style.userSelect = "none";
 
         // add the styles/classes and event listners to the newYearDiv
-        newYearDiv.classList.add('col-3', 'year_container', 'align-top', 'mt-2', 'mb-2', 'ml-1', 'pb-1', 'mr-1');
+        newYearDiv.classList.add('col-3', 'year_container','year', 'align-top', 'mt-2', 'mb-2', 'ml-1', 'pb-1', 'mr-1');
 
         newYearDiv.addEventListener('dragover', e => {
             e.preventDefault()
