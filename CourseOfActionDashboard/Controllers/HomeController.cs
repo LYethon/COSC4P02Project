@@ -427,6 +427,28 @@ namespace CourseOfActionDashboard.Controllers
         }
 
         [HttpGet]
+        public double PullCoscValues(int[] idArray)
+        {
+
+            double creditValues = 0;
+
+            if (idArray != null)
+            {
+                for (int i = 0; i < idArray.Length; i++)
+                {
+                    var temp = idArray[i];
+                    Course course = _dbCourses.courseTable.Where(s => s.CID.Equals(temp)).FirstOrDefault();
+                    if (course.Subject == "COSC")
+                    {
+                        creditValues += course.CreditValue;
+                    }
+                }
+            }
+            else return 0;
+            return creditValues;
+        }
+
+        [HttpGet]
         public double PullSocSciValues(int[] idArray)
         {
 

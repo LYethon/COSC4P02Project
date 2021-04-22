@@ -87,7 +87,10 @@
                                         <tc><td style="padding-bottom:6px">Humanities</td></tc>
                                         <tc><td id="humPlanned" style="padding-bottom:6px">0/0</td></tc>
                                     </tr>
-                                  
+                                    <tr>
+                                        <tc><td style="padding-bottom:6px">Computer Science</td></tc>
+                                        <tc><td id="coscPlanned" style="padding-bottom:6px">0/0</td></tc>
+                                    </tr>
                                 </table>
                             </div>
 
@@ -1090,6 +1093,20 @@
                 console.log("Error");
             }
         });
+
+    $.ajax({
+            type: 'GET',
+            url: "@(Url.Action("PullCoscValues", "Home"))",
+            data: { 'idArray': idArray},
+            dataType: 'json',
+            traditional: true,
+            success: function (data) {
+                showProgress('cosc',data); //send number and type to showdata method
+            },
+            error: function (e) {
+                console.log("Error");
+            }
+        });
       }
 
     function showProgress(type,num){
@@ -1106,7 +1123,8 @@
         if(type == '3alpha') document.getElementById("3aPlanned").innerHTML = (num) + " / " + tot3alpha + " required";
         if(type == '4alpha') document.getElementById("4aPlanned").innerHTML = (num) + " scheduled";
         if(type == 'socSci') document.getElementById("socPlanned").innerHTML = (num) + " / " + totSocSci + " required";
-        if(type == 'human') document.getElementById("humPlanned").innerHTML = (num) + " / " + totHuman + " required";
+        if (type == 'human') document.getElementById("humPlanned").innerHTML = (num) + " / " + totHuman + " required";
+        if(type == 'cosc') document.getElementById("coscPlanned").innerHTML = (num) + " scheduled";
         if(type == 'total'){
             document.getElementById("overPlanned").innerHTML = (num) + " / " + totOverall + " required";
             var percentPlanned = "width:" + ((num / totOverall) * 100) + "%";
