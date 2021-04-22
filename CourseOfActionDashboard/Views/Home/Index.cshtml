@@ -128,7 +128,10 @@
     <div class="row" style="max-width: 100em; margin: auto; min-width: 100em;">
         <!--Required Courses Checklist-->
         <div class="pt-3" style="width: 14em; margin-right: 1em">
-            <div id="courseRBox" class="courseCheckBox p-3" style="visibility: hidden; border: 1px solid #dddddd; border-radius: 10px; max-height: 566px; background-color: white; overflow-y:auto;">
+            <button class="btn btn-outline-secondary dropdown-toggle" aria-label="SuccessButton" onclick="showRequired(this)" style="margin-top: 8px; width: 100%">
+                Show Required Courses 
+            </button>
+            <div id="courseRBox" class="courseCheckBox p-3" style="visibility: hidden; border: 1px solid #dddddd; border-radius: 10px; max-height: 500px; background-color: white; margin-top: 20px; overflow-y:auto;">
                 <a class="navbar-brand" style="color: #7c8791">Required Courses</a>
                 <ul id="requiredC" style="margin: 10px 0 0 -5px;">
                 </ul>
@@ -305,9 +308,9 @@
                     <button class="alert" aria-label="SuccessButton" onclick="switchToRecommendation()">
                         Recommendation
                     </button>
-                    <button class="alert" aria-label="SuccessButton" onclick="showRequired(this)">
+                    @*<button class="alert" aria-label="SuccessButton" onclick="showRequired(this)">
                         Show Required Courses
-                    </button>
+                    </button>*@
                 </div>
             </div>
             <div class="container-fluid">
@@ -367,7 +370,7 @@
 
 
 <script type="text/javascript">
-    if (window.screen.availWidth <= 1400) document.body.style.zoom = "78%";
+    if (window.screen.availWidth <= 1400) document.body.style.zoom = "75%";
 
     var showWarning = false;
     var intro = false;
@@ -734,10 +737,10 @@
     function showRequired(b) {
         if ($(".courseCheckBox").css("visibility")=="hidden") {
             $(".courseCheckBox").css("visibility", "visible");
-            b.innerText = "Hide Required Courses";
+            b.innerText = "Hide Required Courses ";
         } else {
             $(".courseCheckBox").css("visibility", "hidden");
-            b.innerText = "Show Required Courses";
+            b.innerText = "Show Required Courses ";
         }
     }
 
