@@ -262,10 +262,13 @@
                 <ul id="myUL" style="overflow-y:scroll; overflow-x:hidden; max-height: 495px; width: 105%; margin: 12px 0 0 -40px">
                     @for (int i = 0; i < courses.Count; i++)
                     {
-                    <li class="list-group-item draggable course_list" draggable="true" onmouseover="displayCourseInfo(@courses[i].CID)">
-                        <div id="@courses[i].CID" creditv="@courses[i].CreditValue" style="text-align: center">@courses[i].Subject @courses[i].Code</div>
-                    </li>
+                        <li class="list-group-item draggable course_list" draggable="true" onmouseover="displayCourseInfo(@courses[i].CID)">
+                            <div id="@courses[i].CID" creditv="@courses[i].CreditValue" creditc="@courses[i].Context" style="text-align: center">@courses[i].Subject @courses[i].Code</div>
+                        </li>
                     }
+                    <li id="noCourses" class="list-group-item course_list" style="display:none">
+                        <div style="text-align: center" creditc="SCIENCE">No Courses Found</div>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -276,6 +279,7 @@
             <div id="courseInfo_name" style="margin-top: 10px; font-size: 110%; font-weight:600"></div>
             <div id="courseInfo_description" style="margin-top: 10px;"></div>
             <div id="courseInfo_creditValue" style="margin-top: 10px; font-weight: 600"></div>
+            <div id="courseInfo_creditContext" style="margin-top: 10px; font-weight: 600"></div>
 
             @for (int i = 0; i < courses.Count; i++)
             {
@@ -283,6 +287,7 @@
                 <div id="courseInfo_name @courses[i].CID" class="navbar-brand">@courses[i].Code @courses[i].Name</div>
                 <div id="courseInfo_description @courses[i].CID">@courses[i].Description</div>
                 <div id="courseInfo_creditValue @courses[i].CID">@courses[i].CreditValue</div>
+                <div id="courseInfo_creditContext @courses[i].CID">@courses[i].Context</div>
             </div>
             }
         </div>

@@ -305,11 +305,21 @@ function filterFunction() {
     for (i = 0; i < li.length; i++) {
         a = li[i].getElementsByTagName("div")[0];
         txtValue = a.textContent || a.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        cContext = $(a).attr("creditc");
+        
+        if ((txtValue.toUpperCase().indexOf(filter) > -1) || (cContext.toUpperCase().indexOf(filter) > -1)) {
             li[i].style.display = "";
         } else {
             li[i].style.display = "none";
-        }
+        }        
+    }
+    if ($(li).is(":visible")) {
+        console.log($(li).is(":visible"))
+        $("#noCourses").css("display", "none");
+    }
+    else {
+        console.log($(li).is(":visible"))
+        $("#noCourses").css("display", "block");
     }
 }
 
@@ -372,12 +382,16 @@ function displayCourseInfo(cid) {
     var nameID = 'courseInfo_name ' + cid;
     var descriptID = 'courseInfo_description ' + cid;
     var creditVID = 'courseInfo_creditValue ' + cid;
+    var creditCON = 'courseInfo_creditContext ' + cid;
     var nameText = document.getElementById(nameID).textContent;
     var descriptText = document.getElementById(descriptID).textContent;
     var creditVText = 'Credit Value: ' + document.getElementById(creditVID).textContent;
+    var creditCText = 'Context: ' + document.getElementById(creditCON).textContent;
     document.getElementById('courseInfo_name').textContent = nameText;
     document.getElementById('courseInfo_description').textContent = descriptText;
     document.getElementById('courseInfo_creditValue').textContent = creditVText;
+    document.getElementById('courseInfo_creditContext').textContent = creditCText;
+
 
     document.getElementById('courseInfo').style.visibility = 'visible';
     document.getElementById('courseInfo').style.position = 'static';
