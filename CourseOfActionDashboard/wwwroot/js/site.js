@@ -194,6 +194,11 @@ function updateYearNums() {
 
 // addYear: adds a year container to the student's CP
 function addYear() {
+    var timeOutFunc;
+    document.getElementById('addYearText').classList.add('show');
+    clearTimeout(timeOutFunc);
+    timeOutFunc = setTimeout(function () { document.getElementById('addYearText').classList.remove('show') }, 2000);
+
     var yearNum = document.getElementById('course_planner').childElementCount;
     if (yearNum < 10) {
         yearNum++;

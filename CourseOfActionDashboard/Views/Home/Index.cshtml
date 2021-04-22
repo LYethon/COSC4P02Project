@@ -126,17 +126,16 @@
     <div class="row" style="max-width: 100em; margin: auto; min-width: 100em;">
         <!--Required Courses Checklist-->
         <div style="width: 14em; margin-right: 1em">
-            <div class="courseCheckBox p-3" style="visibility: hidden; border: 1px solid #dddddd; border-radius: 10px; max-height: 566px; background-color: white; overflow-y:auto;">
+            <div id="courseRBox" class="courseCheckBox p-3" style="visibility: hidden; border: 1px solid #dddddd; border-radius: 10px; max-height: 566px; background-color: white; overflow-y:auto;">
                 <a class="navbar-brand" style="color: #7c8791">Required Courses</a>
                 <ul id="requiredC" style="margin: 10px 0 0 -5px;">
                 </ul>
             </div>
         </div>
         <!--Schedule Options-->
-        <div class="row" style="width: 70em; margin:auto; overflow: hidden;">
+        <div class="row pt-3" style="width: 70em; margin:auto; overflow: hidden;">
 
             <div class="container-fluid p-0" style="width: 72%;">
-
                 <nav class="navbar navbar-expand-lg navbar-light bg-transparent">
                     <a class="navbar-brand">Course Scheduler</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -145,6 +144,7 @@
                     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <div class="navbar-nav">
                             <form id="btn_bar" class="form-inline">
+                                <div id="addYearText">Year Added</div>
                                 <button type="button" class="btn btn-outline-primary add_year mr-2" onclick="addYear()">Add Year</button>
                             </form>
                             <form class="form-inline">

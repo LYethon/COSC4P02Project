@@ -84,3 +84,14 @@ body {
     border-radius: 10px;
     box-shadow: 0 6.7px 5.3px rgb(0 0 0 / 5%);
 }
+
+#addYearText {
+    position: absolute;
+    bottom: 3rem;
+    color: #007bff;
+    opacity: 0;
+}
+
+#addYearText.show {
+    opacity: 1;
+}
